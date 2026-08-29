@@ -1,0 +1,464 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Teoría: Semántica, formularios y tablas</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 0 20px;
+        line-height: 1.5;
+        color: #222;
+      }
+      header {
+        border-bottom: 2px solid #333;
+        padding: 16px 0;
+      }
+      nav a {
+        margin-right: 12px;
+      }
+      section {
+        padding: 24px 0;
+        border-bottom: 1px solid #ddd;
+      }
+      table {
+        border-collapse: collapse;
+        margin: 12px 0;
+      }
+      table,
+      th,
+      td {
+        border: 1px solid #999;
+        padding: 6px 10px;
+      }
+      pre {
+        background: #f4f4f4;
+        padding: 12px;
+        overflow-x: auto;
+        border-left: 4px solid #888;
+      }
+      code {
+        font-family: Consolas, monospace;
+      }
+      footer {
+        padding: 16px 0;
+        color: #666;
+        font-size: 0.9em;
+      }
+      .extra {
+        display: inline-block;
+        background: #fdf1e0;
+        color: #b5651d;
+        font-weight: bold;
+        font-size: 0.8em;
+        padding: 2px 8px;
+        border-radius: 4px;
+        margin-bottom: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Teoría: Semántica, formularios y tablas</h1>
+      <p>
+        Documento de apoyo. Los ejemplos son genéricos — no son el código de tu
+        tarea. Lo marcado como <span class="extra">EXTRA</span> no se califica
+        en la tarea, pero es bueno conocerlo.
+      </p>
+      <nav>
+        <a href="#semantica">Semántica</a>
+        <a href="#bloque-inline">Div/Span</a>
+        <a href="#formularios">Formularios</a>
+        <a href="#tablas">Tablas</a>
+        <a href="#extras">Extras</a>
+      </nav>
+    </header>
+
+    <main>
+      <section id="semantica">
+        <h2>1. Elementos semánticos</h2>
+        <p>
+          Antes de HTML5, casi todo se armaba con <code>&lt;div&gt;</code>. Los
+          elementos semánticos son "divs con nombre": describen qué tipo de
+          contenido hay dentro. De hecho, esta misma página los está usando:
+          todo el documento está dentro de un <code>&lt;header&gt;</code>, un
+          <code>&lt;main&gt;</code> con varios <code>&lt;section&gt;</code>, y
+          termina en un <code>&lt;footer&gt;</code>.
+        </p>
+        <ul>
+          <li>
+            <code>&lt;header&gt;</code>: encabezado de la página o de una
+            sección.
+          </li>
+          <li><code>&lt;nav&gt;</code>: bloque de enlaces de navegación.</li>
+          <li>
+            <code>&lt;main&gt;</code>: el contenido principal y único de la
+            página.
+          </li>
+          <li>
+            <code>&lt;section&gt;</code>: una sección temática dentro del
+            documento.
+          </li>
+          <li>
+            <code>&lt;article&gt;</code>: contenido independiente y
+            autocontenible.
+          </li>
+          <li>
+            <code>&lt;aside&gt;</code>: contenido relacionado pero secundario.
+          </li>
+          <li><code>&lt;footer&gt;</code>: pie de página.</li>
+        </ul>
+        <p>
+          ¿Por qué usarlos en vez de <code>&lt;div&gt;</code> para todo?
+          Accesibilidad (un lector de pantalla puede saltar directo al contenido
+          principal), SEO (los buscadores entienden mejor la estructura), y
+          mantenimiento (el código es más fácil de leer).
+        </p>
+      </section>
+
+      <section id="bloque-inline">
+        <h2>2. Elementos de bloque e inline</h2>
+        <ul>
+          <li>
+            <code>&lt;div&gt;</code>: contenedor genérico de
+            <strong>bloque</strong> (ocupa toda la línea). Se usa para agrupar y
+            luego darle estilo con CSS.
+          </li>
+          <li>
+            <code>&lt;span&gt;</code>: contenedor genérico
+            <strong>inline</strong> (no rompe la línea). Se usa para marcar una
+            palabra o frase suelta dentro de un párrafo.
+          </li>
+        </ul>
+        <p>Ninguno de los dos tiene significado propio; son "cajas" neutras.</p>
+      </section>
+
+      <section id="formularios">
+        <h2>3. Formularios</h2>
+        <ul>
+          <li>
+            <code>&lt;form&gt;</code>: contenedor del formulario.
+            <code>action</code> indica a dónde se envían los datos;
+            <code>method</code> indica cómo (<code>get</code> los pone en la
+            URL, <code>post</code> los manda ocultos).
+          </li>
+          <li>
+            <code>&lt;fieldset&gt;</code> + <code>&lt;legend&gt;</code>: agrupan
+            un conjunto de campos relacionados, con un título.
+          </li>
+          <li>
+            <code>&lt;label for="..."&gt;</code>: se asocia
+            <strong>programáticamente</strong> con el campo cuyo
+            <code>id</code> coincide. Un lector de pantalla lo lee al enfocar el
+            campo, y al hacer clic en el label también se activa el input.
+          </li>
+        </ul>
+        <pre><code>&lt;form action="/enviar" method="post"&gt;
+  &lt;fieldset&gt;
+    &lt;legend&gt;Datos de contacto&lt;/legend&gt;
+    &lt;label for="mail"&gt;Correo:&lt;/label&gt;
+    &lt;input type="email" id="mail" name="mail" placeholder="tu@correo.com"&gt;
+  &lt;/fieldset&gt;
+&lt;/form&gt;</code></pre>
+
+        <h3>Tipos de input más comunes</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Tipo</th>
+              <th>Uso</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>text</code></td>
+              <td>texto libre de una línea</td>
+            </tr>
+            <tr>
+              <td><code>email</code></td>
+              <td>valida formato de correo</td>
+            </tr>
+            <tr>
+              <td><code>password</code></td>
+              <td>oculta el texto con puntos/asteriscos</td>
+            </tr>
+            <tr>
+              <td><code>number</code></td>
+              <td>solo acepta números</td>
+            </tr>
+            <tr>
+              <td><code>radio</code></td>
+              <td>
+                una opción entre varias excluyentes (mismo <code>name</code>)
+              </td>
+            </tr>
+            <tr>
+              <td><code>checkbox</code></td>
+              <td>una o varias opciones no excluyentes</td>
+            </tr>
+            <tr>
+              <td><code>range</code></td>
+              <td>selector deslizable entre un mínimo y máximo</td>
+            </tr>
+            <tr>
+              <td><code>color</code></td>
+              <td>selector de color</td>
+            </tr>
+            <tr>
+              <td><code>file</code></td>
+              <td>subir un archivo</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Otros campos</h3>
+        <p><code>&lt;textarea&gt;</code>: texto largo (varias líneas).</p>
+        <pre><code>&lt;textarea name="comentario" cols="40" rows="6"&gt;&lt;/textarea&gt;</code></pre>
+        <p>
+          <code>&lt;select&gt;</code> + <code>&lt;option&gt;</code>: menú
+          desplegable.
+        </p>
+        <pre><code>&lt;select name="pais"&gt;
+  &lt;option value="mx"&gt;México&lt;/option&gt;
+  &lt;option value="es"&gt;España&lt;/option&gt;
+&lt;/select&gt;</code></pre>
+
+        <h3>Botones</h3>
+        <ul>
+          <li>
+            <code>&lt;button type="submit"&gt;</code>: envía el formulario.
+          </li>
+          <li>
+            <code>&lt;button type="button"&gt;</code>: no hace nada por sí solo
+            — se usa con JavaScript.
+          </li>
+        </ul>
+
+        <h3>El atributo name</h3>
+        <p>
+          <code>id</code> identifica un elemento en la página (para
+          CSS/JS/labels). <code>name</code> es lo que se envía al servidor. Un
+          input sin <code>name</code> no se envía.
+        </p>
+
+        <h3>Accesibilidad y errores comunes</h3>
+        <ul>
+          <li>
+            Todo <code>input</code> debería tener su
+            <code>&lt;label&gt;</code> correctamente asociado (<code>for</code>
+            = <code>id</code>).
+          </li>
+          <li>Olvidar <code>name</code> hace que el dato no se envíe.</li>
+        </ul>
+      </section>
+
+      <section id="tablas">
+        <h2>4. Tablas</h2>
+        <p>
+          Una tabla sirve para mostrar <strong>datos tabulares</strong> (filas y
+          columnas relacionadas). No debe usarse para acomodar el diseño de una
+          página completa.
+        </p>
+        <ul>
+          <li><code>&lt;table&gt;</code>: contenedor de toda la tabla.</li>
+          <li><code>&lt;tr&gt;</code>: una fila (<em>table row</em>).</li>
+          <li>
+            <code>&lt;th&gt;</code>: celda de encabezado (negritas por defecto).
+          </li>
+          <li><code>&lt;td&gt;</code>: celda de datos normal.</li>
+          <li>
+            <code>&lt;thead&gt;</code> / <code>&lt;tbody&gt;</code>: agrupan
+            encabezado y cuerpo — ayuda a lectores de pantalla y a quien lea el
+            código después.
+          </li>
+        </ul>
+        <p>
+          <strong>colspan</strong> une celdas horizontalmente.
+          <strong>rowspan</strong> une celdas verticalmente. Ambos deben ser
+          <strong>mayores a 1</strong> — usarlos con valor 1 es lo mismo que no
+          ponerlos y no cuenta.
+        </p>
+        <pre><code>&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th rowspan="2"&gt;País&lt;/th&gt;
+      &lt;th colspan="2"&gt;Población&lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Urbana&lt;/th&gt;
+      &lt;th&gt;Rural&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;México&lt;/td&gt;
+      &lt;td&gt;80%&lt;/td&gt;
+      &lt;td&gt;20%&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</code></pre>
+        <p>Así se ve renderizado:</p>
+        <table>
+          <thead>
+            <tr>
+              <th rowspan="2">País</th>
+              <th colspan="2">Población</th>
+            </tr>
+            <tr>
+              <th>Urbana</th>
+              <th>Rural</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>México</td>
+              <td>80%</td>
+              <td>20%</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>
+          "País" ocupa dos filas (no se repite abajo) y "Población" ocupa dos
+          columnas.
+        </p>
+      </section>
+
+      <section id="extras">
+        <h2>5. Extras (no se califican en la tarea)</h2>
+        <p>
+          Estos elementos no forman parte de lo que se revisa en la tarea, pero
+          se muestran en clase como ejemplo y vale la pena conocerlos.
+        </p>
+
+        <span class="extra">EXTRA</span>
+        <h3>hr y br</h3>
+        <ul>
+          <li>
+            <code>&lt;hr&gt;</code>: <em>thematic break</em> — línea horizontal
+            que indica cambio de tema.
+          </li>
+          <li>
+            <code>&lt;br&gt;</code>: salto de línea simple dentro de un mismo
+            bloque de texto.
+          </li>
+        </ul>
+        <pre><code>&lt;p&gt;
+  Primera línea&lt;br&gt;
+  Segunda línea
+&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;Nuevo tema&lt;/p&gt;</code></pre>
+
+        <span class="extra">EXTRA</span>
+        <h3>sup y sub</h3>
+        <ul>
+          <li>
+            <code>&lt;sup&gt;</code>: superíndice (texto elevado), típico en
+            exponentes o notas.
+          </li>
+          <li>
+            <code>&lt;sub&gt;</code>: subíndice (texto bajado), típico en
+            fórmulas químicas.
+          </li>
+        </ul>
+        <p>El agua es H<sub>2</sub>O &nbsp;·&nbsp; Área = lado<sup>2</sup></p>
+        <pre><code>&lt;p&gt;El agua es H&lt;sub&gt;2&lt;/sub&gt;O&lt;/p&gt;
+&lt;p&gt;Área = lado&lt;sup&gt;2&lt;/sup&gt;&lt;/p&gt;</code></pre>
+
+        <span class="extra">EXTRA</span>
+        <h3>Entidades HTML</h3>
+        <p>
+          Una entidad representa un carácter que el navegador podría confundir
+          con código, o que no está en el teclado. Empieza con
+          <code>&amp;</code>, sigue un código, y termina en <code>;</code>.
+        </p>
+        <table>
+          <thead>
+            <tr>
+              <th>Carácter</th>
+              <th>Entidad</th>
+              <th>Código numérico</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>&lt;</td>
+              <td><code>&amp;lt;</code></td>
+              <td><code>&amp;#60;</code></td>
+            </tr>
+            <tr>
+              <td>&gt;</td>
+              <td><code>&amp;gt;</code></td>
+              <td><code>&amp;#62;</code></td>
+            </tr>
+            <tr>
+              <td>&amp;</td>
+              <td><code>&amp;amp;</code></td>
+              <td><code>&amp;#38;</code></td>
+            </tr>
+            <tr>
+              <td>&copy;</td>
+              <td><code>&amp;copy;</code></td>
+              <td><code>&amp;#169;</code></td>
+            </tr>
+            <tr>
+              <td>espacio irrompible</td>
+              <td><code>&amp;nbsp;</code></td>
+              <td><code>&amp;#160;</code></td>
+            </tr>
+          </tbody>
+        </table>
+        <p>
+          Cuando se pide "usar la entidad", se refiere al código
+          (<code>&amp;copy;</code>), no al símbolo ya escrito (©) — en el código
+          fuente no es lo mismo aunque se vean igual en el navegador.
+        </p>
+        <p>
+          Más códigos: <a href="https://entitycode.com/">entitycode.com</a> ·
+          <a href="https://html.spec.whatwg.org/multipage/named-characters.html"
+            >especificación oficial</a
+          >
+        </p>
+
+        <span class="extra">EXTRA</span>
+        <h3>Columna de imágenes en una tabla</h3>
+        <p>
+          Se puede meter un <code>&lt;img&gt;</code> dentro de un
+          <code>&lt;td&gt;</code> como cualquier otro contenido:
+        </p>
+        <pre><code>&lt;td&gt;&lt;img src="https://ejemplo.com/foto.png" width="64" height="64" alt="Descripción"&gt;&lt;/td&gt;</code></pre>
+        <p>
+          <code>width</code>/<code>height</code> fijan el tamaño de la imagen, y
+          <code>alt</code> describe qué se ve (accesibilidad).
+        </p>
+      </section>
+    </main>
+
+    <footer>
+      <p>
+        Para leer más:
+        <a href="https://developer.mozilla.org/es/docs/Web/HTML/Element/table"
+          >MDN — table</a
+        >
+        ·
+        <a href="https://developer.mozilla.org/es/docs/Web/HTML/Element/form"
+          >MDN — form</a
+        >
+        ·
+        <a href="https://developer.mozilla.org/es/docs/Web/HTML/Element/input"
+          >MDN — input</a
+        >
+        ·
+        <a href="https://developer.mozilla.org/es/docs/Web/HTML/Element/label"
+          >MDN — label</a
+        >
+        ·
+        <a href="https://www.w3schools.com/html/html5_semantic_elements.asp"
+          >W3Schools — semántica</a
+        >
+      </p>
+    </footer>
+  </body>
+</html>
