@@ -7,6 +7,90 @@
   </head>
 
   <body>
-    <h1>Mi tienda en línea</h1>
+    <header>
+      <h1>Mi tienda en línea</h1>
+      <nav>
+        <a>Contacto</a>
+        <a>Producto</a>
+        <a>Tabla</a>
+      </nav>
+    </header>
+
+    <main>
+      <section>
+        <h2>Formulario de contacto</h2>
+        <form>
+          <fieldset>
+            <legend>Datos personales</legend>
+            <br />
+            <label for="nombre">Nombre</label>
+            <input
+              type="text"
+              id="nombre"
+              name="fname"
+              placeholder="Primer nombre"
+            />
+            <br />
+            <br />
+            <label for="apellido">Apellido</label>
+            <input
+              type="text"
+              id="apellido"
+              name="lname"
+              placeholder="Apellido"
+            />
+            <br />
+            <br />
+            <label for="correo">Correo</label>
+            <input
+              type="email"
+              id="correo"
+              name="email"
+              placeholder="persona@correo.com"
+            />
+            <br />
+            <br />
+            <label for="password">Contraseña</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Contraseña"
+            />
+            <br />
+            <br />
+            <label for="edad">Edad</label>
+            <input
+              type="number"
+              id="edad"
+              name="edad"
+              placeholder="Edad"
+              max="99"
+              min="18"
+            />
+            <br />
+            <br />
+            <button>Enviar</button>
+          </fieldset>
+        </form>
+
+        <h2>Búsqueda en YouTube</h2>
+        <form action="https://www.youtube.com/results">
+          <fieldset>
+            <legend>Búsqueda</legend>
+            <label for="busqueda">Búsqueda</label>
+            <input
+              type="text"
+              id="busqueda"
+              name="search_query"
+              placeholder="Tutoriales"
+            />
+            <button>Buscar</button>
+          </fieldset>
+        </form>
+      </section>
+    </main>
+
+    <footer></footer>
   </body>
 </html>
