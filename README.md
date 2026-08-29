@@ -103,6 +103,10 @@ Ahora vamos a obtener este cambio en nuestro repositorio local. En GitHub Deskto
 
 Finalmente, revisa el archivo `README.md` en tu máquina local. El cambio que hiciste en línea ahora debería estar reflejado en tu archivo local también.
 
+## 10. Descartar y Revertir Cambios
+
+Una gran ventaja de trabajar con un sistema de control de versiones como git es que puedes deshacer errores fácilmente volviendo a la última versión "buena" de tu proyecto. Hay múltiples maneras de hacerlo. Nos enfocaremos en dos.
+
 ### Descartar
 
 Si por algo ya escribiste algo en app.js podemos descartar estos cambios simplemente dando clic derecho sobre el cambio y seleccionando "Discard Changes". Revisa tu archivo nuevamente. Deberías notar que el archivo queda nuevamente vacío.
