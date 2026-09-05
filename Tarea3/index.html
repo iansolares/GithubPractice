@@ -18,6 +18,44 @@
 
     <main>
       <section>
+        <!--TABLAS-->
+        <h2>Tablas</h2>
+        <table border="1">
+          <thead>
+            <tr>
+              <th rowspan="2">Categorias</th>
+              <th colspan="2">Producto</th>
+            </tr>
+            <tr>
+              <th>Nombre</th>
+              <th>Precio</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td rowspan="2">Frutas</td>
+              <td>Manzana</td>
+              <td>$10.00</td>
+            </tr>
+            <tr>
+              <td>Platano</td>
+              <td>$8.00</td>
+            </tr>
+            <tr>
+              <td rowspan="2">Verduras</td>
+              <td>Zanahoria</td>
+              <td>$5.00</td>
+            </tr>
+            <tr>
+              <td>Papa</td>
+              <td>$2.00</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      <hr />
+      <section>
+        <!--FORMULARIO-->
         <h2>Formulario de contacto</h2>
         <form>
           <fieldset>
@@ -26,8 +64,8 @@
             <label for="nombre">Nombre</label>
             <input
               type="text"
-              id="nombre"
               name="fname"
+              id="nombre"
               placeholder="Primer nombre"
             />
             <br />
@@ -35,8 +73,8 @@
             <label for="apellido">Apellido</label>
             <input
               type="text"
-              id="apellido"
               name="lname"
+              id="apellido"
               placeholder="Apellido"
             />
             <br />
@@ -44,8 +82,8 @@
             <label for="correo">Correo</label>
             <input
               type="email"
-              id="correo"
               name="email"
+              id="correo"
               placeholder="persona@correo.com"
             />
             <br />
@@ -53,36 +91,90 @@
             <label for="password">Contraseña</label>
             <input
               type="password"
-              id="password"
               name="password"
-              placeholder="Contraseña"
+              id="password"
+              placeholder="*****"
             />
             <br />
             <br />
             <label for="edad">Edad</label>
             <input
               type="number"
-              id="edad"
               name="edad"
+              id="edad"
               placeholder="Edad"
               max="99"
               min="18"
             />
+          </fieldset>
+          <fieldset>
+            <legend>Preferencias</legend>
             <br />
+            <p>Notificarme de:</p>
+            <label for="notif-ofertas">Ofertas</label>
+            <input
+              type="checkbox"
+              name="notificaciones"
+              id="notif-ofertas"
+              value="ofertas"
+            />
+            <label for="notif-novedades">Novedades</label>
+            <input
+              type="checkbox"
+              name="notificaciones"
+              id="notif-novedades"
+              value="novedades"
+            />
+            <p>Método de envío</p>
+            <input
+              type="radio"
+              name="envio"
+              id="envio-estandar"
+              value="estandar"
+            />
+            <label for="envio-estandar">Estandar</label>
+            <input
+              type="radio"
+              name="envio"
+              id="envio-express"
+              value="express"
+            />
+            <label for="envio-express">Express</label>
+            <input
+              type="radio"
+              name="envio"
+              id="envio-inmediato"
+              value="inmediato"
+            />
+            <label for="envio-inmediato">Inmediato</label>
             <br />
-            <button>Enviar</button>
+            <label for="presupuesto">Presupuesto aproximado</label>
+            <input
+              type="range"
+              name="presupuesto"
+              id="presupuesto"
+              min="1000"
+              max="10000"
+              step="1000"
+            />
+            <br /><br />
+            <button type="button">Enviar</button>
+            <button type="submit">Para JS</button>
           </fieldset>
         </form>
-
+      </section>
+      <hr />
+      <section>
+        <!--BUSQUEDA-->
         <h2>Búsqueda en YouTube</h2>
         <form action="https://www.youtube.com/results">
           <fieldset>
             <legend>Búsqueda</legend>
-            <label for="busqueda">Búsqueda</label>
+            <label for="busqueda">Búsqueda en YouTube</label>
             <input
               type="text"
-              id="busqueda"
               name="search_query"
+              id="busqueda"
               placeholder="Tutoriales"
             />
             <button>Buscar</button>
