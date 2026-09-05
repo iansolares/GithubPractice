@@ -1,0 +1,89 @@
+html{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+h1{
+    text-align: center;
+    letter-spacing: 3px;
+    font-size: 40px;
+    color: rgb(19, 69, 150);
+}
+
+#ofertas{
+    background-color: rgba(0, 50, 255, .3);
+}
+
+.oferta-destacada{
+    background-color: greenyellow;
+    font-weight: bold;
+}
+
+ul{
+    background-color: rgb(126, 126, 126);
+    font-weight: normal;
+}
+
+ol{
+    background-color: salmon;
+    font-weight: bold;
+}
+
+nav a{
+    text-decoration: none;
+    color: darkred;
+}
+
+a[href^="#detalle"]{
+    color: rgb(214, 6, 6);
+}
+
+#combos li > a{
+    background-color: green;
+}
+
+#combos span ~ a{
+    background-color: brown;
+}
+
+#combos span + a{
+    background-color: gold;
+}
+
+#carrito-agregar:hover{
+    background-color: blue;
+    color: yellow;
+}
+
+#carrito-comprar:active{
+    background-color: blue;
+    color: yellow;
+}
+
+button:nth-of-type(3){
+    background-color: blue;
+    color: yellow;
+}
+
+input[type="radio"]:checked{
+    accent-color: green;
+    color: green;
+}
+
+input[type="radio"]:checked + label{
+    accent-color: green;
+    color: green;
+}
+
+p:nth-of-type(2):hover::before{
+    content: "Antes --->";
+    color: red;
+}
+
+p:nth-of-type(2):hover:after{
+    content: "<--- Despues";
+    color: green;
+}
+
+html:focus{
+    background-color: yellow;
+}
