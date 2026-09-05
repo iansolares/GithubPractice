@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Teoría: CSS — colores, texto, selectores y pseudo-clases</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 0 20px; line-height: 1.5; color: #222; }
+    header { border-bottom: 2px solid #333; padding: 16px 0; }
+    nav a { margin-right: 12px; }
+    section { padding: 24px 0; border-bottom: 1px solid #ddd; }
+    table { border-collapse: collapse; margin: 12px 0; }
+    table, th, td { border: 1px solid #999; padding: 6px 10px; }
+    pre { background: #f4f4f4; padding: 12px; overflow-x: auto; border-left: 4px solid #888; }
+    code { font-family: Consolas, monospace; }
+    footer { padding: 16px 0; color: #666; font-size: 0.9em; }
+    .tarea { display: inline-block; background: #e3f7e6; color: #1b7a35; font-weight: bold; font-size: 0.8em; padding: 2px 8px; border-radius: 4px; margin-bottom: 8px; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Teoría: CSS — colores, texto, selectores y pseudo-clases</h1>
+    <p>Documento de apoyo. Los ejemplos son genéricos.</p>
+    <nav>
+      <a href="#que-es-css">Qué es CSS</a>
+      <a href="#colores-texto">Colores y texto</a>
+      <a href="#selectores">Selectores</a>
+      <a href="#combinadores">Combinadores</a>
+      <a href="#pseudo">Pseudo-clases/elementos</a>
+      <a href="#cascada">Cascada</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <section id="que-es-css">
+      <h2>1. ¿Qué es CSS?</h2>
+      <p>CSS (Cascading Style Sheets) describe <strong>cómo se ven</strong> los elementos HTML: color, tamaño, forma, posición. Se llama "en cascada" porque los estilos se resuelven en capas cuando hay conflictos entre reglas.</p>
+      <p>Sintaxis básica:</p>
+      <pre><code>selector {
+  propiedad: valor;
+}</code></pre>
+      <h3>3 formas de incluir CSS</h3>
+      <ul>
+        <li><strong>Inline</strong>: dentro del atributo <code>style</code> de un elemento. Mala práctica — no se comparte entre elementos.</li>
+        <li><strong>Interno</strong>: con una etiqueta <code>&lt;style&gt;</code> en el <code>&lt;head&gt;</code>. No se comparte entre documentos distintos.</li>
+        <li><strong>Externo</strong>: en un archivo <code>.css</code> aparte, enlazado con <code>&lt;link&gt;</code>. La mejor práctica — se reutiliza en todo el sitio.</li>
+      </ul>
+      <pre><code>&lt;link rel="stylesheet" href="estilos.css"&gt;</code></pre>
+    </section>
+
+    <section id="colores-texto">
+      <h2>2. Colores y propiedades de texto</h2>
+
+      <span class="tarea">TAREA</span>
+      <h3>Tipografía global (font-family)</h3>
+      <p><code>font-family</code> acepta una lista de opciones (font stack): el navegador usa la primera que tenga disponible.</p>
+      <pre><code>html {
+  font-family: Arial, Helvetica, sans-serif;
+}</code></pre>
+
+      <span class="tarea">TAREA</span>
+      <h3>Propiedades de texto</h3>
+      <ul>
+        <li><code>text-align</code>: alineación horizontal (<code>left</code>, <code>center</code>, <code>right</code>).</li>
+        <li><code>letter-spacing</code>: espacio entre letras.</li>
+        <li><code>font-size</code>: tamaño del texto (px es una unidad absoluta).</li>
+        <li><code>color</code>: color del <strong>texto</strong> (no confundir con el fondo).</li>
+        <li><code>font-weight</code>: grosor del texto — <code>normal</code> (400), <code>bold</code> (700), <code>bolder</code> (relativo al padre), o un número de 100 a 900.</li>
+      </ul>
+      <pre><code>h1 {
+  text-align: center;
+  letter-spacing: 3px;
+  font-size: 40px;
+  color: #1b5e20;
+}</code></pre>
+
+      <span class="tarea">TAREA</span>
+      <h3>Colores con transparencia</h3>
+      <p><code>background-color</code> pinta el fondo (distinto de <code>color</code>, que pinta el texto). <code>rgba(r, g, b, a)</code> y <code>hsla(tono, saturación, luminosidad, a)</code> agregan un cuarto valor, <strong>alfa</strong>, la transparencia (0 = invisible, 1 = opaco).</p>
+      <pre><code>#seccion {
+  background-color: rgba(46, 125, 50, 0.08);
+}</code></pre>
+
+      <span class="tarea">TAREA</span>
+      <h3>Herencia de font-weight</h3>
+      <p>Muchas propiedades de texto se <strong>heredan</strong>: si un contenedor (<code>ul</code>, <code>ol</code>) define un <code>font-weight</code>, sus hijos (<code>li</code>) lo heredan a menos que ellos mismos definan otro.</p>
+      <pre><code>ul { font-weight: normal; }
+ol { font-weight: bold; }</code></pre>
+    </section>
+
+    <section id="selectores">
+      <h2>3. Selectores</h2>
+      <table>
+        <thead><tr><th>Selector</th><th>Aplica a</th></tr></thead>
+        <tbody>
+          <tr><td><code>h1</code></td><td>Todos los elementos de ese tipo</td></tr>
+          <tr><td><code>.clase</code></td><td>Todos los elementos con <code>class="clase"</code></td></tr>
+          <tr><td><code>#id</code></td><td>El único elemento con ese <code>id</code></td></tr>
+          <tr><td><code>A B</code></td><td>Todo B dentro de A (descendiente, sin importar qué tan anidado)</td></tr>
+        </tbody>
+      </table>
+
+      <span class="tarea">TAREA</span>
+      <h3>Selector descendiente</h3>
+      <p>Un espacio entre dos selectores significa "dentro de". <code>nav a</code> selecciona solo los <code>&lt;a&gt;</code> que están dentro de un <code>&lt;nav&gt;</code>, no todos los enlaces de la página.</p>
+      <pre><code>nav a {
+  text-decoration: none;
+  color: #2e7d32;
+}</code></pre>
+
+      <h3>Nombres de clase e id descriptivos</h3>
+      <p>Un buen nombre dice <strong>de qué</strong> es el elemento, no solo qué le pasa visualmente. <code>.caja2</code> o <code>.destacado</code> no dicen nada del contenido; <code>.tarjeta-producto</code> u <code>.oferta-destacada</code> sí. Lo mismo con ids: <code>#boton1</code> dice poco, <code>#carrito-agregar</code> dice a qué componente pertenece y qué hace.</p>
+
+      <span class="tarea">TAREA</span>
+      <h3>Selectores de atributo</h3>
+      <p>Seleccionan elementos según un atributo HTML. <code>[attr^="valor"]</code> selecciona los que EMPIEZAN con ese valor (también existen <code>$=</code> termina con, y <code>*=</code> contiene).</p>
+      <pre><code>a[href^="#detalle"] {
+  color: darkred;
+}</code></pre>
+    </section>
+
+    <section id="combinadores">
+      <h2>4. Combinadores</h2>
+      <p>Los combinadores describen la <strong>relación</strong> entre dos selectores.</p>
+      <table>
+        <thead><tr><th>Combinador</th><th>Significa</th></tr></thead>
+        <tbody>
+          <tr><td><code>A &gt; B</code></td><td>B es HIJO DIRECTO de A (no nieto)</td></tr>
+          <tr><td><code>A ~ B</code></td><td>B es cualquier hermano que aparezca DESPUÉS de A</td></tr>
+          <tr><td><code>A + B</code></td><td>B es el hermano INMEDIATO siguiente de A</td></tr>
+        </tbody>
+      </table>
+
+      <span class="tarea">TAREA</span>
+      <pre><code>#seccion li > a {
+  background-color: #c8e6c9;
+}
+#seccion span ~ a {
+  background-color: #ffe0b2;
+}
+#seccion span + a {
+  background-color: #ffccbc;
+}</code></pre>
+      <p>Ejemplo: en <code>&lt;li&gt;&lt;span&gt;Nuevo&lt;/span&gt;&lt;br&gt;&lt;a&gt;...&lt;/a&gt;&lt;/li&gt;</code>, el <code>&lt;br&gt;</code> en medio hace que <code>span ~ a</code> sí aplique, pero <code>span + a</code> no (no son adyacentes).</p>
+    </section>
+
+    <section id="pseudo">
+      <h2>5. Pseudo-clases y pseudo-elementos</h2>
+      <p>Una <strong>pseudo-clase</strong> (<code>:algo</code>) selecciona un elemento según su <strong>estado</strong>, no según su HTML.</p>
+      <table>
+        <thead><tr><th>Pseudo-clase</th><th>Cuándo aplica</th></tr></thead>
+        <tbody>
+          <tr><td><code>:hover</code></td><td>Mientras el mouse está encima</td></tr>
+          <tr><td><code>:active</code></td><td>Mientras se hace clic</td></tr>
+          <tr><td><code>:checked</code></td><td>Cuando un checkbox/radio está marcado</td></tr>
+          <tr><td><code>:nth-of-type(n)</code></td><td>El n-ésimo elemento de ese tipo dentro de su contenedor</td></tr>
+        </tbody>
+      </table>
+
+      <span class="tarea">TAREA</span>
+      <pre><code>#carrito-agregar:hover { background-color: #388e3c; }
+#carrito-comprar:active { background-color: #d84315; }
+button:nth-of-type(3) { background-color: #fff3e0; }
+input[type="radio"]:checked { accent-color: #2e7d32; }</code></pre>
+
+      <h3>Pseudo-elementos</h3>
+      <p>Un <strong>pseudo-elemento</strong> (<code>::algo</code>) no selecciona algo que ya existe: CREA un elemento virtual dentro del seleccionado. <code>::before</code> lo inserta al inicio, <code>::after</code> al final. Siempre necesitan la propiedad <code>content</code> (aunque sea vacío) para poder verse, y se pueden combinar con una pseudo-clase.</p>
+
+      <span class="tarea">TAREA</span>
+      <pre><code>p:hover::before {
+  content: "Oferta-->";
+  color: white;
+  background-color: #1b5e20;
+}
+p:hover::after {
+  content: "<--Descuento";
+  color: white;
+  background-color: #1b5e20;
+}</code></pre>
+    </section>
+
+    <section id="cascada">
+      <h2>6. Cascada y especificidad</h2>
+      <p>Cuando dos reglas le aplican al mismo elemento, gana la más <strong>específica</strong>: id &gt; clase/atributo &gt; tipo de elemento. Si empatan en especificidad, gana la que está escrita más abajo en el código (o la más "externa": inline &gt; <code>&lt;style&gt;</code> &gt; archivo externo) — salvo <code>!important</code>, que invierte el orden.</p>
+      <p>Algunos elementos (como los botones) no heredan <code>color</code> automáticamente; se puede forzar con <code>color: inherit;</code>.</p>
+      <p>Chrome muestra, al inspeccionar un elemento, el CSS tachado cuando una regla pierde contra otra más específica — muy útil para depurar.</p>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>Para leer más:
+      <a href="https://developer.mozilla.org/es/docs/Web/CSS/CSS_selectors">MDN — selectores CSS</a> ·
+      <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes">MDN — pseudo-clases</a> ·
+      <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements">MDN — pseudo-elementos</a> ·
+      <a href="https://polypane.app/css-specificity-calculator/">Calculadora de especificidad</a>
+    </p>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <title>Revisor Automático</title>
+    <link rel="stylesheet" href="style.css" />
+    <script async src="Revisor.js"></script>
+  </head>
+  <body>
+    <header>
+      <h1>Revisor Automático</h1>
+    </header>
+
+    <main>
+      <section class="code-input-section">
+        <h2>Pega tu código CSS o sube tu archivo:</h2>
+        <input type="file" id="fileinput" accept=".css,text/css" />
+        <textarea
+          id="codeInput"
+          rows="5"
+          placeholder="Pega aquí tu style.css..."
+        ></textarea>
+        <button id="processCodeButton">Procesar Código</button>
+      </section>
+
+      <section class="progress-section">
+        <div class="wrapper">
+          <div class="progress-bar">
+            <span id="progress-bar-fill-text"
+              >Calificación <span id="score">0</span>%</span
+            >
+            <span id="progress-bar-fill"></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="criteria-section">
+        <ul>
+          <!-- ===== COLORES Y TEXTO (Clase 5) ===== -->
+          <li class="punto">
+            (5 pts) Tipografía global<br />
+            <input type="checkbox" /><label id="T1S1"
+              >html/body con font-family Arial, Helvetica, sans-serif</label
+            ><br />
+          </li>
+          <li class="punto">
+            (10 pts) Encabezado &lt;h1&gt;<br />
+            <input type="checkbox" /><label id="T2S1"
+              >Alineado al centro y con letter-spacing</label
+            ><br />
+            <input type="checkbox" /><label id="T2S2"
+              >Con font-size y color definidos</label
+            ><br />
+          </li>
+          <li class="punto">
+            (5 pts) Sección #ofertas<br />
+            <input type="checkbox" /><label id="T3S1"
+              >Fondo con transparencia (rgba o hsla)</label
+            ><br />
+          </li>
+          <li class="punto">
+            (5 pts) Clase .oferta-destacada<br />
+            <input type="checkbox" /><label id="T4S1"
+              >Fondo de color y texto en negritas</label
+            ><br />
+          </li>
+          <li class="punto">
+            (10 pts) Listas &lt;ul&gt; y &lt;ol&gt;<br />
+            <input type="checkbox" /><label id="T5S1"
+              >ul con fondo de color y peso de fuente normal</label
+            ><br />
+            <input type="checkbox" /><label id="T5S2"
+              >ol con fondo de color y peso de fuente en negritas</label
+            ><br />
+          </li>
+
+          <!-- ===== SELECTORES Y PSEUDO (Clase 6) ===== -->
+          <li class="punto">
+            (10 pts) Selector descendiente en la navegación<br />
+            <input type="checkbox" /><label id="T6S1"
+              >Selector: nav a (sin subrayado)</label
+            ><br />
+            <input type="checkbox" /><label id="T6S2"
+              >Selector: nav a (color definido)</label
+            ><br />
+          </li>
+          <li class="punto">
+            (10 pts) Selector de atributo<br />
+            <input type="checkbox" /><label id="T7S1"
+              >Selector: a[href^="#detalle"]</label
+            ><br />
+          </li>
+          <li class="punto">
+            (15 pts) Combinadores en #combos<br />
+            <input type="checkbox" /><label id="T8S1"
+              >Selector: #combos li > a</label
+            ><br />
+            <input type="checkbox" /><label id="T8S2"
+              >Selector: #combos span ~ a</label
+            ><br />
+            <input type="checkbox" /><label id="T8S3"
+              >Selector: #combos span + a</label
+            ><br />
+          </li>
+          <li class="punto">
+            (20 pts) Pseudo-clases<br />
+            <input type="checkbox" /><label id="T9S1"
+              >Selector: #carrito-agregar:hover</label
+            ><br />
+            <input type="checkbox" /><label id="T9S2"
+              >Selector: #carrito-comprar:active</label
+            ><br />
+            <input type="checkbox" /><label id="T9S3"
+              >Selector: button:nth-of-type(3)</label
+            ><br />
+            <input type="checkbox" /><label id="T9S4"
+              >Selector: input[type="radio"]:checked</label
+            ><br />
+          </li>
+          <li class="punto">
+            (10 pts) Pseudo-elementos en &lt;p&gt;<br />
+            <input type="checkbox" /><label id="T10S1"
+              >Selector: p:hover::before</label
+            ><br />
+            <input type="checkbox" /><label id="T10S2"
+              >Selector: p:hover::after</label
+            ><br />
+          </li>
+        </ul>
+      </section>
+    </main>
+  </body>
+</html>
