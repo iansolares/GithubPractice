@@ -1,0 +1,208 @@
+/* General Styles */
+*,
+*::before,
+*::after {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  line-height: 1.6;
+}
+
+/* Header */
+header {
+  text-align: center;
+  padding: 1em;
+  background-color: #f5f5f5;
+}
+
+/* File Input Section */
+.file-input-section {
+  text-align: center;
+  margin: 2em auto;
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  border: 2px solid #659cef;
+  border-radius: 10px;
+  padding: 1em;
+  background-color: #f9f9f9;
+}
+
+.file-input {
+  display: none;
+}
+
+.custom-file-label {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #659cef;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.custom-file-label:hover {
+  background-color: #4a7bbd;
+}
+
+.file-name {
+  display: block;
+  margin-top: 10px;
+  color: #555;
+  font-size: 0.9em;
+}
+
+/* Code Paste Section */
+.code-input-section {
+  text-align: center;
+  margin: 2em auto;
+  width: 90%;
+  max-width: 600px;
+}
+
+#codeInput {
+  width: 100%;
+  padding: 1em;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 1em;
+  resize: vertical;
+}
+
+#processCodeButton {
+  padding: 10px 20px;
+  font-size: 1em;
+  background-color: #659cef;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#processCodeButton:hover {
+  background-color: #4a7bbd;
+}
+/* Progress Bar Section */
+.wrapper {
+  width: 90%;
+  max-width: 900px;
+  margin: 2em auto;
+}
+
+.progress-bar {
+  width: 100%;
+  background-color: #e0e0e0;
+  border-radius: 20px;
+  height: 40px;
+  position: relative;
+  overflow: hidden;
+}
+
+#progress-bar-fill {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #659cef, #4a7bbd);
+  border-radius: 20px;
+  width: 0; /* Start at 0% width */
+  transition: width 0.5s ease-in-out;
+  text-align: center;
+  color: white;
+  line-height: 40px;
+}
+
+#progress-bar-fill-text {
+  position: absolute;
+  left: 50%;
+  font-weight: bold;
+  transform: translateX(-50%);
+  color: black;
+  font-size: 1em;
+  text-align: center;
+  height: 100%;
+  line-height: 40px;
+}
+
+/* Criteria Section */
+.criteria-section {
+  margin: 2em auto;
+  padding: 1em;
+  width: 90%;
+  max-width: 900px;
+}
+
+ul {
+  list-style: none;
+}
+
+li.punto {
+  margin: 1em 0;
+  padding-left: 1em;
+}
+
+[type="checkbox"] {
+  display: none;
+  position: relative;
+}
+
+[type="checkbox"] + label::before {
+  content: "";
+  display: inline-block;
+  width: 0.9em;
+  height: 0.9em;
+  border-radius: 50%;
+  border: 1px solid #000;
+  background: gray;
+  margin-right: 0.5em;
+  transition: background-color 0.3s ease;
+}
+
+[type="checkbox"]:disabled + label::before {
+  background: red;
+}
+
+[type="checkbox"]:checked + label::before {
+  background: green;
+}
+
+input[type="checkbox"]:focus + label::before {
+  outline: 2px solid #659cef;
+  outline-offset: 2px;
+}
+
+/* Document Section */
+.document-section {
+  margin: 2em auto;
+  width: 90%;
+  max-width: 900px;
+}
+
+textarea {
+  width: 100%;
+  padding: 1em;
+  font-size: 1em;
+  line-height: 1.5;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  resize: vertical;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 600px) {
+  .wrapper,
+  .criteria-section,
+  .document-section {
+    width: 100%;
+    padding: 1em;
+  }
+
+  textarea {
+    font-size: 0.9em;
+  }
+}
