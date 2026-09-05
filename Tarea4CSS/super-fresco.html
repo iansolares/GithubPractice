@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Súper Fresco</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Súper Fresco</h1>
+      <nav>
+        <a href="#ofertas">Ofertas</a> |
+        <a href="#categorias">Categorías</a> |
+        <a href="#combos">Combos</a>
+      </nav>
+    </header>
+
+    <main>
+      <section id="ofertas">
+        <h2>Ofertas de la semana</h2>
+        <ul>
+          <li><a href="#detalle-manzana">Manzanas 2x1</a></li>
+          <li><a href="#detalle-leche" class="oferta-destacada">Leche al 50%</a></li>
+          <li><a href="#detalle-pan">Pan artesanal</a></li>
+        </ul>
+      </section>
+
+      <section id="categorias">
+        <h2>Categorías</h2>
+        <ol>
+          <li><a href="#frutas">Frutas y verduras</a></li>
+          <li><a href="#lacteos">Lácteos</a></li>
+          <li><a href="#panaderia">Panadería</a></li>
+        </ol>
+      </section>
+
+      <section id="combos">
+        <h2>Combos relámpago</h2>
+        <ul>
+          <li>
+            <a href="#combo1">Combo desayuno</a>
+          </li>
+          <li>
+            <span>Nuevo</span>
+            <br />
+            <a href="#combo2">Combo despensa</a>
+          </li>
+          <li>
+            <span>Nuevo</span>
+            <a href="#combo3">Combo fiesta</a>
+          </li>
+        </ul>
+      </section>
+
+      <section id="carrito">
+        <h2>Tu carrito</h2>
+        <button id="carrito-agregar">Agregar al carrito</button>
+        <button id="carrito-comprar">Comprar ahora</button>
+        <button>Ver más ofertas</button>
+        <button>Ayuda</button>
+
+        <p>Método de pago:</p>
+        <input type="radio" name="pago" id="efectivo" value="efectivo" checked />
+        <label for="efectivo">Efectivo</label>
+        <input type="radio" name="pago" id="tarjeta" value="tarjeta" />
+        <label for="tarjeta">Tarjeta</label>
+
+        <p>Pasa el cursor aquí para ver el descuento especial.</p>
+      </section>
+    </main>
+
+    <footer>
+      <p>&copy; 2052 Súper Fresco</p>
+    </footer>
+  </body>
+</html>
