@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <title>Revisor Ejercicio 2</title>
+    <link rel="stylesheet" href="Ej2Revisor.css" />
+    <script async src="Ej2Revisor.js"></script>
+  </head>
+  <body>
+    <header>
+      <h1>Revisor automático ejercicio 2</h1>
+    </header>
+
+    <main>
+      <section class="code-input-section">
+        <h2>pega tu código o sube tu archivo:</h2>
+        <input type="file" id="fileinput" />
+        <textarea id="codeInput" rows="5" placeholder="Pega tu código aquí..."></textarea>
+        <button id="processCodeButton">Procesar Código</button>
+      </section>
+
+      <section class="progress-section">
+        <div class="wrapper">
+          <div class="progress-bar">
+            <span id="progress-bar-fill-text">Calificación <span id="score">0</span>%</span>
+            <span id="progress-bar-fill"> </span>
+          </div>
+        </div>
+      </section>
+
+      <section class="criteria-section">
+        <ul>
+          <li class="punto">
+            (10pts) Mínimo 5 párrafos<br />
+            <input type="checkbox" id="checkbox1" />
+            <label for="checkbox1">5 etiquetas &lt;p&gt;</label>
+          </li>
+          <li class="punto">
+            (30pts) Los 6 tipos de encabezados:
+            <ul>
+              <input type="checkbox" id="checkbox2" />
+              <label for="checkbox2">Solamente un &lt;h1&gt;</label
+              ><br />
+              <input type="checkbox" id="checkbox3" />
+              <label for="checkbox3">Mínimo dos &lt;h2&gt;</label
+              ><br />
+              <input type="checkbox" id="checkbox4" />
+              <label for="checkbox4">Contiene los encabezados &lt;h3&gt;, &lt;h4&gt;, &lt;h5&gt;, &lt;h6&gt;</label>
+            </ul>
+          </li>
+          <li class="punto">
+            (20pts) Los 2 tipos de listas con mínimo 3 elementos cada una:
+            <ul>
+              <input type="checkbox" id="checkbox5" />
+              <label for="checkbox5">lista ordenada &lt;ol&gt; con tres elementos &lt;li&gt;</label
+              ><br />
+              <input type="checkbox" id="checkbox6" />
+              <label for="checkbox6">Lista sin ordenar &lt;ul&gt; con tres elementos &lt;li&gt;</label
+              ><br />
+            </ul>
+          </li>
+          <li class="punto">
+            (10pts) Un elemento ancla a una página en la web
+            <br />
+            <input type="checkbox" id="checkbox7" />
+            <label for="checkbox7">&lt;a&gt; a una página http...</label>
+          </li>
+          <li class="punto">
+            (30pts) Dos imágenes, ambas con un texto alterno mediante el atributo alt:
+            <ul>
+              <input type="checkbox" id="checkbox8" />
+              <label for="checkbox8">Imagen local &lt;img&gt; con alt</label
+              ><br />
+              <input type="checkbox" id="checkbox9" />
+              <label for="checkbox9">Imagen en web &lt;img&gt; con alt y protocolo http o https</label
+              ><br />
+            </ul>
+          </li>
+        </ul>
+      </section>
+    </main>
+  </body>
+</html>
