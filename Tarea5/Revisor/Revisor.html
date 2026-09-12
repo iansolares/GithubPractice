@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <title>Revisor Automático</title>
+    <link rel="stylesheet" href="style.css" />
+    <script async src="Revisor.js"></script>
+  </head>
+  <body>
+    <header>
+      <h1>Revisor Automático</h1>
+    </header>
+
+    <main>
+      <section class="code-input-section">
+        <h2>Pega tu código o sube tu archivo:</h2>
+        <input type="file" id="fileinput" accept=".css,text/css" />
+        <textarea
+          id="codeInput"
+          rows="5"
+          placeholder="Pega aquí tu tarea5.css..."
+        ></textarea>
+        <button id="processCodeButton">Procesar Código</button>
+      </section>
+
+      <section class="progress-section">
+        <div class="wrapper">
+          <div class="progress-bar">
+            <span id="progress-bar-fill-text"
+              >Calificación <span id="score">0</span>%</span
+            >
+            <span id="progress-bar-fill"></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="criteria-section">
+        <ul>
+          <li class="punto">
+            Mercurio — width/height + transform: translate (el más simple)<br />
+            <input type="checkbox" /><label id="T1S1"
+              >(5 pts) width y height</label
+            ><br />
+            <input type="checkbox" /><label id="T1S2"
+              >(5 pts) transform: translate</label
+            ><br />
+          </li>
+          <li class="punto">
+            Venus — padding/border-radius + transform: rotate<br />
+            <input type="checkbox" /><label id="T2S1"
+              >(5 pts) padding y border-radius</label
+            ><br />
+            <input type="checkbox" /><label id="T2S2"
+              >(5 pts) transform: rotate</label
+            ><br />
+          </li>
+          <li class="punto">
+            Tierra — border-style/border-color + transform: scale<br />
+            <input type="checkbox" /><label id="T3S1"
+              >(5 pts) border-style y border-color</label
+            ><br />
+            <input type="checkbox" /><label id="T3S2"
+              >(5 pts) transform: scale</label
+            ><br />
+          </li>
+          <li class="punto">
+            Marte — border-width/margin + transform: skew<br />
+            <input type="checkbox" /><label id="T4S1"
+              >(5 pts) border-width y margin</label
+            ><br />
+            <input type="checkbox" /><label id="T4S2"
+              >(5 pts) transform: skew</label
+            ><br />
+          </li>
+          <li class="punto">
+            Júpiter — overflow + 2 transition-duration<br />
+            <input type="checkbox" /><label id="T5S1">(5 pts) overflow</label
+            ><br />
+            <input type="checkbox" /><label id="T5S2"
+              >(5 pts) 2 transition-duration en un mismo selector</label
+            ><br />
+          </li>
+          <li class="punto">
+            Saturno — display + 2 transition-timing-function<br />
+            <input type="checkbox" /><label id="T6S1">(5 pts) display</label
+            ><br />
+            <input type="checkbox" /><label id="T6S2"
+              >(5 pts) 2 transition-timing-function distintas</label
+            ><br />
+          </li>
+          <li class="punto">
+            Urano — box-sizing + keyframes from/to<br />
+            <input type="checkbox" /><label id="T7S1">(5 pts) box-sizing</label
+            ><br />
+            <input type="checkbox" /><label id="T7S2"
+              >(5 pts) @keyframes con from/to</label
+            ><br />
+          </li>
+          <li class="punto">
+            Neptuno — position + keyframes con porcentaje (el más difícil)<br />
+            <input type="checkbox" /><label id="T8S1">(5 pts) position</label
+            ><br />
+            <input type="checkbox" /><label id="T8S2"
+              >(5 pts) @keyframes con porcentaje numérico</label
+            ><br />
+          </li>
+          <li class="punto">
+            Sol — forma + giro que se pausa<br />
+            <input type="checkbox" /><label id="T9S1"
+              >(5 pts) #sol con border-radius y position</label
+            ><br />
+            <input type="checkbox" /><label id="T9S2"
+              >(5 pts) #sol gira en Y y se pausa al pasar el cursor</label
+            ><br />
+          </li>
+          <li class="punto">
+            Nube — forma + movimiento continuo<br />
+            <input type="checkbox" /><label id="T10S1"
+              >(5 pts) #nube con border-radius y position</label
+            ><br />
+            <input type="checkbox" /><label id="T10S2"
+              >(5 pts) #nube se mueve con animation-direction: alternate</label
+            ><br />
+          </li>
+        </ul>
+      </section>
+    </main>
+  </body>
+</html>
