@@ -49,9 +49,9 @@ h1 {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  justify-content: space-between;
-  align-content: space-around;
-  align-items: end;
+  justify-content: space-between; /* Main Axis */
+  align-content: space-around; /* Cross Axis */
+  align-items: end; /* Cross Axis */
 }
 
 #game div {

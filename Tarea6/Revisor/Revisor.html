@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <title>Revisor Automático - Flexbox y Media Queries</title>
+    <link rel="stylesheet" href="style.css" />
+    <script async src="Revisor.js"></script>
+  </head>
+  <body>
+    <header>
+      <h1>Revisor Automático - Flexbox, Media Queries y Custom Properties</h1>
+    </header>
+
+    <main>
+      <section class="code-input-section">
+        <h2>Pega tu código o sube tu archivo:</h2>
+        <input type="file" id="fileinput" accept=".css,text/css" />
+        <textarea id="codeInput" rows="5" placeholder="Pega aquí tu style.css..."></textarea>
+        <button id="processCodeButton">Procesar Código</button>
+      </section>
+
+      <section class="progress-section">
+        <div class="wrapper">
+          <div class="progress-bar">
+            <span id="progress-bar-fill-text">Calificación <span id="score">0</span>%</span>
+            <span id="progress-bar-fill"></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="criteria-section">
+        <ul>
+          <li class="punto">
+            (1) Flexbox del nav<br />
+            <input type="checkbox" /><label id="T1S1">(1A) El header/nav es flex desde la base (mobile)</label><br />
+            <input type="checkbox" /><label id="T1S2">(1B) En escritorio, cambia el main axis del nav de columna a fila</label><br />
+          </li>
+          <li class="punto">
+            (2) Flexbox + wrap del catálogo<br />
+            <input type="checkbox" /><label id="T2S1">(2A) El catálogo es flex con wrap</label><br />
+            <input type="checkbox" /><label id="T2S2">(2B) Cada tarjeta define su flex-basis/flex-grow (o el shorthand flex)</label><br />
+          </li>
+          <li class="punto">
+            (3) Custom properties<br />
+            <input type="checkbox" /><label id="T3S1">(3A) Existe un bloque :root con al menos 6 variables</label><br />
+            <input type="checkbox" /><label id="T3S2">(3B) .hero usa var() para su color de fondo</label><br />
+          </li>
+          <li class="punto">
+            (4) Media query combinado (150px a 699px) + accesibilidad del botón<br />
+            <input type="checkbox" /><label id="T4S1">(4A) Existe el media query con esa condición</label><br />
+            <input type="checkbox" /><label id="T4S2">(4B) El botón de agregar tiene cursor: pointer</label><br />
+          </li>
+          <li class="punto">
+            (5) Media query por altura máxima (800px)<br />
+            <input type="checkbox" /><label id="T5S1">(5A) Existe el media query con esa condición</label><br />
+            <input type="checkbox" /><label id="T5S2">(5B) Ajusta algo real dentro de él</label><br />
+          </li>
+          <li class="punto">
+            (6) Media query desde 550px<br />
+            <input type="checkbox" /><label id="T6S1">(6A) Existe el media query con esa condición</label><br />
+            <input type="checkbox" /><label id="T6S2">(6B) Cambia el color de marca (reasigna la variable)</label><br />
+          </li>
+          <li class="punto">
+            (7) Media query desde 750px<br />
+            <input type="checkbox" /><label id="T7S1">(7A) Ya en fila, separa el logo y los links a los extremos</label><br />
+            <input type="checkbox" /><label id="T7S2">(7B) El catálogo pasa a 3 columnas</label><br />
+          </li>
+          <li class="punto">
+            (8) Media query desde 1000px<br />
+            <input type="checkbox" /><label id="T8S1">(8A) Aumenta algún tamaño de fuente usando una variable de :root</label><br />
+            <input type="checkbox" /><label id="T8S2">(8B) El catálogo pasa a 4 columnas</label><br />
+          </li>
+          <li class="punto">
+            (9) Media query por orientación (landscape)<br />
+            <input type="checkbox" /><label id="T9S1">(9A) Existe el media query con orientación horizontal</label><br />
+            <input type="checkbox" /><label id="T9S2">(9B) Ajusta algo real dentro de él</label><br />
+          </li>
+          <li class="punto">
+            (10) Media query desde 1500px y hasta 550px<br />
+            <input type="checkbox" /><label id="T10S1">(10A) Imagen de fondo en pantallas grandes</label><br />
+            <input type="checkbox" /><label id="T10S2">(10B) Cambio de tipografía en pantallas chicas</label><br />
+          </li>
+        </ul>
+      </section>
+    </main>
+  </body>
+</html>

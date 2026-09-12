@@ -11,10 +11,11 @@
 :root {
   --color-marca: #2e7d32;
   --tam-titulo-hero: 1.8rem;
-  /* (3A) Agrega 2 variables más aquí (con al menos 6 en total ya
-     cuenta el punto). Tip: se usan en el punto 8. */
+  --tam-marca: 1.2rem;
+  --tam-link-nav: 0.8rem;
   --columnas-productos: 1;
   --gap-productos: 1.5rem;
+  flex-wrap: wrap;
 }
 
 body {
@@ -23,8 +24,7 @@ body {
 }
 
 .sitio-header {
-  /* (1A) Agregar flex en este contenedor, para que el logo y el nav
-     dejen de apilarse uno debajo del otro por default */
+  display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1rem;
@@ -54,9 +54,7 @@ body {
 }
 
 .hero {
-  /* (3B) Ponle un color de fondo usando una variable en vez de
-     escribir el color directo — mira cómo lo hace el botón de
-     agregar más abajo (.producto .agregar) */
+  background-color: var(--color-marca);
   color: white;
   text-align: center;
   padding: 3rem 1rem;
@@ -78,8 +76,7 @@ body {
 
 .productos {
   display: flex;
-  /* (2A) Falta ajustar el cross axis de flex para que se envuelvan
-     los productos en varias filas */
+  flex-wrap: wrap;
   gap: var(--gap-productos);
   justify-content: center;
 }
@@ -90,9 +87,7 @@ body {
   border-radius: 12px;
   padding: 1rem;
   text-align: center;
-  /* (2B) Pon la fórmula para calcular el ancho de cada tarjeta: 100%
-     entre el número de columnas, menos el gap */
-  flex: 1 1 calc(/* completar */);
+  flex: 1 1 calc(100% / var(--columnas-productos) - var(--gap-productos));
 }
 
 .producto img {
@@ -116,42 +111,38 @@ body {
   color: white;
   padding: 0.5rem 1rem;
   border-radius: 20px;
-  /* (4B) Cambia el cursor a pointer para que se vea que es clickeable */
+  cursor: pointer;
 }
 
 .producto .agregar:hover {
   background: #388e3c;
 }
 
-/* (4A) Escribe aquí un media query combinado: min-width 150px Y
-   max-width 699px en la misma condición. */
-/* completar */ {
+
+@media (min-width: 150px) and (max-width:699px) {
   .nav-principal a {
-    /* (4B) Ajusta lo que quieras aquí, como idea puedes cambiar el display a bloque en línea, 
-    puedes descomentar el color de fondo para ver la diferencia */
+    display: inline-block;
     padding: 0.4rem 0.8rem;
-    /* background-color: var(--color-marca); */
+    background-color: var(--color-marca);
   }
 }
 
-/* (5A) Escribe aquí un media query por ALTO máximo de 800px. */
-/* completar */ {
+@media (max-height: 800px) {
   .hero {
-    /* (5B) El padding vertical debe ser menor al original (3rem 1rem) */
-    padding: 1rem 1rem;
+    padding: 3rem, 1rem;
   }
 }
 
-/* (6A) Escribe aquí un media query desde 550px de ancho. */
-/* completar */ {
+@media (min-width: 550px){
   :root {
     /* (6B) Cambia el color de marca a uno bastante distinto del original */
+      --color-marca: #6702b9;
   }
 }
 
 @media (min-width: 750px) {
   .sitio-header {
-    /* (1B) Cambia el main axis del nav de columna a fila */
+    flex-direction: row;
     /* (7A) Ya en fila, separa el logo y los links a los extremos */
   }
   .nav-principal ul {
@@ -188,6 +179,7 @@ body {
   body {
       /* (10B) Celulares chicos: cambia la fuente de todo el sitio a que
      incluya la fuente de Google Roboto */
+     font-family: "Roboto", arial, sans-serif;
   }
   :root {
     --tam-titulo-hero: 1rem;
