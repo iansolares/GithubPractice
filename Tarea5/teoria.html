@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Teoría: Box Model y Animaciones CSS</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 0 20px; line-height: 1.5; color: #222; }
+    header { border-bottom: 2px solid #333; padding: 16px 0; }
+    nav a { margin-right: 12px; }
+    section { padding: 24px 0; border-bottom: 1px solid #ddd; }
+    table { border-collapse: collapse; margin: 12px 0; width: 100%; }
+    table, th, td { border: 1px solid #999; padding: 6px 10px; }
+    pre { background: #f4f4f4; padding: 12px; overflow-x: auto; border-left: 4px solid #888; }
+    code { font-family: Consolas, monospace; }
+    footer { padding: 16px 0; color: #666; font-size: 0.9em; }
+    .box-diagram { display: flex; justify-content: center; margin: 16px 0; }
+    .capa { border: 2px dashed #999; padding: 12px; text-align: center; font-size: 0.85em; color: #555; }
+    .capa.margin { border-color: #f9a825; }
+    .capa.border { border-color: #ef6c00; border-style: solid; }
+    .capa.padding { border-color: #2e7d32; }
+    .capa.content { background: #90caf9; color: #0d47a1; font-weight: bold; padding: 20px; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Teoría: Box Model y Animaciones CSS</h1>
+    <p>Cómo se arma una caja en CSS, y cómo hacer que las cosas se muevan.</p>
+    <nav>
+      <a href="#box-model">Box Model</a>
+      <a href="#transiciones">Transiciones</a>
+      <a href="#transforms">Transforms</a>
+      <a href="#keyframes">Keyframes</a>
+      <a href="#animation">Animation</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <section id="box-model">
+      <h2>1. El Box Model</h2>
+      <p>Todo elemento HTML es una caja rectangular con 4 capas, de adentro hacia afuera:</p>
+      <div class="box-diagram">
+        <div class="capa margin">margin
+          <div class="capa border">border
+            <div class="capa padding">padding
+              <div class="capa content">content</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <ul>
+        <li><strong>content</strong>: el contenido real (texto, imagen...). Su tamaño lo controlan <code>width</code>/<code>height</code>.</li>
+        <li><strong>padding</strong>: espacio interno, entre el contenido y el borde.</li>
+        <li><strong>border</strong>: el borde — necesita 3 propiedades para verse: <code>border-style</code> (trazo), <code>border-width</code> (grosor), <code>border-color</code> (color).</li>
+        <li><strong>margin</strong>: espacio externo, entre esta caja y las demás. También existe <code>margin</code> negativo (valores como <code>-10px</code>), que hace que una caja se "monte" sobre otra.</li>
+      </ul>
+
+      <h3>width, height</h3>
+      <pre><code>.recuadro {
+  width: 250px;
+  height: 90px;
+}</code></pre>
+      <p><em>width/height también aceptan unidades relativas: <code>%</code> (relativo al padre), <code>vw</code>/<code>vh</code> (relativo a la ventana del navegador).</em></p>
+
+      <h3>padding, border-radius</h3>
+      <p><code>border-radius</code> redondea las esquinas. Con <code>50%</code> en una caja cuadrada se vuelve un círculo perfecto. Con valores distintos por esquina (<code>border-top-left-radius</code>, etc.) se pueden hacer formas asimétricas.</p>
+      <pre><code>.recuadro {
+  padding: 0.5rem;
+  border-radius: 12px;
+}</code></pre>
+
+      <h3>border-style, border-color, border-width</h3>
+      <pre><code>.recuadro {
+  border-style: dotted;  /* solid, dashed, double... */
+  border-color: purple;
+  border-width: 3px;
+}</code></pre>
+
+      <h3>margin</h3>
+      <p>Separa una caja de las demás. A diferencia de padding, no forma parte del "fondo" de la caja — si le pones background-color, el margin nunca se pinta.</p>
+      <pre><code>.recuadro {
+  margin: 1.5rem;
+}</code></pre>
+
+      <h3>overflow</h3>
+      <table>
+        <thead><tr><th>Valor</th><th>Qué hace</th></tr></thead>
+        <tbody>
+          <tr><td><code>visible</code></td><td>El contenido se sale de la caja (default)</td></tr>
+          <tr><td><code>hidden</code></td><td>Se recorta lo que no cabe</td></tr>
+          <tr><td><code>scroll</code></td><td>Aparece una barra de desplazamiento siempre</td></tr>
+          <tr><td><code>auto</code></td><td>Barra solo si hace falta</td></tr>
+        </tbody>
+      </table>
+
+      <h3>display</h3>
+      <table>
+        <thead><tr><th>Valor</th><th>Qué hace</th></tr></thead>
+        <tbody>
+          <tr><td><code>block</code></td><td>Ocupa toda la línea (default de div, section, p...)</td></tr>
+          <tr><td><code>inline</code></td><td>No rompe línea, ignora width/height (default de span, a...)</td></tr>
+          <tr><td><code>inline-block</code></td><td>No rompe línea, PERO sí respeta width/height</td></tr>
+          <tr><td><code>none</code></td><td>Oculta el elemento por completo (no ocupa espacio, a diferencia de visibility:hidden)</td></tr>
+          <tr><td><code>flex</code> / <code>grid</code></td><td>Sistemas de layout para acomodar varios hijos</td></tr>
+        </tbody>
+      </table>
+
+      <h3>box-sizing</h3>
+      <p><code>content-box</code> (default): el padding y el border se SUMAN al width declarado. <code>border-box</code>: quedan DENTRO del width — el ancho final es el que pusiste, sin sorpresas. Por eso <code>border-box</code> es la opción más usada en proyectos reales.</p>
+      <pre><code>.recuadro {
+  box-sizing: border-box;
+}</code></pre>
+
+      <h3>position</h3>
+      <table>
+        <thead><tr><th>Valor</th><th>Qué hace</th></tr></thead>
+        <tbody>
+          <tr><td><code>static</code></td><td>Default, sigue el flujo normal de la página</td></tr>
+          <tr><td><code>relative</code></td><td>Se mueve respecto a su posición original (con top/left/etc.)</td></tr>
+          <tr><td><code>absolute</code></td><td>Se saca del flujo, se ubica respecto a su padre posicionado más cercano</td></tr>
+          <tr><td><code>fixed</code></td><td>Respecto a la ventana — no se mueve al hacer scroll</td></tr>
+          <tr><td><code>sticky</code></td><td>Combina relative y fixed: sigue el flujo hasta cierto punto, luego se "pega"</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="transiciones">
+      <h2>2. Transiciones</h2>
+      <p>Una transición anima el cambio entre dos estados de un elemento (por ejemplo, normal → <code>:hover</code>).</p>
+      <pre><code>.enlace {
+  transition-property: color;
+  transition-duration: 0.2s;
+  transition-timing-function: ease;
+}</code></pre>
+
+      <h3>Dos transition-duration en un mismo selector</h3>
+      <p>Si <code>transition-property</code> lista varias propiedades separadas por coma, <code>transition-duration</code> puede listar un tiempo distinto para cada una, en el mismo orden.</p>
+      <pre><code>.enlace {
+  transition-property: color, transform;
+  transition-duration: 2s, 0.5s;
+}</code></pre>
+
+      <h3>Dos transition-timing-function distintas</h3>
+      <p><code>steps(n, end)</code> hace la transición "a saltos" (como stop-motion) en vez de suave — muy distinto a <code>ease-out</code>, que empieza rápido y termina lento.</p>
+      <pre><code>.enlace {
+  transition-timing-function: steps(3, end), ease-out;
+}</code></pre>
+      <p><em>Otras timing-functions listas para usar: <code>linear</code> (velocidad constante), <code>ease-in</code> (empieza lento), <code>cubic-bezier(x1,y1,x2,y2)</code> (curva 100% personalizada — pueden armar la suya en cubic-bezier.com).</em></p>
+    </section>
+
+    <section id="transforms">
+      <h2>3. Transforms</h2>
+      <p><code>transform</code> modifica visualmente un elemento sin afectar el layout de sus vecinos (a diferencia de cambiar width/margin, que sí los empuja).</p>
+      <table>
+        <thead><tr><th>Función</th><th>Qué hace</th></tr></thead>
+        <tbody>
+          <tr><td><code>rotate(deg)</code></td><td>Gira el elemento sobre su centro</td></tr>
+          <tr><td><code>translate(x, y)</code></td><td>Lo mueve sin afectar a los demás elementos</td></tr>
+          <tr><td><code>scale(n)</code></td><td>Lo agranda (&gt;1) o encoge (&lt;1)</td></tr>
+          <tr><td><code>skewX(deg)</code> / <code>skewY(deg)</code></td><td>Lo inclina, efecto "cursiva"</td></tr>
+          <tr><td><code>rotateY(deg)</code> / <code>rotateX(deg)</code></td><td>Gira en 3D sobre el eje vertical/horizontal — una forma simétrica se ve "adelgazar"</td></tr>
+        </tbody>
+      </table>
+      <p>Se pueden combinar varias en una sola declaración, separadas por espacio:</p>
+      <pre><code>.icono:hover {
+  transform: scale(1.2) rotate(10deg);
+}</code></pre>
+      <p><em>Tip: girar una forma perfectamente simétrica con <code>rotate()</code> normal casi no se nota (se ve igual en cualquier ángulo). Con <code>rotateY()</code> o <code>rotateX()</code> sí se nota, porque simulan el giro en 3D.</em></p>
+    </section>
+
+    <section id="keyframes">
+      <h2>4. Keyframes</h2>
+      <p><code>@keyframes</code> define los pasos intermedios de una animación, con un nombre que luego se usa en <code>animation-name</code> (o en el shorthand <code>animation</code>). El nombre lo inventas tú — no tiene que coincidir con nada.</p>
+
+      <h3>Notación from/to</h3>
+      <p><code>from</code> equivale a <code>0%</code> y <code>to</code> a <code>100%</code> — más legible cuando solo hay un estado inicial y uno final.</p>
+      <pre><code>@keyframes mi-transicion {
+  from { opacity: 0.2; }
+  to   { opacity: 1; }
+}</code></pre>
+
+      <h3>Porcentaje numérico</h3>
+      <p>Cuando la animación pasa por varios estados intermedios, se usan porcentajes. El paso intermedio no tiene que ser justo la mitad — puede ir donde tú quieras.</p>
+      <pre><code>@keyframes mi-recorrido {
+  0%   { transform: translateY(0); }
+  70%  { transform: translateY(-15px); }
+  100% { transform: translateY(0); }
+}</code></pre>
+    </section>
+
+    <section id="animation">
+      <h2>5. Animation</h2>
+      <table>
+        <thead><tr><th>Propiedad</th><th>Qué hace</th></tr></thead>
+        <tbody>
+          <tr><td><code>animation-name</code></td><td>Qué @keyframes usar</td></tr>
+          <tr><td><code>animation-duration</code></td><td>Cuánto dura un ciclo completo</td></tr>
+          <tr><td><code>animation-iteration-count</code></td><td>Cuántas veces se repite (<code>infinite</code> = para siempre)</td></tr>
+          <tr><td><code>animation-delay</code></td><td>Cuánto espera antes de arrancar</td></tr>
+          <tr><td><code>animation-direction</code></td><td>En qué sentido se reproduce</td></tr>
+          <tr><td><code>animation-play-state</code></td><td><code>running</code> o <code>paused</code></td></tr>
+        </tbody>
+      </table>
+
+      <h3>animation-direction: alternate</h3>
+      <p>Con <code>normal</code> (default), al llegar al final la animación salta de golpe al inicio. Con <code>alternate</code>, se reproduce AL REVÉS — va y regresa suavemente, como un péndulo.</p>
+      <pre><code>.elemento-generico {
+  animation: mi-recorrido 2.5s linear infinite;
+  animation-direction: alternate;
+}</code></pre>
+
+      <h3>animation-play-state al pasar el cursor</h3>
+      <p>Se puede pausar una animación en cualquier estado (por ejemplo <code>:hover</code> o <code>:active</code>) sin necesidad de JavaScript.</p>
+      <pre><code>.elemento-generico:hover {
+  animation-play-state: paused;
+}</code></pre>
+      <p><em>Truco extra: si necesitas que la pausa se quede fija con un CLIC (no solo mientras el mouse está encima), se puede lograr sin JavaScript con un <code>&lt;input type="checkbox"&gt;</code> oculto + un <code>&lt;label&gt;</code>, usando el selector <code>:checked ~</code>.</em></p>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>Para leer más:
+      <a href="https://developer.mozilla.org/es/docs/Learn/CSS/Building_blocks/The_box_model">MDN — box model</a> ·
+      <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/transition">MDN — transition</a> ·
+      <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/transform">MDN — transform</a> ·
+      <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@keyframes">MDN — @keyframes</a> ·
+      <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/animation">MDN — animation</a> ·
+      <a href="https://cubic-bezier.com/">cubic-bezier.com — calculadora de curvas</a>
+    </p>
+  </footer>
+
+</body>
+</html>

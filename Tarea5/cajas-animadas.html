@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sistema Solar: Box Model y Animaciones</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>Sistema Solar: Box Model y Animaciones</h1>
+    <hr />
+
+    <section id="mercurio">
+      <button class="planeta-boton boton-mercurio">Mercurio</button>
+      <p>
+        El planeta más pequeño y más cercano al Sol. Esta caja define un
+        <code>width</code> y un <code>height</code> compactos. Pasa el cursor
+        sobre el botón para verlo deslizarse (<code>transform: translate</code>)
+        — el transform más simple para empezar.
+      </p>
+    </section>
+
+    <section id="venus">
+      <button class="planeta-boton boton-venus">Venus</button>
+      <p>
+        Su atmósfera densa envuelve todo, como el <code>padding</code> envuelve
+        el contenido — y su <code>border-radius</code> lo hace casi una esfera
+        perfecta. Pasa el cursor sobre el botón para verlo girar (<code
+          >transform: rotate</code
+        >): dato curioso, Venus gira al revés que casi todos los demás planetas.
+      </p>
+    </section>
+
+    <section id="tierra">
+      <button class="planeta-boton boton-tierra">Tierra</button>
+      <p>
+        Nuestro planeta tiene un borde bien definido — su atmósfera — por eso
+        necesita <code>border-style</code> y <code>border-color</code>. Pasa el
+        cursor sobre el botón para cambiar su tamaño (<code
+          >transform: scale</code
+        >), como acercarte con un telescopio.
+      </p>
+    </section>
+
+    <section id="marte">
+      <button class="planeta-boton boton-marte">Marte</button>
+      <p>
+        El planeta rojo tiene un <code>border-width</code> grueso de polvo, y
+        suficiente <code>margin</code> para separarlo del cinturón de
+        asteroides. Pasa el cursor sobre el botón para verlo inclinarse (<code
+          >transform: skew</code
+        >) — el transform más llamativo.
+      </p>
+    </section>
+
+    <section id="jupiter">
+      <button class="planeta-boton boton-jupiter">Júpiter</button>
+      <p>
+        Es tan grande que su contenido no cabe — <code>overflow</code> decide
+        qué pasa con lo que se sale. Pasa el cursor sobre el botón y compara: el
+        color y el tamaño cambian con dos
+        <code>transition-duration</code> distintas, como sus bandas de nubes
+        moviéndose a velocidades diferentes.
+      </p>
+    </section>
+
+    <section id="saturno">
+      <button class="planeta-boton boton-saturno">Saturno</button>
+      <p>
+        Con sus anillos, usa <code>display: inline-block</code> para no romper
+        la fila. Pasa el cursor sobre el botón: el color cambia de golpe
+        (<code>steps()</code>), como los anillos por separado, mientras el giro
+        es suave (<code>ease-in-out</code>).
+      </p>
+    </section>
+
+    <section id="urano">
+      <button class="planeta-boton boton-urano">Urano</button>
+      <p>
+        Gira de lado — su eje está inclinado 98°. Igual de radical es
+        <code>box-sizing: border-box</code>, que cambia por completo cómo se
+        mide la caja. El título aparece y desaparece todo el tiempo con un
+        <code>@keyframes</code> que usa <code>from</code>/<code>to</code>.
+      </p>
+    </section>
+
+    <section id="neptuno">
+      <button class="planeta-boton boton-neptuno">Neptuno</button>
+      <p>
+        El más lejano del Sol, con los vientos más rápidos del sistema solar.
+        <code>position</code> le da su propio marco de referencia. El título se
+        mueve en varios pasos con un <code>@keyframes</code> de porcentajes — el
+        más avanzado de todos.
+      </p>
+    </section>
+
+    <hr />
+
+    <section id="cielo">
+      <h2>El Sol</h2>
+      <div id="nube"></div>
+      <div id="sol"></div>
+    </section>
+  </body>
+</html>
