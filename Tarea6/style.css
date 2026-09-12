@@ -1,0 +1,197 @@
+/* =====================================================================
+   TAREA 6 — Flexbox, Media Queries y Custom Properties
+   Los comentarios marcan lo que se tiene que realizar.
+   Los valores son libres salvo que se diga lo contrario.
+   ===================================================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --color-marca: #2e7d32;
+  --tam-titulo-hero: 1.8rem;
+  /* (3A) Agrega 2 variables más aquí (con al menos 6 en total ya
+     cuenta el punto). Tip: se usan en el punto 8. */
+  --columnas-productos: 1;
+  --gap-productos: 1.5rem;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.sitio-header {
+  /* (1A) Agregar flex en este contenedor, para que el logo y el nav
+     dejen de apilarse uno debajo del otro por default */
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background-color: #1b5e20;
+  color: white;
+}
+
+.marca {
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.nav-principal ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-principal a {
+  color: white;
+  text-decoration: none;
+}
+
+.hero {
+  /* (3B) Ponle un color de fondo usando una variable en vez de
+     escribir el color directo — mira cómo lo hace el botón de
+     agregar más abajo (.producto .agregar) */
+  color: white;
+  text-align: center;
+  padding: 3rem 1rem;
+}
+
+.hero h1 {
+  margin: 0 0 0.5rem;
+  font-size: var(--tam-titulo-hero);
+}
+
+.hero p {
+  margin: 0;
+}
+
+.catalogo {
+  padding: 2rem 1rem;
+  text-align: center;
+}
+
+.productos {
+  display: flex;
+  /* (2A) Falta ajustar el cross axis de flex para que se envuelvan
+     los productos en varias filas */
+  gap: var(--gap-productos);
+  justify-content: center;
+}
+
+.producto {
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+  /* (2B) Pon la fórmula para calcular el ancho de cada tarjeta: 100%
+     entre el número de columnas, menos el gap */
+  flex: 1 1 calc(/* completar */);
+}
+
+.producto img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.producto h3 {
+  margin: 0.5rem 0 0.25rem;
+}
+
+.producto .precio {
+  color: #ef6c00;
+  font-weight: bold;
+  margin: 0 0 0.5rem;
+}
+
+.producto .agregar {
+  border: none;
+  background: var(--color-marca);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  /* (4B) Cambia el cursor a pointer para que se vea que es clickeable */
+}
+
+.producto .agregar:hover {
+  background: #388e3c;
+}
+
+/* (4A) Escribe aquí un media query combinado: min-width 150px Y
+   max-width 699px en la misma condición. */
+/* completar */ {
+  .nav-principal a {
+    /* (4B) Ajusta lo que quieras aquí, como idea puedes cambiar el display a bloque en línea, 
+    puedes descomentar el color de fondo para ver la diferencia */
+    padding: 0.4rem 0.8rem;
+    /* background-color: var(--color-marca); */
+  }
+}
+
+/* (5A) Escribe aquí un media query por ALTO máximo de 800px. */
+/* completar */ {
+  .hero {
+    /* (5B) El padding vertical debe ser menor al original (3rem 1rem) */
+    padding: 1rem 1rem;
+  }
+}
+
+/* (6A) Escribe aquí un media query desde 550px de ancho. */
+/* completar */ {
+  :root {
+    /* (6B) Cambia el color de marca a uno bastante distinto del original */
+  }
+}
+
+@media (min-width: 750px) {
+  .sitio-header {
+    /* (1B) Cambia el main axis del nav de columna a fila */
+    /* (7A) Ya en fila, separa el logo y los links a los extremos */
+  }
+  .nav-principal ul {
+    flex-direction: row;
+    gap: 1.5rem;
+  }
+  :root {
+    /* (7B) El catálogo pasa a 3 columnas */
+  }
+}
+
+@media (min-width: 1000px) {
+  :root {
+    --tam-marca: 2.2rem;
+    --tam-link-nav: 1.1rem;
+    /* (8A) Usa la variable del root para agrandar el título del hero */
+    /* (8B) El catálogo pasa a 4 columnas */
+  }
+}
+
+/* (9A) Existe el media query con orientación horizontal. */
+/* completar */ {
+  .hero {
+    /* (9B) Cambia el padding vertical del .hero (top y bottom) a 1rem */
+  }
+}
+
+@media (min-width: 1500px) {
+  /* (10A) Pantallas muy grandes: dale al hero una imagen de fondo
+     decorativa que esté centrada y cubra todo el espacio (cover) */
+}
+
+@media (max-width: 550px) {
+  body {
+      /* (10B) Celulares chicos: cambia la fuente de todo el sitio a que
+     incluya la fuente de Google Roboto */
+  }
+  :root {
+    --tam-titulo-hero: 1rem;
+    --tam-marca: 1.2rem;
+    --tam-link-nav: 0.8rem;
+  }
+}

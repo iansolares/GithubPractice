@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flexbox Playground — Thomas Was Alone</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="wasalone.css" />
+  </head>
+
+  <body>
+    <h1>Thomas Was Alone</h1>
+
+    <!-- ============================================================
+         CAPÍTULO 1 — main axis, cross axis y flex-wrap
+         ============================================================ -->
+    <section class="capitulo">
+      <h2>Capítulo 1 — Main axis, cross axis y flex-wrap</h2>
+      <div class="experimentar">
+        <p><strong>Para experimentar:</strong></p>
+        <ul>
+          <li>
+            Cambia <code>flex-direction</code> de <code>column</code> a
+            <code>row</code> en <code>#game</code>: el main axis pasa de
+            vertical a horizontal, y el cross axis pasa de horizontal a vertical
+            — se intercambian.
+          </li>
+          <li>
+            Cambia <code>column</code> a <code>column-reverse</code>: el main
+            axis se voltea (los personajes empiezan de abajo hacia arriba en vez
+            de arriba hacia abajo).
+          </li>
+          <li>
+            Cambia <code>flex-wrap: wrap</code> a <code>nowrap</code>: sin wrap
+            solo hay UNA línea, así que <code>align-content</code> deja de tener
+            efecto (no hay más líneas que acomodar).
+          </li>
+          <li>
+            Compara <code>align-items: end</code> (afecta a TODOS los personajes
+            en el cross axis) contra <code>align-self</code> en #james y en
+            #laura/#claire (afecta solo a ESE personaje, también en el cross
+            axis con prioridad).
+          </li>
+        </ul>
+      </div>
+      <section id="game">
+        <div id="thomas">1.-Thomas</div>
+        <div id="chris">2.-Chris</div>
+        <div id="john">3.-John</div>
+        <div id="claire">4.-Claire</div>
+        <div id="laura">5.-Laura</div>
+        <div id="james">6.-James</div>
+        <div id="sarah">7.-Sarah</div>
+      </section>
+    </section>
+
+    <!-- ============================================================
+         CAPÍTULO 2 — flex-basis + flex-shrink
+         ============================================================ -->
+    <section class="capitulo">
+      <h2>Capítulo 2 — flex-basis y flex-shrink</h2>
+      <div class="experimentar">
+        <p><strong>Para experimentar:</strong></p>
+        <ul>
+          <li>
+            Todos los rectángulos piden el mismo
+            <code>flex-basis: 450px</code> — más de lo que cabe en el
+            contenedor, así que TODOS tienen que encoger.
+          </li>
+          <li>
+            El 1º, 2º, 5º, 6º y 7º tienen <code>flex-shrink: 3</code> (encogen 3
+            veces más rápido); el 3º y 4º se quedan en
+            <code>flex-shrink: 1</code> (el default). Achica la ventana del
+            navegador y observa cuáles se encogen primero.
+          </li>
+          <li>
+            Prueba poner <code>flex-shrink: 0</code> en alguno — ese ya NO va a
+            encoger nunca, sin importar qué tan chico sea el contenedor (por eso
+            a veces una caja "se sale" del contenedor).
+          </li>
+        </ul>
+      </div>
+      <section id="container">
+        <div style="background-color: red"></div>
+        <div style="background-color: orange"></div>
+        <div style="background-color: yellow"></div>
+        <div style="background-color: steelblue"></div>
+        <div style="background-color: hotpink"></div>
+        <div style="background-color: green"></div>
+        <div style="background-color: indigo"></div>
+      </section>
+    </section>
+
+    <!-- ============================================================
+         CAPÍTULO 3 — flex-grow
+         ============================================================ -->
+    <section class="capitulo">
+      <h2>Capítulo 3 — flex-grow</h2>
+      <div class="experimentar">
+        <p><strong>Para experimentar:</strong></p>
+        <ul>
+          <li>
+            Aquí el <code>flex-basis</code> es más chico (100px), así que sobra
+            espacio — y por default nadie lo reclama (<code>flex-grow: 0</code>
+            en todos).
+          </li>
+          <li>
+            El 3º y 4º tienen <code>flex-grow: 3</code>: se reparten el espacio
+            sobrante entre ellos dos, proporcionalmente.
+          </li>
+          <li>
+            Pasa el cursor sobre cualquier rectángulo:
+            <code>flex-grow: 10</code> en <code>:hover</code> hace que ESE se
+            coma casi todo el espacio sobrante al instante — así se ve en vivo
+            qué hace crecer a un elemento vs a sus hermanos.
+          </li>
+        </ul>
+      </div>
+      <section id="container2">
+        <div style="background-color: red"></div>
+        <div style="background-color: orange"></div>
+        <div style="background-color: yellow"></div>
+        <div style="background-color: steelblue"></div>
+        <div style="background-color: hotpink"></div>
+        <div style="background-color: green"></div>
+        <div style="background-color: indigo"></div>
+      </section>
+    </section>
+  </body>
+</html>

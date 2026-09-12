@@ -1,0 +1,178 @@
+body {
+  font-family: "Open Sans", sans-serif;
+}
+
+h1 {
+  text-align: center;
+  margin: 3rem auto 1rem;
+  font-size: 5rem;
+}
+
+/* ===== Capítulos ===== */
+.capitulo {
+  max-width: 90%;
+  margin: 4rem auto;
+  padding-top: 2rem;
+  border-top: 3px solid #37a3c4;
+}
+
+.capitulo h2 {
+  text-align: center;
+  color: #333;
+}
+
+.experimentar {
+  background: #e1e8ff;
+  border-left: 4px solid #4525f9;
+  padding: 1rem 1.5rem;
+  margin: 1rem auto;
+  max-width: 60%;
+  font-size: 0.95rem;
+}
+
+.experimentar code {
+  background: #ffffff;
+  padding: 1px 5px;
+  border-radius: 10px;
+}
+
+/* ===== Capítulo 1: main axis / cross axis / flex-wrap ===== */
+#game {
+  background-color: slategray;
+  width: 90%;
+  height: 500px;
+  margin: 2rem auto;
+  border: 1rem solid black;
+  text-align: center;
+  color: rgb(2, 2, 2);
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-content: space-around;
+  align-items: end;
+}
+
+#game div {
+  font-size: 1rem;
+  overflow: hidden;
+  transition: linear 0.5s;
+}
+
+#game div:hover {
+  box-shadow: 0 0 2em 0.5em white;
+  border: 0.2rem solid black;
+  cursor: default;
+}
+
+#thomas {
+  height: 150px;
+  width: 100px;
+  background-color: red;
+}
+
+#chris {
+  height: 100px;
+  width: 100px;
+  background-color: orange;
+}
+
+#john {
+  height: 300px;
+  width: 70px;
+  background-color: yellow;
+}
+
+#claire {
+  height: 250px;
+  width: 250px;
+  background-color: steelblue;
+}
+
+#laura {
+  height: 70px;
+  width: 250px;
+  background-color: hotpink;
+}
+
+#james {
+  height: 150px;
+  width: 100px;
+  background-color: green;
+}
+
+#sarah {
+  height: 80px;
+  width: 50px;
+  background-color: indigo;
+}
+
+#james {
+  align-self: start;
+}
+
+#laura,
+#claire {
+  align-self: center;
+}
+
+/* ===== Capítulos 2 y 3: flex-basis, flex-shrink, flex-grow ===== */
+#container,
+#container2 {
+  background-color: black;
+  width: 90%;
+  height: 500px;
+  margin: 2rem auto;
+  border: 1rem solid #0004ff;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+#container div,
+#container2 div {
+  transition: linear 0.5s;
+}
+
+#container div:hover,
+#container2 div:hover {
+  box-shadow: 0 0 2em 0.5em white;
+  cursor: default;
+}
+
+/* Capítulo 2: todos piden más espacio del que hay -> todos encogen */
+#container div {
+  height: 200px;
+  width: 200px;
+  flex-basis: 450px;
+  flex-shrink: 1;
+  flex-grow: 0;
+}
+
+#container div:nth-of-type(1),
+#container div:nth-of-type(2),
+#container div:nth-of-type(5),
+#container div:nth-of-type(6),
+#container div:nth-of-type(7) {
+  flex-shrink: 3;
+}
+
+/* Capítulo 3: piden menos espacio del que hay -> sobra, nadie crece por default */
+#container2 div {
+  height: 200px;
+  width: 200px;
+  flex-basis: 100px;
+  flex-grow: 0;
+}
+
+#container2 div:nth-of-type(3),
+#container2 div:nth-of-type(4) {
+  flex-grow: 3;
+  flex-shrink: 3;
+}
+
+#container2 div:hover {
+  flex-grow: 10;
+}
