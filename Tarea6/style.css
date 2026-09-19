@@ -118,8 +118,7 @@ body {
   background: #388e3c;
 }
 
-
-@media (min-width: 150px) and (max-width:699px) {
+@media (min-width: 150px) and (max-width: 699px) {
   .nav-principal a {
     display: inline-block;
     padding: 0.4rem 0.8rem;
@@ -129,28 +128,27 @@ body {
 
 @media (max-height: 800px) {
   .hero {
-    padding: 3rem, 1rem;
+    padding: 1rem, 1rem;
   }
 }
 
-@media (min-width: 550px){
+@media (min-width: 550px) {
   :root {
-    /* (6B) Cambia el color de marca a uno bastante distinto del original */
-      --color-marca: #6702b9;
+    --color-marca: #6702b9;
   }
 }
 
 @media (min-width: 750px) {
   .sitio-header {
     flex-direction: row;
-    /* (7A) Ya en fila, separa el logo y los links a los extremos */
+    justify-content: space-between;
   }
   .nav-principal ul {
     flex-direction: row;
     gap: 1.5rem;
   }
   :root {
-    /* (7B) El catálogo pasa a 3 columnas */
+    --columnas-productos: 3;
   }
 }
 
@@ -158,28 +156,28 @@ body {
   :root {
     --tam-marca: 2.2rem;
     --tam-link-nav: 1.1rem;
-    /* (8A) Usa la variable del root para agrandar el título del hero */
-    /* (8B) El catálogo pasa a 4 columnas */
+    --tam-titulo-hero: 5rem;
+    --columnas-productos: 4;
   }
 }
 
-/* (9A) Existe el media query con orientación horizontal. */
-/* completar */ {
+@media (orientation: landscape) {
   .hero {
-    /* (9B) Cambia el padding vertical del .hero (top y bottom) a 1rem */
+    padding: 1rem, 1rem;
   }
 }
 
 @media (min-width: 1500px) {
-  /* (10A) Pantallas muy grandes: dale al hero una imagen de fondo
-     decorativa que esté centrada y cubra todo el espacio (cover) */
+  .hero {
+    background-image: url(./fruits.webp);
+    background-size: cover;
+    background-position: center;
+  }
 }
 
 @media (max-width: 550px) {
   body {
-      /* (10B) Celulares chicos: cambia la fuente de todo el sitio a que
-     incluya la fuente de Google Roboto */
-     font-family: "Roboto", arial, sans-serif;
+    font-family: "Roboto", arial, sans-serif;
   }
   :root {
     --tam-titulo-hero: 1rem;
