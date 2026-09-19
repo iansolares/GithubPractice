@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Teoría: Frameworks y Bootstrap</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous" defer></script>
+    <style>
+      body { padding-top: 4.5rem; }
+      .example-preview { border: 1px solid #dee2e6; border-radius: 0.5rem 0.5rem 0 0; padding: 1.5rem; background: #fff; }
+      .example-code { border: 1px solid #dee2e6; border-top: none; border-radius: 0 0 0.5rem 0.5rem; background: #f8f9fa; padding: 1rem; margin: 0 0 2rem 0; overflow-x: auto; }
+      .example-code code { font-size: 0.85rem; white-space: pre; }
+      .grid-demo > div { background: #cfe2ff; border: 1px solid #9ec5fe; padding: 0.5rem; text-align: center; border-radius: 4px; }
+      section { scroll-margin-top: 4.5rem; padding: 2rem 0; border-bottom: 1px solid #eee; }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Teoría: Bootstrap</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navTeoria">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navTeoria">
+          <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link" href="#frameworks">Frameworks</a></li>
+            <li class="nav-item"><a class="nav-link" href="#instalacion">Instalación</a></li>
+            <li class="nav-item"><a class="nav-link" href="#grid">Grid</a></li>
+            <li class="nav-item"><a class="nav-link" href="#componentes">Componentes</a></li>
+            <li class="nav-item"><a class="nav-link" href="#responsivo">Responsivo</a></li>
+            <li class="nav-item"><a class="nav-link" href="#personalizar">Personalizar</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container py-4">
+      <h1>Teoría: Frameworks y Bootstrap</h1>
+      <p class="text-muted">Esta página está hecha con Bootstrap, así que en cada bloque primero van a ver el resultado ya renderizado y justo debajo el código que lo genera — igual que en la documentación oficial. Pero antes de entrarle a eso, veamos qué problema resuelve un framework y por qué Bootstrap está armado como está.</p>
+
+      <section id="frameworks">
+        <h2>1. El problema que resuelve un framework de CSS</h2>
+        <p>Cuando un sitio crece, el CSS escrito a mano se empieza a poner difícil de mantener: cada quien le pone nombre distinto a sus clases, un botón "azul" en una página termina siendo un azul distinto al de otra, y arreglar un estilo en un lugar rompe otra cosa en otro lado. Un framework de CSS existe para eso: pone un mismo set de clases, colores y tamaños que todo el equipo usa igual, para que "botón primario" siempre signifique lo mismo en cualquier parte del sitio.</p>
+
+        <h3>No todos los frameworks lo resuelven de la misma forma</h3>
+        <p>Hay básicamente tres formas de hacerlo:</p>
+        <ul>
+          <li><strong>Basados en componentes</strong> (Bootstrap, Bulma, Foundation): te dan piezas ya armadas y con estilo — un navbar, una card — ya listas para usar. Avanzas rápido, pero si no personalizas nada, dos sitios con el mismo framework se ven parecidos entre sí.</li>
+          <li><strong>Utility-first</strong> (Tailwind CSS): no te dan componentes armados, te dan muchísimas clases chiquitas que cada una hace una sola cosa (<code>p-4</code>, <code>text-center</code>, <code>flex</code>), y tú armas tu propio componente combinándolas. Tienes más control sobre cómo se ve, pero el HTML termina con muchas más clases por elemento.</li>
+          <li><strong>Sin estilo (headless)</strong> (Radix, Headless UI): no traen ni un color — solo resuelven que un dropdown abra bien con el teclado o que un modal funcione como debe, y el diseño completo lo pones tú.</li>
+        </ul>
+        <p><strong>Bootstrap en realidad es una mezcla de las dos primeras:</strong> te da componentes armados (navbar, card, carousel) pero TAMBIÉN te da un montón de clases chiquitas de una sola cosa (<code>d-flex</code>, <code>text-center</code>, <code>p-4</code>) — de hecho esas ya las han usado en clases anteriores sin llamarlas "framework". Bootstrap nada más las empaqueta juntas.</p>
+
+        <h3>Un poco de dónde viene</h3>
+        <p>Bootstrap nació en 2011 adentro de Twitter. Lo hicieron Mark Otto y Jacob Thornton porque las herramientas internas de la empresa se veían todas distintas entre sí — cada equipo usaba su propia mezcla de CSS. Lo liberaron como código abierto casi de inmediato y se volvió el framework de CSS más usado del mundo. La versión que usamos aquí (5.3) ya no depende de jQuery como las versiones viejas — usa JavaScript normal más Popper.js para acomodar los menús.</p>
+      </section>
+
+      <section id="instalacion">
+        <h2>2. Cómo entra Bootstrap a la página</h2>
+        <p>Un CDN es un servidor externo que ya tiene guardado el archivo de Bootstrap — en vez de bajarlo y guardarlo en tu proyecto, el navegador lo pide directo de ahí en cuanto carga la página.</p>
+        <div class="example-code"><code>&lt;link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"&gt;
+&lt;script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" defer&gt;&lt;/script&gt;
+&lt;script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" defer&gt;&lt;/script&gt;</code></div>
+        <p>Tres cosas de por qué está escrito así:</p>
+        <ul>
+          <li><strong>El orden importa.</strong> El CSS va en el <code>&lt;head&gt;</code> porque el navegador necesita saber los estilos antes de dibujar la página. Popper.js va ANTES que el JS de Bootstrap porque Bootstrap ya lo necesita cargado para saber dónde acomodar los dropdowns y tooltips — si se invierte el orden, esos componentes truenan en la consola.</li>
+          <li><strong><code>defer</code></strong> le dice al navegador: bájate este script mientras yo sigo leyendo el resto del HTML, pero no lo corras hasta que ya esté todo armado. Sin esto, el script se podría ejecutar a la mitad, buscando algo que el navegador todavía ni ha leído.</li>
+          <li><strong><code>integrity</code></strong> no es solo "seguridad" así en general — es como una huella digital del archivo. El navegador saca la huella de lo que de verdad se descargó y la compara con la que trae el HTML. Si no coinciden (alguien cambió el archivo en el camino), el navegador se niega a usarlo.</li>
+        </ul>
+        <p>Esta página ya tiene los tres cargados — por eso todo lo de aquí abajo se ve y funciona de verdad, no son capturas de pantalla.</p>
+      </section>
+
+      <section id="grid">
+        <h2>3. El grid: por qué 12 columnas</h2>
+        <p><code>container</code> centra el contenido con un ancho máximo; <code>container-fluid</code> siempre ocupa el 100% del ancho disponible. El grid divide ese ancho en <strong>12 columnas</strong> — y no es un número que se les ocurrió nada más así: 12 se puede dividir exacto entre 2, 3, 4 y 6, así que puedes hacer mitades, tercios, cuartos y sextos sin que te sobre ni te falte espacio. Un <code>row</code> contiene columnas (<code>col-N</code>), y N dice cuántas de esas 12 ocupa cada una.</p>
+
+        <div class="example-preview">
+          <div class="row grid-demo">
+            <div class="col-4">col-4</div>
+            <div class="col-4">col-4</div>
+            <div class="col-4">col-4</div>
+          </div>
+        </div>
+        <div class="example-code"><code>&lt;div class="row"&gt;
+  &lt;div class="col-4"&gt;...&lt;/div&gt;
+  &lt;div class="col-4"&gt;...&lt;/div&gt;
+  &lt;div class="col-4"&gt;...&lt;/div&gt;
+&lt;/div&gt;</code></div>
+        <p>Por debajo, el grid está hecho con Flexbox — un <code>row</code> es <code>display: flex</code>, y cada <code>col-N</code> saca su ancho a partir de esa fracción de 12 (lo pueden confirmar inspeccionando cualquier <code>row</code> en el navegador). El <code>row</code> también trae un margen negativo a los lados, que cancela el padding que traen sus columnas por dentro — así el contenido de la primera y la última columna queda pegado al borde del contenedor, en vez de quedar recorrido hacia adentro.</p>
+      </section>
+
+      <section id="componentes">
+        <h2>4. Componentes más comunes</h2>
+        <p>Van en el mismo orden en que normalmente se arma una página: primero lo de arriba, al final lo de hasta abajo. En cada uno, antes del código, vale la pena entender qué problema resuelve y por qué funciona así — no solo memorizar el nombre de la clase.</p>
+
+        <h3>Navbar</h3>
+        <p>Un navbar tiene que resolver algo real: en pantalla ancha hay espacio para mostrar todos los links, pero en un celular no. En vez de escribir dos versiones del menú, Bootstrap usa un solo <code>&lt;ul&gt;</code> que vive dentro de un contenedor con la clase <code>collapse</code>. En pantallas chicas ese contenedor empieza oculto; un botón (<code>navbar-toggler</code>) con <code>data-bs-toggle="collapse"</code> le dice al JS de Bootstrap que, al hacer clic, le ponga o le quite la clase <code>show</code> a ese contenedor — eso es lo que lo hace aparecer y desaparecer. En pantallas anchas, Bootstrap simplemente ignora esa clase y hace que el menú se muestre siempre en fila.</p>
+        <p><code>sticky-top</code> usa <code>position: sticky</code> de CSS para que el navbar se quede pegado arriba al hacer scroll, sin necesitar JavaScript. Un dropdown adentro del navbar funciona con la misma idea de mostrar/ocultar, pero además usa Popper.js para decidir de qué lado abrir el menú según el espacio que haya en pantalla.</p>
+        <div class="example-preview">
+          <nav class="navbar navbar-expand-lg navbar-dark bg-primary rounded">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="#">Mi Sitio</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navEjemplo">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navEjemplo">
+                <ul class="navbar-nav">
+                  <li class="nav-item"><a class="nav-link active" href="#">Inicio</a></li>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Más</a>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="#">Opción 1</a></li>
+                      <li><a class="dropdown-item" href="#">Opción 2</a></li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+        </div>
+        <div class="example-code"><code>&lt;nav class="navbar navbar-expand-lg navbar-dark bg-primary"&gt;
+  &lt;div class="container-fluid"&gt;
+    &lt;a class="navbar-brand" href="#"&gt;Mi Sitio&lt;/a&gt;
+    &lt;button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navEjemplo"&gt;
+      &lt;span class="navbar-toggler-icon"&gt;&lt;/span&gt;
+    &lt;/button&gt;
+    &lt;div class="collapse navbar-collapse" id="navEjemplo"&gt;
+      &lt;ul class="navbar-nav"&gt;
+        &lt;li class="nav-item"&gt;&lt;a class="nav-link active" href="#"&gt;Inicio&lt;/a&gt;&lt;/li&gt;
+        &lt;li class="nav-item dropdown"&gt;
+          &lt;a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"&gt;Más&lt;/a&gt;
+          &lt;ul class="dropdown-menu"&gt;
+            &lt;li&gt;&lt;a class="dropdown-item" href="#"&gt;Opción 1&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a class="dropdown-item" href="#"&gt;Opción 2&lt;/a&gt;&lt;/li&gt;
+          &lt;/ul&gt;
+        &lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/nav&gt;</code></div>
+        <p><em>Achica la ventana del navegador para ver el botón hamburguesa aparecer — es literalmente el mismo truco de mostrar/ocultar que se acaba de explicar.</em></p>
+
+        <h3>Botones</h3>
+        <p>El color de un botón (<code>btn-primary</code>, <code>btn-success</code>...) no describe un color exacto, describe qué TIPO de acción es: "primary" es la acción principal, "danger" es algo que borra o daña, "success" confirma que algo salió bien. Esto importa porque, si más adelante cambian la paleta del sitio (lo van a ver en el Bloque 6, Personalizar), un botón "danger" sigue significando lo mismo aunque su color exacto cambie.</p>
+        <p><code>btn-outline-{color}</code> no es un botón distinto — es el mismo botón, pero en vez de rellenar el fondo, solo le pinta el borde y el texto de ese color, dejando el fondo transparente. El tamaño (<code>btn-sm</code>/<code>btn-lg</code>) ajusta el padding y el tamaño de letra juntos, no solo uno de los dos. El atributo <code>disabled</code> (ojo: es un atributo de HTML, no una clase de Bootstrap) es lo que de verdad impide el clic — que se vea gris es nada más una consecuencia de que el navegador ya sabe que ese botón está apagado.</p>
+        <div class="example-preview">
+          <button class="btn btn-primary me-2">Normal</button>
+          <button class="btn btn-outline-primary me-2">Outline</button>
+          <button class="btn btn-primary btn-sm me-2">Chico</button>
+          <button class="btn btn-primary btn-lg me-2">Grande</button>
+          <button class="btn btn-primary" disabled>Deshabilitado</button>
+        </div>
+        <div class="example-code"><code>&lt;button class="btn btn-primary"&gt;Normal&lt;/button&gt;
+&lt;button class="btn btn-outline-primary"&gt;Outline&lt;/button&gt;
+&lt;button class="btn btn-primary btn-sm"&gt;Chico&lt;/button&gt;
+&lt;button class="btn btn-primary btn-lg"&gt;Grande&lt;/button&gt;
+&lt;button class="btn btn-primary" disabled&gt;Deshabilitado&lt;/button&gt;</code></div>
+
+        <h3>Tipografía con utilidades</h3>
+        <p>Un <code>&lt;h1&gt;</code> normalmente hace dos cosas a la vez: le dice al navegador "este es el título más importante de la página" (eso importa para SEO y para lectores de pantalla) y también "muéstralo grande". Bootstrap separa esas dos cosas: las clases <code>display-1</code> a <code>display-6</code> solo controlan el tamaño, sin importar qué etiqueta las lleve — las puedes poner en un <code>&lt;h1&gt;</code> y sigue siendo el título principal, o hasta en un <code>&lt;p&gt;</code> si solo quieres el tamaño grande sin que cuente como encabezado. <code>.lead</code> resalta un párrafo de introducción (más grande y más ligero que el texto normal), pensado para ir justo debajo de un título.</p>
+        <div class="example-preview bg-primary text-white text-center rounded">
+          <h1 class="display-4 fw-bold">Título de bienvenida</h1>
+          <p class="lead mb-0">Un texto introductorio, un poco más grande que el normal.</p>
+        </div>
+        <div class="example-code"><code>&lt;div class="bg-primary text-white text-center p-4"&gt;
+  &lt;h1 class="display-4 fw-bold"&gt;Título de bienvenida&lt;/h1&gt;
+  &lt;p class="lead"&gt;Un texto introductorio, un poco más grande que el normal.&lt;/p&gt;
+&lt;/div&gt;</code></div>
+
+        <h3>Alerts</h3>
+        <p>Una alerta simple es solo CSS — un <code>&lt;div&gt;</code> con color de fondo según su clase. Lo que la hace "cerrable" son tres cosas trabajando juntas: <code>alert-dismissible</code> le hace espacio al botón de cerrar (le mete padding extra a la derecha); <code>fade</code> + <code>show</code> son las clases que Bootstrap usa para animar cuando algo aparece o desaparece; y el atributo <code>data-bs-dismiss="alert"</code> en el botón es lo que el JS de Bootstrap está escuchando — al hacer clic, le quita la clase <code>show</code> (dispara la animación de salida) y después borra el elemento por completo.</p>
+        <div class="example-preview">
+          <div class="alert alert-success" role="alert">Una alerta simple.</div>
+          <div class="alert alert-warning alert-dismissible fade show mb-0" role="alert">
+            <strong>Aviso:</strong> Esta se puede cerrar.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        </div>
+        <div class="example-code"><code>&lt;div class="alert alert-success" role="alert"&gt;Una alerta simple.&lt;/div&gt;
+
+&lt;div class="alert alert-warning alert-dismissible fade show" role="alert"&gt;
+  &lt;strong&gt;Aviso:&lt;/strong&gt; Esta se puede cerrar.
+  &lt;button type="button" class="btn-close" data-bs-dismiss="alert"&gt;&lt;/button&gt;
+&lt;/div&gt;</code></div>
+        <p><em>Ojo: cuando cierras una alerta, el elemento se borra del todo (no solo se esconde) — si la necesitas otra vez, hay que volver a crearla, no nomás mostrarla de nuevo.</em></p>
+
+        <h3>Button groups</h3>
+        <p>Un <code>btn-group</code> por sí solo nada más agrupa botones uno junto al otro. Lo interesante es cómo se convierte en un selector: un <code>input type="radio"</code> ya trae de HTML puro el comportamiento de "una sola opción entre varias con el mismo <code>name</code>". Bootstrap no inventa nada nuevo ahí, solo lo esconde con la clase <code>btn-check</code> (que le pone <code>display: none</code> al radio real) y usa su <code>&lt;label&gt;</code> como si fuera el botón. Al hacer clic en el label, se activa el radio escondido por la relación <code>for</code>/<code>id</code> — el mismo truco de accesibilidad que ya conocen de los formularios, nada nuevo de Bootstrap.</p>
+        <div class="example-preview">
+          <div class="btn-group" role="group" aria-label="Ejemplo">
+            <input type="radio" class="btn-check" name="ejemplo-radio" id="er1" autocomplete="off" checked />
+            <label class="btn btn-outline-primary" for="er1">Opción A</label>
+            <input type="radio" class="btn-check" name="ejemplo-radio" id="er2" autocomplete="off" />
+            <label class="btn btn-outline-primary" for="er2">Opción B</label>
+            <input type="radio" class="btn-check" name="ejemplo-radio" id="er3" autocomplete="off" />
+            <label class="btn btn-outline-primary" for="er3">Opción C</label>
+          </div>
+        </div>
+        <div class="example-code"><code>&lt;div class="btn-group" role="group"&gt;
+  &lt;input type="radio" class="btn-check" name="radio" id="op1" checked&gt;
+  &lt;label class="btn btn-outline-primary" for="op1"&gt;Opción A&lt;/label&gt;
+  &lt;input type="radio" class="btn-check" name="radio" id="op2"&gt;
+  &lt;label class="btn btn-outline-primary" for="op2"&gt;Opción B&lt;/label&gt;
+&lt;/div&gt;</code></div>
+
+        <h3>Badges</h3>
+        <p>Un badge normal es solo una etiqueta chica con fondo — lo difícil es pegarlo en la esquina de otro elemento sin que empuje el resto del layout. Para eso se juntan tres utilidades de posición: el elemento de afuera necesita <code>position-relative</code> (sirve de referencia), el badge usa <code>position-absolute</code> con <code>top-0 start-100</code> (lo manda a la esquina de arriba a la derecha), y <code>translate-middle</code> lo mueve medio ancho y medio alto hacia atrás — así el CENTRO del badge queda justo sobre la esquina, no su borde.</p>
+        <div class="example-preview">
+          <span class="badge text-bg-primary me-2">Nuevo</span>
+          <span class="badge text-bg-danger me-4">-20%</span>
+          <button class="btn btn-primary position-relative">
+            Inbox
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">3</span>
+          </button>
+        </div>
+        <div class="example-code"><code>&lt;span class="badge text-bg-primary"&gt;Nuevo&lt;/span&gt;
+
+&lt;button class="btn btn-primary position-relative"&gt;
+  Inbox
+  &lt;span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"&gt;3&lt;/span&gt;
+&lt;/button&gt;</code></div>
+
+        <h3>Cards</h3>
+        <p>Una card a propósito es un contenedor bien simple: no le importa qué le pongas adentro, solo pone un borde, una esquina redondeada y separación pareja entre sus partes (<code>card-body</code>, <code>card-title</code>, <code>card-text</code>). Por ser tan simple, la misma card sirve para un producto de catálogo, un perfil de usuario o una noticia — el componente no asume nada del contenido, solo del contenedor.</p>
+        <div class="example-preview">
+          <div class="card" style="max-width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title">Título de la card</h5>
+              <p class="card-text">Un texto breve de ejemplo dentro del cuerpo de la tarjeta.</p>
+              <a href="#" class="btn btn-primary">Ir</a>
+            </div>
+          </div>
+        </div>
+        <div class="example-code"><code>&lt;div class="card"&gt;
+  &lt;img src="..." class="card-img-top" alt="..."&gt;
+  &lt;div class="card-body"&gt;
+    &lt;h5 class="card-title"&gt;Título de la card&lt;/h5&gt;
+    &lt;p class="card-text"&gt;Un texto breve de ejemplo.&lt;/p&gt;
+    &lt;a href="#" class="btn btn-primary"&gt;Ir&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></div>
+
+        <h3>Carousel</h3>
+        <p>Un error común es pensar que el carrusel "carga" la siguiente imagen cuando pasas de slide. En realidad TODAS las imágenes ya están en el HTML desde que la página cargó; lo único que cambia es cuál <code>carousel-item</code> tiene la clase <code>active</code> en ese momento — las demás están escondidas con CSS. El "salto" entre slides es una transición de CSS que dispara el JavaScript, no una carga nueva de contenido. Los botones de indicador (los puntitos) y las flechas de prev/next funcionan porque, con <code>data-bs-target</code>, apuntan al mismo <code>id</code> del carrusel — así el JS sabe a cuál controlar, aunque haya varios carruseles en la misma página.</p>
+        <div class="example-preview">
+          <div id="carruselTeoria" class="carousel slide">
+            <div class="carousel-indicators">
+              <button type="button" data-bs-target="#carruselTeoria" data-bs-slide-to="0" class="active"></button>
+              <button type="button" data-bs-target="#carruselTeoria" data-bs-slide-to="1"></button>
+            </div>
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <div class="bg-secondary text-white text-center py-5 rounded">Diapositiva 1</div>
+              </div>
+              <div class="carousel-item">
+                <div class="bg-secondary text-white text-center py-5 rounded">Diapositiva 2</div>
+              </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carruselTeoria" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carruselTeoria" data-bs-slide="next">
+              <span class="carousel-control-next-icon"></span>
+            </button>
+          </div>
+        </div>
+        <div class="example-code"><code>&lt;div id="carruselTeoria" class="carousel slide"&gt;
+  &lt;div class="carousel-indicators"&gt;
+    &lt;button data-bs-target="#carruselTeoria" data-bs-slide-to="0" class="active"&gt;&lt;/button&gt;
+    &lt;button data-bs-target="#carruselTeoria" data-bs-slide-to="1"&gt;&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div class="carousel-inner"&gt;
+    &lt;div class="carousel-item active"&gt;...&lt;/div&gt;
+    &lt;div class="carousel-item"&gt;...&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;button class="carousel-control-prev" data-bs-target="#carruselTeoria" data-bs-slide="prev"&gt;...&lt;/button&gt;
+  &lt;button class="carousel-control-next" data-bs-target="#carruselTeoria" data-bs-slide="next"&gt;...&lt;/button&gt;
+&lt;/div&gt;</code></div>
+
+        <h3>Forms</h3>
+        <p>Bootstrap solo resuelve la parte de cómo SE VE un formulario (<code>form-control</code>, <code>form-label</code>, <code>form-check</code>) — a propósito no toca nada de cómo funciona. Eso quiere decir que la relación <code>id</code>/<code>for</code> entre un input y su label sigue siendo cosa tuya, igual que en un formulario sin ningún framework; Bootstrap no adivina esa relación ni valida datos solo (para eso trae otras clases aparte, <code>is-valid</code>/<code>is-invalid</code>, que no vemos en esta clase).</p>
+        <div class="example-preview">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <label class="form-label" for="fNombre">Nombre</label>
+              <input type="text" id="fNombre" class="form-control" />
+            </div>
+            <div class="col-md-6 mb-2">
+              <label class="form-label" for="fCorreo">Correo</label>
+              <input type="email" id="fCorreo" class="form-control" />
+            </div>
+          </div>
+        </div>
+        <div class="example-code"><code>&lt;div class="row"&gt;
+  &lt;div class="col-md-6"&gt;
+    &lt;label class="form-label" for="fNombre"&gt;Nombre&lt;/label&gt;
+    &lt;input type="text" id="fNombre" class="form-control"&gt;
+  &lt;/div&gt;
+  &lt;div class="col-md-6"&gt;
+    &lt;label class="form-label" for="fCorreo"&gt;Correo&lt;/label&gt;
+    &lt;input type="email" id="fCorreo" class="form-control"&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></div>
+
+        <h3>SVG Icons</h3>
+        <p>Un ícono SVG no es una imagen como las de siempre — no hay pixeles guardados en un archivo, hay puras coordenadas (el atributo <code>d</code> del <code>&lt;path&gt;</code>) que el navegador dibuja en el momento, dentro de un lienzo que define <code>viewBox</code>. Por eso el mismo ícono se ve nítido a 16px o a 200px: en cada tamaño el navegador vuelve a dibujar las líneas, no está estirando pixeles que ya existían. Y como el color se pone con el atributo <code>fill</code> (no con un CSS de imagen de fondo), cambiarlo es tan simple como cambiar ese valor.</p>
+        <div class="example-preview">
+          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="#0d6efd" viewBox="0 0 16 16">
+            <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zM6.5 5.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0zM8 8a1 1 0 0 1 1 1v3a1 1 0 1 1-2 0V9a1 1 0 0 1 1-1z" />
+          </svg>
+        </div>
+        <div class="example-code"><code>&lt;svg width="40" height="40" fill="#0d6efd" viewBox="0 0 16 16"&gt;
+  &lt;path d="..." /&gt;
+&lt;/svg&gt;</code></div>
+      </section>
+
+      <section id="responsivo">
+        <h2>5. Responsividad: por qué "mobile-first"</h2>
+        <p>Las clases de columna aceptan un breakpoint: <code>col-{breakpoint}-{N}</code>. Lo importante no es memorizar los números, sino entender la lógica: TODAS las condiciones de Bootstrap son <code>min-width</code>, nunca <code>max-width</code>. Eso quiere decir que una clase sin breakpoint (<code>col-12</code>) es la base para cualquier pantalla, y cada breakpoint extra (<code>col-md-6</code>) solo se prende a partir de cierto ancho hacia arriba, sin tope. Por eso conviene diseñar primero para celular: el CSS que no se sobreescribe con un breakpoint más grande se queda aplicando en pantallas grandes también, así que más vale que ese CSS base sea el más simple (una columna, apilado), y no al revés.</p>
+        <table class="table table-bordered w-auto">
+          <thead><tr><th>Breakpoint</th><th>Se prende desde</th></tr></thead>
+          <tbody>
+            <tr><td><code>sm</code></td><td>576px</td></tr>
+            <tr><td><code>md</code></td><td>768px</td></tr>
+            <tr><td><code>lg</code></td><td>992px</td></tr>
+            <tr><td><code>xl</code></td><td>1200px</td></tr>
+          </tbody>
+        </table>
+        <div class="example-code"><code>&lt;div class="col-12 col-md-6 col-lg-3"&gt;...&lt;/div&gt;
+&lt;!-- 1 columna en celular, 2 en tablet, 4 en escritorio --&gt;</code></div>
+        <p><em>Achica y agranda esta misma ventana para ver el ejemplo de la sección 3 (Grid) reacomodarse solo — por debajo son las mismas media queries min-width que acabamos de ver.</em></p>
+      </section>
+
+      <section id="personalizar" class="border-bottom-0">
+        <h2>6. Personalizar: variables que cambian sin recargar</h2>
+        <p>Hasta la versión 4, la única forma de cambiar los colores de Bootstrap era con Sass: recompilabas todo el framework con tus valores nuevos ANTES de que el navegador viera una sola línea de CSS. Desde la versión 5.3, Bootstrap también deja su paleta como variables de CSS (<code>--bs-primary</code>, <code>--bs-secondary</code>...) — y esas sí las resuelve el navegador mientras la página ya está corriendo, no antes. La diferencia importa: una variable de CSS la puedes leer y cambiar con JavaScript después de que la página ya cargó (como abajo), algo que una variable de Sass ya no te deja hacer, porque para cuando el navegador la ve, ya se convirtió en CSS normal y fijo.</p>
+        <p>Cambiar <code>--bs-primary</code> en <code>:root</code> cambia el color en TODOS los componentes que la usan (botones, links, bordes) a la vez, porque esos componentes no tienen el color escrito directo — tienen escrito <code>var(--bs-primary)</code>, y el navegador va a buscar ese valor cada vez que pinta la página.</p>
+        <div class="example-preview">
+          <button class="btn btn-primary me-3" id="btnDemoColor">Botón de ejemplo</button>
+          <button class="btn btn-outline-secondary btn-sm" id="btnCambiarColor" type="button">Cambiar --bs-primary en vivo</button>
+        </div>
+        <div class="example-code"><code>:root {
+  --bs-primary: #6a1b9a;
+  --bs-primary-rgb: 106, 27, 154;
+}</code></div>
+        <p><em>El botón "Cambiar" de arriba hace justo eso con una línea de JavaScript, para que vean el efecto sin recargar la página — pero para la tarea, con escribir el bloque <code>:root</code> del código de arriba ya alcanza, no hace falta JavaScript.</em></p>
+      </section>
+    </div>
+
+    <footer class="text-center text-muted py-4">
+      <p>Para leer más:
+        <a href="https://getbootstrap.com/docs/5.3/getting-started/introduction/">Introducción</a> ·
+        <a href="https://getbootstrap.com/docs/5.3/layout/grid/">Grid</a> ·
+        <a href="https://getbootstrap.com/docs/5.3/components/navbar/">Navbar</a> ·
+        <a href="https://getbootstrap.com/docs/5.3/forms/overview/">Forms</a> ·
+        <a href="https://getbootstrap.com/docs/5.3/customize/css-variables/">Variables CSS</a>
+      </p>
+    </footer>
+
+    <script>
+      const btnToggle = document.getElementById("btnCambiarColor");
+      let personalizado = false;
+      btnToggle.addEventListener("click", () => {
+        personalizado = !personalizado;
+        document.documentElement.style.setProperty("--bs-primary", personalizado ? "#6a1b9a" : "#0d6efd");
+        document.documentElement.style.setProperty("--bs-primary-rgb", personalizado ? "106, 27, 154" : "13, 110, 253");
+      });
+    </script>
+  </body>
+</html>

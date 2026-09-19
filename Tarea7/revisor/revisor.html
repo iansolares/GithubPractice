@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <title>Revisor Automático - Frameworks (Bootstrap)</title>
+    <link rel="stylesheet" href="style.css" />
+    <script async src="revisor.js"></script>
+  </head>
+  <body>
+    <header>
+      <h1>Revisor Automático - Frameworks (Bootstrap)</h1>
+    </header>
+
+    <main>
+      <section class="code-input-section">
+        <h2>Pega tu código o sube tu archivo:</h2>
+        <input type="file" id="fileinput" accept=".html,text/html" />
+        <textarea id="codeInput" rows="6" placeholder="Pega aquí tu index.html..."></textarea>
+        <button id="processCodeButton">Procesar Código</button>
+      </section>
+
+      <section class="progress-section">
+        <div class="wrapper">
+          <div class="progress-bar">
+            <span id="progress-bar-fill-text">Calificación <span id="score">0</span>%</span>
+            <span id="progress-bar-fill"></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="criteria-section">
+        <ul>
+          <li class="punto">
+            (1) Navbar<br />
+            <input type="checkbox" /><label id="T1S1">(1A) Existe navbar-toggler + collapse conectados por el mismo id</label><br />
+            <input type="checkbox" /><label id="T1S2">(1B) Ese navbar tiene un dropdown-menu adentro</label><br />
+          </li>
+          <li class="punto">
+            (2) Hero<br />
+            <input type="checkbox" /><label id="T2S1">(2A) Existe una clase display-1 a display-6 junto con un .lead</label><br />
+            <input type="checkbox" /><label id="T2S2">(2B) Ese bloque tiene un color de fondo con una utilidad bg-*</label><br />
+          </li>
+          <li class="punto">
+            (3) Alerts<br />
+            <input type="checkbox" /><label id="T3S1">(3A) Existe al menos una alerta simple</label><br />
+            <input type="checkbox" /><label id="T3S2">(3B) Existe una alerta dismissible con su btn-close funcional</label><br />
+          </li>
+          <li class="punto">
+            (4) Button group<br />
+            <input type="checkbox" /><label id="T4S1">(4A) btn-group con al menos 3 radios btn-check del mismo name</label><br />
+            <input type="checkbox" /><label id="T4S2">(4B) Cada radio tiene su label bien asociado (for/id)</label><br />
+          </li>
+          <li class="punto">
+            (5) Cards + Grid<br />
+            <input type="checkbox" /><label id="T5S1">(5A) Al menos 4 cards en columnas responsivas (2+ breakpoints)</label><br />
+            <input type="checkbox" /><label id="T5S2">(5B) Al menos una card tiene un badge adentro</label><br />
+          </li>
+          <li class="punto">
+            (6) Carousel<br />
+            <input type="checkbox" /><label id="T6S1">(6A) Al menos 3 carousel-item, exactamente uno active</label><br />
+            <input type="checkbox" /><label id="T6S2">(6B) Indicadores y controles conectados al mismo id</label><br />
+          </li>
+          <li class="punto">
+            (7) Form<br />
+            <input type="checkbox" /><label id="T7S1">(7A) Dos campos en la misma fila (row + col-*)</label><br />
+            <input type="checkbox" /><label id="T7S2">(7B) Checkbox y botón de enviar en el mismo form</label><br />
+          </li>
+          <li class="punto">
+            (8) Footer + SVG<br />
+            <input type="checkbox" /><label id="T8S1">(8A) Existe un footer</label><br />
+            <input type="checkbox" /><label id="T8S2">(8B) Ese footer tiene al menos 2 svg adentro</label><br />
+          </li>
+        </ul>
+      </section>
+    </main>
+  </body>
+</html>
