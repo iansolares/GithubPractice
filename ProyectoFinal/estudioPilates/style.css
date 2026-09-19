@@ -1,0 +1,32 @@
+/* COLOR PALLETTE
+#EDEEE9 — paper (soft stone-grey, cool cast, not warm cream)
+#1F221C — ink (near-black with a green undertone, not flat #000)
+#8F948A — stone (mid grey-green, for secondary text/dividers)
+#3B4A3D — pine (deep muted green, primary accent)
+#C9CCC3 — silver (light neutral, for borders/hairlines — this is your "silver")
+*/
+
+/*FONT FAMILY
+Type: One serif for headlines with real character (Fraunces — has the boutique-editorial weight without being
+the generic high-contrast serif), one clean grotesque for body/UI (Archivo — precise, structured, fits 
+pilates' control-and-alignment feel better than the ubiquitous Inter).
+*/
+
+html {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.mainNavBar {
+  background-color: greenyellow;
+}
+
+h1.mainNav a {
+  text-decoration: none;
+  color: black;
+}
+
+table th {
+  border-color: black;
+  border-width: 2px;
+  border-style: solid;
+}
