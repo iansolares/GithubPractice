@@ -1,0 +1,471 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Teoría: Flexbox, Media Queries y Custom Properties</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 0 20px;
+        line-height: 1.5;
+        color: #222;
+      }
+      header {
+        border-bottom: 2px solid #333;
+        padding: 16px 0;
+      }
+      nav a {
+        margin-right: 12px;
+      }
+      section {
+        padding: 24px 0;
+        border-bottom: 1px solid #ddd;
+      }
+      table {
+        border-collapse: collapse;
+        margin: 12px 0;
+        width: 100%;
+      }
+      table,
+      th,
+      td {
+        border: 1px solid #999;
+        padding: 6px 10px;
+      }
+      pre {
+        background: #f4f4f4;
+        padding: 12px;
+        overflow-x: auto;
+        border-left: 4px solid #888;
+      }
+      code {
+        font-family: Consolas, monospace;
+      }
+      footer {
+        padding: 16px 0;
+        color: #666;
+        font-size: 0.9em;
+      }
+      .axis-demo {
+        display: flex;
+        gap: 10px;
+        background: #eee;
+        padding: 16px;
+        border-radius: 8px;
+        margin: 12px 0;
+      }
+      .axis-demo div {
+        background: #659cef;
+        color: white;
+        padding: 12px;
+        border-radius: 4px;
+        text-align: center;
+        flex: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Teoría: Flexbox, Media Queries y Custom Properties</h1>
+      <p>
+        Cómo acomodar elementos en fila o columna, cómo adaptar un sitio a
+        distintas pantallas, y cómo evitar repetir valores en tu CSS.
+      </p>
+      <nav>
+        <a href="#flexbox">Flexbox</a>
+        <a href="#media-queries">Media Queries</a>
+        <a href="#custom-properties">Custom Properties</a>
+        <a href="#grid">Grid (extra)</a>
+      </nav>
+    </header>
+
+    <main>
+      <section id="flexbox">
+        <h2>1. Flexbox</h2>
+        <p>
+          <code>display: flex</code> convierte a un elemento en un contenedor
+          flex — sus hijos directos ("flex items") dejan de seguir el flujo
+          normal del documento y se acomodan según las reglas de Flexbox.
+        </p>
+        <pre><code>.contenedor {
+  display: flex;
+}</code></pre>
+
+        <h3>Main axis y cross axis</h3>
+        <p>
+          Todo contenedor flex tiene 2 ejes: el <strong>main axis</strong> (eje
+          principal) y el <strong>cross axis</strong> (eje cruzado,
+          perpendicular al principal). <code>flex-direction</code> decide cuál
+          es cuál:
+        </p>
+        <table>
+          <thead>
+            <tr>
+              <th>flex-direction</th>
+              <th>Main axis</th>
+              <th>Cross axis</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>row</code> (default)</td>
+              <td>Horizontal, izquierda→derecha</td>
+              <td>Vertical</td>
+            </tr>
+            <tr>
+              <td><code>row-reverse</code></td>
+              <td>Horizontal, derecha→izquierda</td>
+              <td>Vertical</td>
+            </tr>
+            <tr>
+              <td><code>column</code></td>
+              <td>Vertical, arriba→abajo</td>
+              <td>Horizontal</td>
+            </tr>
+            <tr>
+              <td><code>column-reverse</code></td>
+              <td>Vertical, abajo→arriba</td>
+              <td>Horizontal</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>
+          Los valores "reverse" solo voltean el <strong>sentido</strong> del
+          main axis — no intercambian cuál eje es cuál.
+        </p>
+
+        <h3>flex-wrap</h3>
+        <p>
+          Por default (<code>nowrap</code>), todos los items se aprietan en una
+          sola línea, encogiéndose si hace falta. Con <code>wrap</code>, los que
+          no caben pasan a una nueva línea — esa nueva línea se acomoda a lo
+          largo del <strong>cross axis</strong>.
+        </p>
+        <pre><code>.contenedor {
+  display: flex;
+  flex-wrap: wrap;
+}</code></pre>
+
+        <h3>
+          Alinear: justify-content, align-items, align-self, align-content
+        </h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Propiedad</th>
+              <th>Eje que usa</th>
+              <th>Afecta a...</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>justify-content</code></td>
+              <td>Main axis</td>
+              <td>Todos los items</td>
+            </tr>
+            <tr>
+              <td><code>align-items</code></td>
+              <td>Cross axis</td>
+              <td>Todos los items (dentro de su línea)</td>
+            </tr>
+            <tr>
+              <td><code>align-self</code></td>
+              <td>Cross axis</td>
+              <td>Un solo item (sobrescribe a align-items)</td>
+            </tr>
+            <tr>
+              <td><code>align-content</code></td>
+              <td>Cross axis</td>
+              <td>Líneas completas (solo se nota si hay más de una línea)</td>
+            </tr>
+          </tbody>
+        </table>
+        <pre><code>.contenedor {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.item-especial {
+  align-self: flex-end;
+}</code></pre>
+
+        <h3>flex-basis, flex-grow, flex-shrink</h3>
+        <ul>
+          <li>
+            <code>flex-basis</code>: el tamaño "ideal" que un item pide, antes
+            de ajustes.
+          </li>
+          <li>
+            <code>flex-shrink</code>: qué tanto puede encoger un item si TODOS
+            piden más espacio del que hay (0 = nunca encoge).
+          </li>
+          <li>
+            <code>flex-grow</code>: qué tanto puede crecer un item si SOBRA
+            espacio (0 = nunca crece, el default).
+          </li>
+        </ul>
+        <p>
+          Se pueden combinar en el shorthand
+          <code>flex: grow shrink basis;</code>
+        </p>
+        <pre><code>.tarjeta {
+  flex: 1 1 200px;
+}</code></pre>
+      </section>
+
+      <section id="media-queries">
+        <h2>2. Media Queries</h2>
+        <p>
+          Un media query aplica un bloque de CSS SOLO si se cumple una condición
+          sobre el dispositivo — casi siempre el ancho de la ventana, pero
+          también existen alto, orientación, y otros.
+        </p>
+        <pre><code>@media (condición) {
+  selector {
+    propiedad: valor;
+  }
+}</code></pre>
+
+        <h3>Las condiciones más comunes</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Condición</th>
+              <th>Reacciona a...</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>min-width</code></td>
+              <td>La pantalla es AL MENOS esta de ancho</td>
+            </tr>
+            <tr>
+              <td><code>max-width</code></td>
+              <td>La pantalla es COMO MÁXIMO esta de ancho</td>
+            </tr>
+            <tr>
+              <td><code>min-height</code> / <code>max-height</code></td>
+              <td>Lo mismo, pero con el alto de la ventana</td>
+            </tr>
+            <tr>
+              <td><code>orientation</code></td>
+              <td>
+                <code>landscape</code> (más ancha que alta) o
+                <code>portrait</code> (al revés) — sin importar el tamaño exacto
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Combinar condiciones con and</h3>
+        <p>
+          Para un rango específico (ni muy chico ni muy grande), se combinan dos
+          condiciones:
+        </p>
+        <pre><code>@media (min-width: 600px) and (max-width: 900px) {
+  .menu {
+    font-size: 1.1rem;
+  }
+}</code></pre>
+
+        <h3>Diseño "mobile-first"</h3>
+        <p>
+          El CSS base (sin ningún media query) es para la pantalla más chica.
+          Los media query van agregando/cambiando cosas a medida que la pantalla
+          crece — casi siempre con <code>min-width</code>. Es más fácil de
+          mantener que empezar por escritorio y "romper" hacia abajo.
+        </p>
+        <pre><code>/* Base: celular */
+.menu {
+  flex-direction: column;
+}
+
+/* Ya cabe horizontal */
+@media (min-width: 600px) {
+  .menu {
+    flex-direction: row;
+  }
+}</code></pre>
+        <p>
+          <em
+            >Ojo con el ORDEN en el archivo: si dos media query aplican al mismo
+            tiempo (por ejemplo <code>min-width:400px</code> y
+            <code>max-width:850px</code> en una pantalla de 700px), gana el que
+            está escrito más abajo — igual que cualquier otra regla de CSS.</em
+          >
+        </p>
+      </section>
+
+      <section id="custom-properties">
+        <h2>3. Custom Properties (variables CSS)</h2>
+        <p>
+          Una custom property se declara con <code>--</code> al inicio del
+          nombre, normalmente dentro de <code>:root</code> (para que esté
+          disponible en toda la página). Se usa en cualquier lugar con
+          <code>var(--nombre)</code>.
+        </p>
+        <pre><code>:root {
+  --color-principal: seagreen;
+  --espaciado: 1rem;
+}
+
+.tarjeta {
+  background-color: var(--color-principal);
+  padding: var(--espaciado);
+}</code></pre>
+
+        <h3>Reasignar el valor de una variable</h3>
+        <p>
+          El valor de una variable se puede REASIGNAR dentro de un selector más
+          específico, o dentro de un media query — todo lo que use
+          <code>var(--nombre)</code> ahí adentro (o después, en la cascada) usa
+          el nuevo valor, sin tener que tocar cada regla una por una.
+        </p>
+        <pre><code>@media (min-width: 900px) {
+  :root {
+    --espaciado: 2rem;
+  }
+}</code></pre>
+        <p>
+          Esto es especialmente útil en diseño responsivo: en vez de repetir la
+          misma fórmula con un valor distinto en cada media query, escribes la
+          fórmula UNA vez con una variable, y cada breakpoint solo cambia el
+          número.
+        </p>
+
+        <p>
+          <strong>Importante:</strong> una variable NO se puede usar dentro de
+          la <em>condición</em> de un <code>@media</code> — no existe
+          <code>@media (min-width: var(--algo))</code>, eso todavía no es
+          estándar en CSS. Lo que sí funciona es cambiar el <em>valor</em> de la
+          variable adentro del bloque, como en el ejemplo de arriba.
+        </p>
+        <h3>Extra - Cursor</h3>
+        <p>
+          Cuando un elemento clickeable (como un botón con estilos
+          personalizados) pierde su apariencia nativa, a veces también deja de
+          sentirse "clickeable". <code>cursor: pointer</code> le avisa al
+          usuario que ese elemento se puede presionar, aunque visualmente ya no
+          se parezca al botón por default del navegador. Es un detalle pequeño,
+          pero se nota cuando falta.
+        </p>
+        <pre><code>.boton-personalizado {
+  cursor: pointer;
+}</code></pre>
+      </section>
+
+      <section id="grid">
+        <h2>4. CSS Grid (el otro sistema de layout)</h2>
+        <p>
+          Flexbox acomoda en <strong>una dimensión a la vez</strong> (fila O
+          columna). <strong>Grid</strong> acomoda en
+          <strong>dos dimensiones a la vez</strong> (filas Y columnas
+          simultáneas) — mejor para diseños tipo cuadrícula real, como un
+          dashboard o una galería con posiciones fijas.
+        </p>
+
+        <h3>Lo básico</h3>
+        <pre><code>.tablero {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 140px);
+  gap: 1rem;
+}</code></pre>
+        <p>
+          <code>repeat(3, 1fr)</code> crea 3 columnas de ancho igual (<code
+            >fr</code
+          >
+          = "fracción" del espacio disponible) sin necesidad de
+          <code>calc()</code> ni <code>flex-basis</code> — Grid hace esa cuenta
+          por ti.
+        </p>
+
+        <h3>Áreas con nombre</h3>
+        <p>
+          Una de las cosas que Flexbox no puede hacer: nombrar zonas del layout
+          y acomodar elementos por nombre, no por orden.
+        </p>
+        <pre><code>.pagina {
+  display: grid;
+  grid-template-areas:
+    "cabecera cabecera"
+    "menu     contenido"
+    "pie      pie";
+  grid-template-columns: 200px 1fr;
+}
+
+.menu { grid-area: menu; }
+.contenido { grid-area: contenido; }</code></pre>
+
+        <h3>¿Cuándo uno u otro?</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Situación</th>
+              <th>Mejor opción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>No sabes cuántos elementos habrá (una lista que crece)</td>
+              <td>Flexbox</td>
+            </tr>
+            <tr>
+              <td>Quieres alinear cosas en una sola fila o columna</td>
+              <td>Flexbox</td>
+            </tr>
+            <tr>
+              <td>
+                Necesitas una estructura de página completa
+                (header/sidebar/contenido/footer)
+              </td>
+              <td>Grid</td>
+            </tr>
+            <tr>
+              <td>Quieres que algo ocupe varias filas o columnas a la vez</td>
+              <td>Grid</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>
+          <em
+            >En la práctica, muchos sitios usan Grid para la estructura general
+            de la página, y Flexbox para acomodar el contenido DENTRO de cada
+            sección de esa estructura — no son opciones excluyentes.</em
+          >
+        </p>
+      </section>
+    </main>
+
+    <footer>
+      <p>
+        Para leer más:
+        <a
+          href="https://developer.mozilla.org/es/docs/Web/CSS/CSS_flexible_box_layout"
+          >MDN — Flexbox</a
+        >
+        ·
+        <a
+          href="https://developer.mozilla.org/es/docs/Web/CSS/CSS_media_queries"
+          >MDN — Media Queries</a
+        >
+        ·
+        <a
+          href="https://developer.mozilla.org/es/docs/Web/CSS/Using_CSS_custom_properties"
+          >MDN — Custom Properties</a
+        >
+        ·
+        <a href="https://developer.mozilla.org/es/docs/Web/CSS/CSS_grid_layout"
+          >MDN — Grid</a
+        >
+        ·
+        <a href="https://flexboxsheet.com/"
+          >flexboxsheet.com — referencia rápida</a
+        >
+      </p>
+    </footer>
+  </body>
+</html>
