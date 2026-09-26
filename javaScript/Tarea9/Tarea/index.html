@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Súper Fresco — Carrito</title>
+    <link rel="stylesheet" href="style.css" />
+    <script defer src="carrito-compras.js"></script>
+  </head>
+  <body>
+    <header>
+      <h1>Súper Fresco</h1>
+      <span>Tarea: Carrito de compras</span>
+    </header>
+
+    <main>
+      <section class="catalogo">
+        <h2>Catálogo</h2>
+        <div class="productos">
+          <div class="producto">
+            <h3>Manzanas</h3>
+            <p class="precio">$10.00</p>
+            <p class="stock" data-indice="0">Stock: 5</p>
+            <button onclick="manejarAgregar(0)">Agregar</button>
+          </div>
+          <div class="producto">
+            <h3>Leche</h3>
+            <p class="precio">$18.00</p>
+            <p class="stock" data-indice="1">Sin stock</p>
+            <button onclick="manejarAgregar(1)">Agregar</button>
+          </div>
+          <div class="producto">
+            <h3>Pan artesanal</h3>
+            <p class="precio">$25.00</p>
+            <p class="stock" data-indice="2">Stock: 3</p>
+            <button onclick="manejarAgregar(2)">Agregar</button>
+          </div>
+          <div class="producto">
+            <h3>Zanahorias</h3>
+            <p class="precio">$8.00</p>
+            <p class="stock" data-indice="3">Stock: 8</p>
+            <button onclick="manejarAgregar(3)">Agregar</button>
+          </div>
+        </div>
+
+        <div class="buscar">
+          <h2>Buscar producto (extra)</h2>
+          <input
+            type="text"
+            id="inputBuscar"
+            placeholder="Nombre exacto, ej. Leche"
+          />
+          <button onclick="manejarBuscar()">Buscar</button>
+          <span id="resultadoBuscar"></span>
+        </div>
+      </section>
+
+      <section class="carrito">
+        <h2>Tu carrito</h2>
+        <ul id="listaCarrito"></ul>
+        <p class="total">Total: <span id="totalCarrito">$0.00</span></p>
+        <button onclick="manejarVaciar()">Vaciar carrito</button>
+      </section>
+    </main>
+  </body>
+</html>

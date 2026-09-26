@@ -1,0 +1,176 @@
+:root {
+  --color-primario: #2e7d32;
+  --color-primario-hover: #256428;
+  --color-peligro: #c62828;
+  --color-fondo: #f4f9f4;
+  --color-superficie: white;
+  --color-texto: #1b3a1f;
+  --color-texto-suave: #666;
+  --color-borde: #d7e5d8;
+  --color-divisor: #eee;
+  --radio-tarjeta: 10px;
+  --radio-boton: 20px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-fondo);
+  color: var(--color-texto);
+}
+
+header {
+  background-color: var(--color-primario);
+  color: white;
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1.5rem;
+}
+
+@media (max-width: 700px) {
+  main {
+    grid-template-columns: 1fr;
+  }
+}
+
+.catalogo h2,
+.carrito h2 {
+  margin-top: 0;
+  font-size: 1.2rem;
+  color: var(--color-primario);
+}
+
+.productos {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.producto {
+  background: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-tarjeta);
+  padding: 1rem;
+  text-align: center;
+}
+
+.producto h3 {
+  margin: 0.25rem 0;
+  font-size: 1rem;
+}
+
+.producto .precio {
+  font-weight: bold;
+  color: var(--color-primario);
+  margin: 0.25rem 0;
+}
+
+.producto .stock {
+  font-size: 0.85rem;
+  color: var(--color-texto-suave);
+  margin-bottom: 0.5rem;
+}
+
+.producto button {
+  border: none;
+  background-color: var(--color-primario);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radio-boton);
+  cursor: pointer;
+}
+
+.producto button:hover {
+  background-color: var(--color-primario-hover);
+}
+
+.carrito {
+  background: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-tarjeta);
+  padding: 1rem;
+  align-self: start;
+}
+
+#listaCarrito {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem;
+  min-height: 2rem;
+}
+
+#listaCarrito li {
+  padding: 0.35rem 0;
+  border-bottom: 1px solid var(--color-divisor);
+}
+
+.total {
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+.carrito button {
+  border: none;
+  background-color: var(--color-peligro);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radio-boton);
+  cursor: pointer;
+  width: 100%;
+}
+
+.buscar {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-divisor);
+}
+
+.buscar input {
+  width: 100%;
+  padding: 0.4rem;
+  margin-bottom: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.buscar button {
+  border: none;
+  background-color: var(--color-primario);
+  color: white;
+  padding: 0.4rem 1rem;
+  border-radius: var(--radio-boton);
+  cursor: pointer;
+}
+
+.buscar button:hover {
+  background-color: var(--color-primario-hover);
+}
+
+#resultadoBuscar {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: #444;
+}

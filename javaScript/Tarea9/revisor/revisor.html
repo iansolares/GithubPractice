@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <title>Revisor Automático</title>
+    <link rel="stylesheet" href="revisor.css" />
+    <script defer src="revisor.js"></script>
+  </head>
+  <body>
+    <header>
+      <h1>Revisor Automático</h1>
+    </header>
+
+    <main>
+      <section class="code-input-section">
+        <h2>Pega tu código o sube tu archivo:</h2>
+        <input type="file" id="fileinput" accept=".js,text/javascript" />
+        <textarea id="codeInput" rows="5" placeholder="Pega aquí tu carrito-compras.js..."></textarea>
+        <button id="processCodeButton">Procesar Código</button>
+      </section>
+
+      <section class="progress-section">
+        <div class="wrapper">
+          <div class="progress-bar">
+            <span id="progress-bar-fill-text">Calificación <span id="score">0</span>%</span>
+            <span id="progress-bar-fill"></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="criteria-section">
+        <ul id="checklist"></ul>
+      </section>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,614 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Teoría: Fundamentos de JavaScript</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 0 20px;
+        line-height: 1.5;
+        color: #222;
+      }
+      header {
+        border-bottom: 2px solid #333;
+        padding: 16px 0;
+      }
+      nav a {
+        margin-right: 12px;
+      }
+      section {
+        padding: 24px 0;
+        border-bottom: 1px solid #ddd;
+      }
+      table {
+        border-collapse: collapse;
+        margin: 12px 0;
+      }
+      table,
+      th,
+      td {
+        border: 1px solid #999;
+        padding: 6px 10px;
+      }
+      pre {
+        background: #f4f4f4;
+        padding: 12px;
+        overflow-x: auto;
+        border-left: 4px solid #888;
+      }
+      code {
+        font-family: Consolas, monospace;
+      }
+      footer {
+        padding: 16px 0;
+        color: #666;
+        font-size: 0.9em;
+      }
+      .extra {
+        display: inline-block;
+        background: #fdf1e0;
+        color: #b5651d;
+        font-weight: bold;
+        font-size: 0.8em;
+        padding: 2px 8px;
+        border-radius: 4px;
+        margin-bottom: 8px;
+      }
+      .tip {
+        background: #e8f5e9;
+        border-left: 4px solid #2e7d32;
+        padding: 8px 12px;
+        margin: 12px 0;
+      }
+      .warn {
+        background: #fdecea;
+        border-left: 4px solid #c62828;
+        padding: 8px 12px;
+        margin: 12px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Teoría: Fundamentos de JavaScript</h1>
+      <p>
+        Ya conocen condicionales, ciclos y funciones de otro lenguaje. Aquí vemos cómo se escriben esas mismas ideas en JavaScript, y algunos comportamientos que son propios del lenguaje. Los ejemplos son genéricos — no son el código de tu tarea. Lo marcado como
+        <span class="extra">EXTRA</span> no se califica, pero es bueno conocerlo.
+      </p>
+      <nav>
+        <a href="#incluir">Incluir JS</a>
+        <a href="#variables">Variables</a>
+        <a href="#tipos">Tipos</a>
+        <a href="#comparacion">Comparación</a>
+        <a href="#templates">Templates</a>
+        <a href="#condicionales">Condicionales</a>
+        <a href="#ciclos">Ciclos</a>
+        <a href="#funciones">Funciones</a>
+        <a href="#arrays">Arrays</a>
+        <a href="#dom">DOM</a>
+      </nav>
+    </header>
+
+    <main>
+      <section id="incluir">
+        <h2>0. Cómo agregar JavaScript a una página</h2>
+        <p>
+          El código JS se guarda en un archivo aparte con extensión
+          <code>.js</code> y se enlaza desde el HTML con la etiqueta <code>&lt;script&gt;</code>. En este curso lo haremos <strong>en el <code>&lt;head&gt;</code> con el atributo <code>defer</code></strong
+          >:
+        </p>
+        <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="es"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Mi página&lt;/title&gt;
+  &lt;link rel="stylesheet" href="estilos.css"&gt;
+  &lt;script src="script.js" defer&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  ...
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+        <ul>
+          <li><code>src</code> indica la ruta del archivo, igual que en <code>href</code> o en una imagen.</li>
+          <li><code>defer</code> hace que el archivo se descargue mientras se lee el HTML, pero que se <strong>ejecute hasta que toda la página ya se cargó</strong>. Así el código puede encontrar cualquier elemento del <code>&lt;body&gt;</code>.</li>
+          <li>Si hay varios scripts con <code>defer</code>, se ejecutan en el orden en que aparecen.</li>
+        </ul>
+        <div class="warn">Sin <code>defer</code>, el script en el <code>&lt;head&gt;</code> se ejecuta <strong>antes</strong> de que exista el <code>&lt;body&gt;</code>, y algo como <code>document.querySelector("#mensaje")</code> regresa <code>null</code>.</div>
+        <div class="tip"><code>defer</code> solo funciona con archivos externos (con <code>src</code>). La etiqueta <code>&lt;script&gt;</code> siempre lleva cierre, aunque esté vacía.</div>
+
+        <h3><span class="extra">EXTRA</span> Otras formas que verán en internet</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Forma</th>
+              <th>Comentario</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>&lt;script src="script.js"&gt;&lt;/script&gt;</code> justo antes de <code>&lt;/body&gt;</code></td>
+              <td>Forma antigua de evitar el problema de <code>null</code>. Funciona, pero el archivo empieza a descargarse más tarde.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;script&gt; ...código... &lt;/script&gt;</code> dentro del HTML</td>
+              <td>Útil para ejemplos cortos; en proyectos reales mezcla HTML con lógica.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Dónde ver el resultado</h3>
+        <p>Todo lo que se imprime con <code>console.log()</code> aparece en la <strong>consola</strong> del navegador: presionen <kbd>F12</kbd> y abran la pestaña <em>Console</em>. Ahí también aparecen los errores, con el archivo y la línea donde ocurrieron.</p>
+      </section>
+      <section id="variables">
+        <h2>1. Declarar variables</h2>
+        <p>JavaScript tiene tres formas de declarar una variable. En código nuevo casi no se usa <code>var</code>.</p>
+        <table>
+          <thead>
+            <tr>
+              <th>Palabra</th>
+              <th>¿Se puede reasignar?</th>
+              <th>¿Cuándo usarla?</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>let</code></td>
+              <td>Sí</td>
+              <td>Cuando el valor va a cambiar (contadores, acumuladores, resultados).</td>
+            </tr>
+            <tr>
+              <td><code>const</code></td>
+              <td>No</td>
+              <td>Cuando el valor no cambia después de declararlo. Es la opción por defecto.</td>
+            </tr>
+            <tr>
+              <td><code>var</code> <span class="extra">EXTRA</span></td>
+              <td>Sí</td>
+              <td>Forma antigua, con reglas de alcance más confusas. Evítenla.</td>
+            </tr>
+          </tbody>
+        </table>
+        <pre><code>let intentos = 0;
+intentos = intentos + 1; // ok, let permite reasignar
+
+const maximoIntentos = 10;
+maximoIntentos = 20; // Error: Assignment to constant variable.</code></pre>
+        <div class="tip">Nota: <code>const</code> en un arreglo no significa que el arreglo no cambie de contenido — significa que esa variable siempre va a apuntar al mismo arreglo. Sí se puede hacer <code>push</code>, <code>pop</code>, etc. sobre un arreglo declarado con <code>const</code>.</div>
+        <p>Lo que <strong>no</strong> se puede con <code>const</code> es reasignar la variable completa, por ejemplo para dejarla como un arreglo nuevo vacío. Para eso hay que declararla con <code>let</code>:</p>
+        <pre><code>let pendientes = ["tarea", "examen"];
+pendientes = []; // ok: let permite reasignar
+
+const invitados = ["Ana", "Luis"];
+invitados.push("Carla"); // ok: se modifica el contenido
+invitados = [];          // Error: Assignment to constant variable.</code></pre>
+
+        <h3>Alcance (scope)</h3>
+        <p><code>let</code> y <code>const</code> solo existen dentro del bloque <code>{ }</code> donde se declararon (scope de bloque). <code>var</code> <span class="extra">EXTRA</span> ignora los bloques y solo respeta el alcance de la función, lo cual causa errores difíciles de detectar.</p>
+        <pre><code>if (true) {
+  let mensaje = "hola";
+  console.log(mensaje); // "hola"
+}
+console.log(mensaje); // Error: mensaje is not defined</code></pre>
+        <p>Sugerencia de nombrado: usen <code>camelCase</code> para variables y funciones (<code>nombreUsuario</code>, no <code>nombre_usuario</code> ni <code>NombreUsuario</code>) — es la convención estándar en JavaScript.</p>
+      </section>
+
+      <section id="tipos">
+        <h2>2. Tipos de datos y tipado dinámico</h2>
+        <p>JavaScript tiene tipado <strong>dinámico</strong>: no se declara el tipo de la variable, y una misma variable puede guardar distintos tipos en distintos momentos.</p>
+        <ul>
+          <li><code>string</code>: texto, entre comillas simples, dobles o con backticks.</li>
+          <li><code>number</code>: no distingue enteros de decimales, son el mismo tipo.</li>
+          <li><code>boolean</code>: <code>true</code> / <code>false</code>.</li>
+          <li><code>undefined</code>: una variable que existe pero no tiene valor asignado.</li>
+          <li><code>null</code>: un valor "vacío" asignado a propósito.</li>
+        </ul>
+        <pre><code>let dato = "hola";   // string
+dato = 5;            // ahora es number, y no da error
+console.log(typeof dato); // "number"</code></pre>
+
+        <h3>Truthy y falsy</h3>
+        <p>
+          Cuando JS necesita un booleano (por ejemplo dentro de un
+          <code>if</code>) y le das otra cosa, la convierte. Solo estos valores se comportan como <code>false</code> ("falsy"); todo lo demás se comporta como <code>true</code> ("truthy"):
+        </p>
+        <pre><code>false, 0, "", null, undefined, NaN</code></pre>
+        <pre><code>let mensajes = [];
+if (mensajes) {
+  console.log("Esto SÍ se ejecuta, un arreglo vacío es truthy");
+}
+if (mensajes.length) {
+  console.log("Esto NO se ejecuta, 0 es falsy");
+}</code></pre>
+        <div class="warn">Error común: confundir un arreglo vacío (truthy) con "no hay nada" — para eso hay que revisar <code>.length</code>, no el arreglo directamente.</div>
+
+        <h3><span class="extra">EXTRA</span> Conversión de tipos (coerción)</h3>
+        <p>El operador <code>+</code> con un string concatena en vez de sumar. Es la fuente de errores de tipos más común en JS:</p>
+        <pre><code>5 + 5;      // 10
+"5" + 5;    // "55"  (convierte el número a texto)
+"5" - 2;    // 3     (aquí sí convierte el texto a número, - no sirve para concatenar)
+5 + "5" + 1; // "551" (se evalúa de izquierda a derecha)</code></pre>
+      </section>
+
+      <section id="comparacion">
+        <h2>3. Comparación: <code>==</code> vs <code>===</code></h2>
+        <p><code>==</code> compara el valor pero convierte tipos si hace falta. <code>===</code> compara valor <strong>y</strong> tipo, sin conversión. En JS casi siempre se usa <code>===</code>.</p>
+        <pre><code>"5" == 5;   // true  (convierte el string a número)
+"5" === 5;  // false (distinto tipo)
+5 === 5;    // true
+null == undefined;  // true
+null === undefined; // false</code></pre>
+        <div class="tip">Regla práctica: usen <code>===</code> y <code>!==</code> siempre, salvo que tengan una razón específica para lo contrario.</div>
+
+        <h3>Operadores lógicos</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Operador</th>
+              <th>Significado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>&amp;&amp;</code></td>
+              <td>Y — las dos condiciones deben ser verdaderas</td>
+            </tr>
+            <tr>
+              <td><code>||</code></td>
+              <td>O — al menos una condición debe ser verdadera</td>
+            </tr>
+            <tr>
+              <td><code>!</code></td>
+              <td>Niega el valor booleano</td>
+            </tr>
+          </tbody>
+        </table>
+        <pre><code>let edad = 20;
+let tieneCredencial = true;
+
+if (edad >= 18 && tieneCredencial) {
+  console.log("Puede entrar");
+}
+
+if (edad < 12 || edad > 65) {
+  console.log("Tarifa especial");
+}</code></pre>
+      </section>
+
+      <section id="templates">
+        <h2>4. Template literals</h2>
+        <p>Con backticks (<code>`</code>) se pueden insertar variables directo dentro de un texto usando <code>${'{'}variable{'}'}</code>, en vez de concatenar con <code>+</code>.</p>
+        <pre><code>let nombre = "Ana";
+let edad = 23;
+
+// Antes:
+console.log("Hola " + nombre + ", tienes " + edad + " años");
+
+// Con template literal:
+console.log(`Hola ${nombre}, tienes ${edad} años`);</code></pre>
+        <p>También se pueden meter operaciones y hasta llamadas a funciones dentro de <code>${'{'}...{'}'}</code>:</p>
+        <pre><code>console.log(`El doble de ${edad} es ${edad * 2}`);
+console.log(`En mayúsculas: ${nombre.toUpperCase()}`);</code></pre>
+        <p><span class="extra">EXTRA</span> A diferencia de un string normal, un template literal puede abarcar varias líneas tal cual, sin usar <code>\n</code>:</p>
+        <pre><code>let mensaje = `Línea uno
+Línea dos`;</code></pre>
+      </section>
+
+      <section id="condicionales">
+        <h2>5. Condicionales</h2>
+        <p>La lógica es la misma que ya conocen; esto es solo la sintaxis de JS.</p>
+        <pre><code>let temperatura = 30;
+
+if (temperatura > 35) {
+  console.log("Hace mucho calor");
+} else if (temperatura > 20) {
+  console.log("Clima agradable");
+} else {
+  console.log("Hace frío");
+}</code></pre>
+        <p><code>switch</code> es útil cuando comparas una misma variable contra varios valores posibles:</p>
+        <pre><code>let dia = 3;
+
+switch (dia) {
+  case 1:
+    console.log("Lunes");
+    break;
+  case 2:
+    console.log("Martes");
+    break;
+  case 3:
+    console.log("Miércoles");
+    break;
+  default:
+    console.log("Otro día");
+}</code></pre>
+        <div class="warn">No olviden el <code>break</code> en cada <code>case</code> — si lo omiten, sigue ejecutando los casos de abajo aunque no hagan match ("fall-through").</div>
+
+        <h3><span class="extra">EXTRA</span> Operador ternario</h3>
+        <p>Es una forma corta de escribir un <code>if/else</code> que solo asigna un valor:</p>
+        <pre><code>let edad = 16;
+let entrada = edad >= 18 ? "Adulto" : "Menor";
+
+// Es equivalente a:
+let entrada2;
+if (edad >= 18) {
+  entrada2 = "Adulto";
+} else {
+  entrada2 = "Menor";
+}</code></pre>
+      </section>
+
+      <section id="ciclos">
+        <h2>6. Ciclos</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Ciclo</th>
+              <th>Cuándo usarlo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>for</code></td>
+              <td>Cuando sabes cuántas veces vas a repetir (típicamente recorriendo un índice).</td>
+            </tr>
+            <tr>
+              <td><code>while</code></td>
+              <td>Cuando repites mientras se cumpla una condición, sin saber de antemano cuántas veces.</td>
+            </tr>
+            <tr>
+              <td><code>for...of</code></td>
+              <td>Cuando quieres recorrer los <strong>valores</strong> de un arreglo directamente, sin manejar el índice.</td>
+            </tr>
+          </tbody>
+        </table>
+        <pre><code>// for clásico
+for (let i = 0; i < 5; i++) {
+  console.log(i);
+}
+
+// while
+let intentos = 0;
+while (intentos < 3) {
+  console.log("Intento " + intentos);
+  intentos = intentos + 1;
+}
+
+// for...of sobre un arreglo
+let colores = ["rojo", "verde", "azul"];
+for (let color of colores) {
+  console.log(color);
+}</code></pre>
+
+        <h3>break y continue</h3>
+        <pre><code>for (let i = 0; i < 10; i++) {
+  if (i === 5) break;     // termina el ciclo por completo
+  if (i % 2 === 0) continue; // salta a la siguiente vuelta
+  console.log(i); // imprime 1, 3
+}</code></pre>
+
+        <h3><span class="extra">EXTRA</span> do...while</h3>
+        <p>Igual que <code>while</code>, pero revisa la condición <strong>al final</strong>, así que el cuerpo se ejecuta al menos una vez:</p>
+        <pre><code>let numero;
+do {
+  numero = Math.floor(Math.random() * 10);
+} while (numero !== 7);</code></pre>
+      </section>
+
+      <section id="funciones">
+        <h2>7. Funciones</h2>
+        <p>Hay dos formas comunes de escribir una función en JS:</p>
+        <pre><code>// Declaración de función
+function sumar(a, b) {
+  return a + b;
+}
+
+// Función flecha (arrow function), guardada en una variable
+const sumar2 = (a, b) => {
+  return a + b;
+};
+
+sumar(2, 3);  // 5
+sumar2(2, 3); // 5</code></pre>
+        <p>Si el cuerpo de la función es una sola línea con <code>return</code>, la flecha se puede escribir aún más corta:</p>
+        <pre><code>const sumar3 = (a, b) => a + b;</code></pre>
+        <div class="tip">Una función que no tiene <code>return</code> explícito, regresa <code>undefined</code>. Eso es importante: si una función debe "regresar un resultado", necesita un <code>return</code> con ese valor.</div>
+
+        <h3>Salir antes con return</h3>
+        <p><code>return</code> termina la función en ese momento; lo que está abajo ya no se ejecuta. Por eso conviene revisar primero los casos inválidos y salir de inmediato. A esto se le llama <strong>cláusula de guarda</strong>, y evita anidar el resto del código dentro de un <code>else</code>:</p>
+        <pre><code>// Con else: el caso normal queda anidado
+function dividir(a, b) {
+  if (b !== 0) {
+    return a / b;
+  } else {
+    return null;
+  }
+}
+
+// Con cláusula de guarda: el caso inválido sale primero
+function dividir2(a, b) {
+  if (b === 0) {
+    return null; // se sale aquí, lo de abajo ya no corre
+  }
+  return a / b;
+}</code></pre>
+        <p>Una función también puede regresar un booleano para avisar si pudo hacer su trabajo:</p>
+        <pre><code>function esMayorDeEdad(edad) {
+  if (edad < 18) {
+    return false;
+  }
+  return true;
+}
+
+if (!esMayorDeEdad(15)) {
+  console.log("No puede votar");
+}</code></pre>
+
+        <h3>Parámetros y valores por defecto</h3>
+        <pre><code>function saludar(nombre = "invitado") {
+  return `Hola, ${nombre}`;
+}
+
+saludar("Luis"); // "Hola, Luis"
+saludar();       // "Hola, invitado"</code></pre>
+
+        <h3>Funciones que llaman a otras funciones</h3>
+        <p>Una función puede usar el resultado de otra — es normal dividir un problema en varias funciones pequeñas en vez de escribir todo en una sola:</p>
+        <pre><code>function calcularSubtotal(precio, cantidad) {
+  return precio * cantidad;
+}
+
+function calcularConImpuesto(precio, cantidad) {
+  const subtotal = calcularSubtotal(precio, cantidad);
+  return subtotal * 1.16;
+}</code></pre>
+      </section>
+
+      <section id="arrays">
+        <h2>8. Arrays (arreglos)</h2>
+        <pre><code>let frutas = ["manzana", "pera", "uva"];
+
+frutas.length;      // 3
+frutas[0];           // "manzana"
+frutas[frutas.length - 1]; // "uva" (el último elemento)
+
+frutas.push("mango"); // agrega al final
+frutas;                // ["manzana", "pera", "uva", "mango"]</code></pre>
+
+        <h3>Modificar un elemento por su índice</h3>
+        <p>Con los corchetes no solo se lee un elemento, también se le puede asignar un valor nuevo:</p>
+        <pre><code>let vidas = [3, 3, 3];
+
+vidas[1] = 5;            // [3, 5, 3]
+vidas[0] = vidas[0] - 1; // [2, 5, 3]  (usa su propio valor para calcular el nuevo)</code></pre>
+
+        <h3><span class="extra">EXTRA</span> Otros métodos para agregar/quitar</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Método</th>
+              <th>Qué hace</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>push(valor)</code></td>
+              <td>Agrega al final</td>
+            </tr>
+            <tr>
+              <td><code>pop()</code></td>
+              <td>Quita y regresa el último elemento</td>
+            </tr>
+            <tr>
+              <td><code>unshift(valor)</code></td>
+              <td>Agrega al inicio</td>
+            </tr>
+            <tr>
+              <td><code>shift()</code></td>
+              <td>Quita y regresa el primer elemento</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p>Recorrer un arreglo con índice (útil cuando necesitas el índice, por ejemplo para comparar dos arreglos en paralelo):</p>
+        <pre><code>let temperaturas = [22, 25, 19, 30];
+
+for (let i = 0; i < temperaturas.length; i++) {
+  console.log(`Día ${i}: ${temperaturas[i]}°C`);
+}</code></pre>
+
+        <h3>Acumular un resultado</h3>
+        <p>Para obtener un solo valor a partir de todo el arreglo (una suma, un conteo), se declara una variable <strong>antes</strong> del ciclo y se va actualizando en cada vuelta:</p>
+        <pre><code>let calificaciones = [8, 9, 7, 10];
+let aprobados = 0; // empieza en 0
+
+for (let i = 0; i < calificaciones.length; i++) {
+  if (calificaciones[i] >= 8) {
+    aprobados = aprobados + 1;
+  }
+}
+
+console.log(aprobados); // 3</code></pre>
+        <div class="tip">Si el arreglo está vacío, el ciclo no da ninguna vuelta y la variable se queda con su valor inicial. Por eso importa elegir bien ese valor.</div>
+
+        <h3>Buscar dentro de un arreglo</h3>
+        <p>Se recorre comparando elemento por elemento. En cuanto se encuentra lo buscado, el <code>return</code> termina la función, y con ella el ciclo. Si el ciclo termina sin encontrarlo, se regresa un valor que indique "no hay", como <code>-1</code>:</p>
+        <pre><code>// Regresa la posición del primer número mayor que el límite
+function buscarPrimeroMayor(numeros, limite) {
+  for (let i = 0; i < numeros.length; i++) {
+    if (numeros[i] > limite) {
+      return i;
+    }
+  }
+  return -1; // ninguno fue mayor
+}
+
+buscarPrimeroMayor([4, 9, 12], 8);  // 1
+buscarPrimeroMayor([4, 9, 12], 20); // -1</code></pre>
+        <div class="tip"><span class="extra">EXTRA</span> Los arreglos también tienen métodos que hacen esta búsqueda por ustedes, como <code>indexOf()</code> o <code>includes()</code> — <a href="https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf">MDN — indexOf</a>. No es obligatorio usarlos, un <code>for</code> normal funciona igual de bien.</div>
+
+        <h3><span class="extra">EXTRA</span> forEach</h3>
+        <p>Otra forma de recorrer un arreglo, ejecutando una función por cada elemento:</p>
+        <pre><code>let colores = ["rojo", "verde", "azul"];
+colores.forEach(function (color, indice) {
+  console.log(`${indice}: ${color}`);
+});</code></pre>
+
+        <h3>Arreglos en paralelo</h3>
+        <p>Una forma común de guardar datos relacionados sin usar objetos (los objetos los vemos en otra clase) es usar varios arreglos donde la misma posición representa al mismo elemento:</p>
+        <pre><code>let alumnos = ["Ana", "Luis", "Carla"];
+let edades = [21, 23, 20];
+
+// La persona en la posición 1 de ambos arreglos es la misma:
+console.log(`${alumnos[1]} tiene ${edades[1]} años`);</code></pre>
+      </section>
+
+      <section id="dom">
+        <h2>9. Una probadita del DOM <span class="extra">EXTRA</span></h2>
+        <p>Todavía no vemos DOM a fondo (eso viene en una clase dedicada), pero con lo que ya saben pueden hacer que un botón dispare una función de JS. Eso se hace con el atributo <code>onclick</code> en el HTML:</p>
+        <pre><code>&lt;!-- index.html --&gt;
+&lt;button onclick="saludar()"&gt;Saludar&lt;/button&gt;
+&lt;p id="mensaje"&gt;&lt;/p&gt;</code></pre>
+        <pre><code>// script.js
+function saludar() {
+  document.querySelector("#mensaje").textContent = "¡Hola!";
+}</code></pre>
+        <ul>
+          <li><code>document.querySelector("#mensaje")</code> busca en la página el primer elemento que coincida con ese selector. Usa los mismos selectores que CSS: <code>#id</code>, <code>.clase</code>, <code>etiqueta</code>.</li>
+          <li><code>.textContent</code> cambia el texto que se muestra dentro de ese elemento.</li>
+        </ul>
+        <p>También se le puede pasar un valor a la función que llama el botón:</p>
+        <pre><code>&lt;!-- index.html --&gt;
+&lt;button onclick="votar(3)"&gt;Votar por la opción 3&lt;/button&gt;</code></pre>
+        <pre><code>// script.js
+function votar(opcion) {
+  console.log(`Votaste por la opción ${opcion}`);
+}</code></pre>
+      </section>
+    </main>
+
+    <footer>
+      <p>
+        Para leer más:
+        <a href="https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/let">MDN — let</a>
+        ·
+        <a href="https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Operators/Equality">MDN — igualdad (==)</a>
+        ·
+        <a href="https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Template_literals">MDN — template literals</a>
+        ·
+        <a href="https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/for...of">MDN — for...of</a>
+        ·
+        <a href="https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Functions/Arrow_functions">MDN — arrow functions</a>
+        ·
+        <a href="https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array">MDN — Array</a>
+        ·
+        <a href="https://developer.mozilla.org/es/docs/Web/API/Document/querySelector">MDN — querySelector</a>
+        ·
+        <a href="https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Grammar_and_types#valores_truthy_y_falsy">MDN — truthy/falsy</a>
+      </p>
+    </footer>
+  </body>
+</html>
