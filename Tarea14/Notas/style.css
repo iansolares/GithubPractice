@@ -1,0 +1,190 @@
+* {
+  box-sizing: border-box;
+}
+ 
+body {
+  margin: 0;
+  font-family: "Segoe UI", Roboto, system-ui, sans-serif;
+  background-color: #f6f3ef;
+  color: #2a2a2a;
+}
+ 
+.clase-header {
+  background-color: #4a2e83;
+  color: white;
+  padding: 1.5rem 2rem;
+}
+ 
+.clase-header h1 {
+  margin: 0 0 0.25rem;
+  font-size: 1.4rem;
+}
+ 
+.clase-header p {
+  margin: 0;
+  opacity: 0.9;
+  font-size: 0.9rem;
+}
+ 
+main {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 3rem;
+}
+ 
+.demo {
+  background: white;
+  border: 1px solid #e0dcd4;
+  border-radius: 10px;
+  padding: 1.1rem 1.3rem;
+  margin-bottom: 1.2rem;
+}
+ 
+.demo h2 {
+  margin-top: 0;
+  font-size: 1.05rem;
+  color: #4a2e83;
+}
+ 
+.demo p {
+  font-size: 0.9rem;
+  color: #444;
+}
+ 
+button {
+  background-color: #4a2e83;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+ 
+button:hover {
+  background-color: #3a2267;
+}
+ 
+input[type="text"] {
+  padding: 0.45rem 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-right: 0.5rem;
+}
+ 
+.salida {
+  background: #2b2b2b;
+  color: #eaeaea;
+  padding: 0.8rem;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  overflow-x: auto;
+  margin-top: 0.8rem;
+  min-height: 1.4rem;
+  white-space: pre-wrap;
+}
+ 
+.estado {
+  margin-top: 0.8rem;
+  font-weight: bold;
+}
+ 
+.estado.cargando {
+  color: #8a6d00;
+}
+ 
+.estado.error {
+  color: #c62828;
+}
+ 
+.estado.exito {
+  color: #2e7d32;
+}
+ 
+.lista-usuarios {
+  list-style: none;
+  padding: 0;
+  margin: 0.8rem 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+ 
+.usuario {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  background: #f6f3ef;
+  border: 1px solid #e0dcd4;
+  border-radius: 8px;
+  padding: 0.6rem 0.8rem;
+  font-size: 0.85rem;
+}
+ 
+.usuario .usuario-nombre {
+  font-weight: bold;
+}
+ 
+.usuario .usuario-detalle {
+  color: #666;
+  font-size: 0.78rem;
+}
+ 
+.codigo-completo pre {
+  max-height: 480px;
+}
+ 
+.aviso-sin-internet {
+  background: #fff3e0;
+  border: 2px solid #ef6c00;
+  border-left-width: 8px;
+  border-radius: 10px;
+  padding: 0.9rem 1.2rem;
+  margin-bottom: 1.2rem;
+  color: #6d3a00;
+}
+ 
+.aviso-sin-internet p {
+  margin: 0.4rem 0 0.6rem;
+  font-size: 0.88rem;
+}
+ 
+.aviso-sin-internet label {
+  font-weight: bold;
+  cursor: pointer;
+}
+ 
+.usuario img {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: 50%;
+}
+ 
+.nota {
+  margin-top: 0.8rem;
+  padding: 0.6rem 0.8rem;
+  background: #eef3fb;
+  border-left: 4px solid #4a6fa5;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  color: #333;
+}
+ 
+.demo h3 {
+  margin: 1.1rem 0 0.3rem;
+  font-size: 0.95rem;
+  color: #2a2a2a;
+}
+ 
+.consola {
+  background: #1e1e1e;
+  color: #e6e6e6;
+  padding: 0.7rem 0.9rem;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  overflow-x: auto;
+  white-space: pre-wrap;
+}
+
+

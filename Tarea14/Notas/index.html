@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Clase en vivo: AJAX, API, JSON y fetch</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="notas.js" defer></script>
+  </head>
+  <body>
+    <header class="clase-header">
+      <h1>Clase en vivo: AJAX, API, JSON y fetch</h1>
+      <p>API real: jsonplaceholder.typicode.com (usuarios y tareas) — otra API distinta a la de la tarea, mismo patrón.</p>
+    </header>
+
+
+    <main>
+      <div class="aviso-sin-internet">
+        <strong>Si no hay internet</strong>
+        <p>Todas las demos usan <code>fetch</code> real. Sin conexión mostrarán el error de red (es justo lo que enseña la demo 9). Para poder seguir la clase igual, activa los datos de respaldo: se reemplaza <code>fetch</code> por una versión local con las mismas respuestas.</p>
+        <label>
+          <input type="checkbox" id="chk-respaldo" />
+          Usar datos de respaldo (sin internet)
+        </label>
+      </div>
+    </main>
+    <section class="demo" id="demo-1">
+      <h2>1. fetch básico</h2>
+      <p>Pedimos datos a una URL y vemos qué regresa <code>fetch</code> antes de tocar nada más.</p>
+      <button id="btn-1">Hacer fetch</button>
+      <pre id="out-1" class="salida"></pre>
+      <button id="btn-2">Response json</button>
+      <pre id="out-2" class="salida"></pre>
+      <button id="btn-3">RandomUser</button>
+      <br>
+      <img id="miImagen" alt="Fotografia usuario aleatorio">
+      <div class="nota"><strong>Nota:</strong> <code>&lt;pre&gt;</code> es un elemento HTML que respeta espacios y saltos de línea, ideal para mostrar resultados o JSON. Aquí cada <code>&lt;pre class="salida"&gt;</code> es solo la caja donde se imprime el resultado; su <code>id</code> (<code>out-1</code>, <code>out-2</code>…) sirve para encontrarlo desde JavaScript.</div>
+    </section>
+  </body>
+</html>
+
+
+
+
