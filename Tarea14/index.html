@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Súper Fresco - Catálogo</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="catalogo.js" defer></script>
+  </head>
+
+  <body>
+    <section class="section">
+      <div class="card">
+        <header class="card-header">
+          <p class="card-header-title">Súper Fresco - Catálogo</p>
+        </header>
+
+        <div class="card-content">
+          <form id="form-buscar" class="buscador">
+            <input
+              type="text"
+              id="input-buscar"
+              placeholder="Buscar producto... (ej. milk)"
+            />
+            <button type="submit">Buscar</button>
+          </form>
+
+          <p id="mensaje-carga" class="mensaje-carga"></p>
+          <p id="mensaje-error" class="mensaje-error"></p>
+
+          <ul id="lista-productos" class="products-list"></ul>
+        </div>
+
+        <footer class="card-footer">
+          <p class="instructions">
+            Catálogo cargado en vivo desde una API real (dummyjson.com).
+          </p>
+        </footer>
+      </div>
+    </section>
+  </body>
+</html>

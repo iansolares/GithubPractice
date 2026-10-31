@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Teoría: AJAX, APIs, JSON y fetch</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 0 20px;
+        line-height: 1.5;
+        color: #222;
+      }
+      header {
+        border-bottom: 2px solid #333;
+        padding: 16px 0;
+      }
+      nav a {
+        margin-right: 10px;
+        font-size: 0.9em;
+      }
+      section {
+        padding: 24px 0;
+        border-bottom: 1px solid #ddd;
+      }
+      table {
+        border-collapse: collapse;
+        margin: 12px 0;
+      }
+      table,
+      th,
+      td {
+        border: 1px solid #999;
+        padding: 6px 10px;
+      }
+      pre {
+        background: #f4f4f4;
+        padding: 12px;
+        overflow-x: auto;
+        border-left: 4px solid #888;
+      }
+      code {
+        font-family: Consolas, monospace;
+      }
+      footer {
+        padding: 16px 0;
+        color: #666;
+        font-size: 0.9em;
+      }
+      .extra {
+        display: inline-block;
+        background: #fdf1e0;
+        color: #b5651d;
+        font-weight: bold;
+        font-size: 0.8em;
+        padding: 2px 8px;
+        border-radius: 4px;
+        margin-bottom: 8px;
+      }
+      .tip {
+        background: #e8f5e9;
+        border-left: 4px solid #2e7d32;
+        padding: 8px 12px;
+        margin: 12px 0;
+      }
+      .warn {
+        background: #fdecea;
+        border-left: 4px solid #c62828;
+        padding: 8px 12px;
+        margin: 12px 0;
+      }
+      h1 {
+        margin-bottom: 4px;
+      }
+      .subtitulo {
+        color: #555;
+        margin-top: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Teoría: AJAX, APIs, JSON y fetch</h1>
+      <nav>
+        <a href="#ajax">AJAX</a>
+        <a href="#api">API</a>
+        <a href="#json">JSON</a>
+        <a href="#probando">Probando APIs</a>
+        <a href="#status">Códigos de estado</a>
+        <a href="#query">Query strings</a>
+        <a href="#xhr">XMLHttpRequest</a>
+        <a href="#fetch">fetch</a>
+        <a href="#fetch-async">fetch con async/await</a>
+        <a href="#errores">Dos tipos de error</a>
+        <a href="#repaso">Repaso</a>
+      </nav>
+    </header>
+
+    <main>
+      <section id="ajax">
+        <h2>1. ¿Qué es AJAX?</h2>
+        <p><strong>AJAX</strong> = Asynchronous JavaScript And XML. El nombre es viejo (de cuando XML era el formato común), pero la idea sigue siendo la misma: pedirle datos a un servidor <strong>sin recargar la página</strong>, usando JavaScript de forma asíncrona.</p>
+        <p>Hoy casi nadie usa XML para esto — se usa JSON — pero el nombre "AJAX" se quedó para referirse a cualquier petición asíncrona de datos desde el navegador.</p>
+      </section>
+
+      <section id="api">
+        <h2>2. ¿Qué es una API?</h2>
+        <p>Una <strong>API</strong> (Application Programming Interface) web es, en este contexto, un servidor que expone URLs donde se le puede pedir (o mandar) información. Cada URL es un <strong>endpoint</strong>.</p>
+        <p>Ejemplo real: <code>https://randomuser.me/api/</code> regresa datos de una persona inventada al azar cada vez que se visita. Hay compendios enormes de APIs públicas y gratuitas para practicar (buscar "public apis github" es un buen punto de partida).</p>
+      </section>
+
+      <section id="json">
+        <h2>3. JSON</h2>
+        <p><strong>JSON</strong> (JavaScript Object Notation) es el formato estándar para representar datos como texto: objetos con <code>{ }</code>, arreglos con <code>[ ]</code>, llaves siempre entre comillas dobles.</p>
+        <pre><code>{
+  "nombre": "Ana",
+  "edad": 23,
+  "intereses": ["música", "ciclismo"],
+  "direccion": {
+    "ciudad": "CDMX",
+    "cp": "01000"
+  }
+}</code></pre>
+        <div class="tip">JSON no es exclusivo de JavaScript — es un formato de texto universal. Cualquier lenguaje puede leerlo o generarlo. En JS, se convierte un string JSON a objeto con <code>JSON.parse()</code>, y un objeto a string JSON con <code>JSON.stringify()</code>.</div>
+      </section>
+
+      <section id="probando">
+        <h2>4. Probando APIs sin escribir código <span class="extra">EXTRA</span></h2>
+        <p>Antes de programar nada, conviene explorar la API a mano con una herramienta como <a href="https://hoppscotch.io/" target="_blank">Hoppscotch</a>: se pone la URL, se elige el método (GET, POST...) y se ve la respuesta completa, con sus headers y su código de estado — así ya se sabe qué esperar antes de escribir el <code>fetch</code>.</p>
+      </section>
+
+      <section id="status">
+        <h2>5. Códigos de estado HTTP</h2>
+        <p>Toda respuesta HTTP viene con un número de 3 dígitos que dice qué pasó:</p>
+        <table>
+          <thead>
+            <tr>
+              <th>Rango</th>
+              <th>Significa</th>
+              <th>Ejemplo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>2xx</td>
+              <td>Éxito</td>
+              <td>200 OK, 201 Creado</td>
+            </tr>
+            <tr>
+              <td>3xx</td>
+              <td>Redirección</td>
+              <td>301 Movido permanentemente</td>
+            </tr>
+            <tr>
+              <td>4xx</td>
+              <td>Error del cliente</td>
+              <td>404 No encontrado, 400 Petición inválida</td>
+            </tr>
+            <tr>
+              <td>5xx</td>
+              <td>Error del servidor</td>
+              <td>500 Error interno</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="warn">Esto es clave para <code>fetch</code>: un 404 o un 500 <strong>SÍ es una respuesta</strong> (el servidor contestó), no un fallo de red. <code>fetch</code> solo rechaza (cae en <code>catch</code>) cuando no pudo ni conectarse (sin internet, dominio no existe, etc.). Para detectar un 404 hay que revisar explícitamente el código de estado (sección 9).</div>
+      </section>
+
+      <section id="query">
+        <h2>6. Query strings</h2>
+        <p>La parte de una URL después de <code>?</code> manda parámetros al servidor, como <code>clave=valor</code> separados por <code>&amp;</code>:</p>
+        <pre><code>https://ejemplo.com/buscar?termino=gatos&pagina=2</code></pre>
+        <p>Si el valor tiene espacios o caracteres especiales, hay que codificarlo con <code>encodeURIComponent()</code> para que la URL siga siendo válida:</p>
+        <pre><code>const termino = "pan dulce";
+const url = `https://ejemplo.com/buscar?q=${encodeURIComponent(termino)}`;
+// -> https://ejemplo.com/buscar?q=pan%20dulce</code></pre>
+      </section>
+
+      <section id="xhr">
+        <h2>7. XMLHttpRequest (la forma vieja) <span class="extra">EXTRA</span></h2>
+        <p>Antes de <code>fetch</code>, las peticiones se hacían con <code>XMLHttpRequest</code>. No soporta promesas — todo es con callbacks (<code>onload</code>, <code>onerror</code>):</p>
+        <pre><code>const req = new XMLHttpRequest();
+req.onload = function () {
+  const data = JSON.parse(this.responseText);
+  console.log(data);
+};
+req.onerror = function () {
+  console.log("Error de red");
+};
+req.open("GET", "https://ejemplo.com/api");
+req.send();</code></pre>
+        <p>Hoy casi no se usa directamente, pero ayuda a entender por qué <code>fetch</code> (que sí regresa promesas) fue una mejora tan grande.</p>
+      </section>
+
+      <section id="fetch">
+        <h2>8. fetch</h2>
+        <p><code>fetch(url)</code> regresa una promesa que resuelve con un objeto <strong>Response</strong> — que todavía NO es el JSON, es la respuesta HTTP completa (headers, status, etc). Para obtener los datos hay que llamar a <code>.json()</code> sobre esa respuesta, que a su vez regresa OTRA promesa:</p>
+        <pre><code>fetch("https://ejemplo.com/api")
+  .then((response) => {
+    console.log(response.status); // 200, 404, etc.
+    return response.json(); // otra promesa
+  })
+  .then((data) => {
+    console.log(data); // ya son los datos como objeto JS
+  })
+  .catch((error) => {
+    console.log("Fallo de red:", error.message);
+  });</code></pre>
+      </section>
+
+      <section id="fetch-async">
+        <h2>9. fetch con async/await</h2>
+        <p>El mismo patrón, más legible con <code>await</code>:</p>
+        <pre><code>async function obtenerDatos() {
+  const response = await fetch("https://ejemplo.com/api");
+  const data = await response.json();
+  console.log(data);
+}</code></pre>
+      </section>
+
+      <section id="errores">
+        <h2>10. Los DOS tipos de error al usar fetch</h2>
+        <p>Esta es la parte que más se presta a confusión: <code>fetch</code> distingue entre <strong>no poder conectarse</strong> y <strong>conectarse pero recibir un error</strong>.</p>
+        <table>
+          <thead>
+            <tr>
+              <th>Caso</th>
+              <th>¿Qué hace fetch?</th>
+              <th>¿Cómo se detecta?</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Sin internet, dominio no existe, CORS bloqueado</td>
+              <td>La promesa de <code>fetch()</code> RECHAZA</td>
+              <td><code>try/catch</code> (o <code>.catch()</code>)</td>
+            </tr>
+            <tr>
+              <td>El servidor respondió con 404, 500, etc.</td>
+              <td>La promesa de <code>fetch()</code> RESUELVE normalmente</td>
+              <td>Revisando <code>response.ok</code> (o <code>response.status</code>) a mano</td>
+            </tr>
+          </tbody>
+        </table>
+        <pre><code>async function obtenerDatos() {
+  try {
+    const response = await fetch("https://ejemplo.com/api/algo-que-no-existe");
+
+    if (!response.ok) {
+      // El servidor SÍ contestó, pero con error (p. ej. 404).
+      throw new Error(`Error ${response.status} al pedir los datos`);
+    }
+
+    const data = await response.json();
+    console.log(data);
+  } catch (error) {
+    // Aquí caen TANTO los errores de red como los que se
+    // lanzaron a mano arriba por un response.ok === false.
+    console.log("Falló:", error.message);
+  }
+}</code></pre>
+        <div class="warn">Si solo se usa <code>try/catch</code> sin revisar <code>response.ok</code>, un 404 se trata silenciosamente como si todo hubiera salido bien — <code>response.json()</code> incluso puede funcionar sin lanzar error, con un cuerpo de error del servidor en vez de los datos esperados.</div>
+      </section>
+
+      <section id="repaso">
+        <h2>11. Repaso: usar los datos que llegan de la API</h2>
+        <p>Los datos de una API casi nunca vienen listos para mostrarse. Estas son las herramientas de JavaScript que más se usan con ellos.</p>
+        <p>
+          <strong>Promedio con <code>reduce</code></strong> (cuidando el arreglo vacío, para no dividir entre 0):
+        </p>
+        <pre><code>function promedio(valores) {
+  if (!valores || valores.length === 0) return null;
+  const suma = valores.reduce((total, v) =&gt; total + v.puntos, 0);
+  return suma / valores.length;
+}</code></pre>
+        <p><strong>Redondear decimales</strong> con <code>toFixed(n)</code> (regresa texto):</p>
+        <pre><code>(4.3333333).toFixed(1); // "4.3"</code></pre>
+        <p><strong>Un texto distinto según el valor</strong>, con un ternario, y <strong>un valor por defecto</strong> con <code>||</code>:</p>
+        <pre><code>const resultado = promedio(valores);
+const texto = resultado === null ? "Sin datos" : `${resultado.toFixed(1)} puntos`;
+
+const autor = dato.autor || "Anónimo"; // si autor no existe o es null</code></pre>
+        <p><strong>Una imagen</strong>: se crea con <code>createElement</code> y se le asigna <code>src</code> (la URL) y <code>alt</code> (texto alternativo):</p>
+        <pre><code>const img = document.createElement("img");
+img.src = dato.urlImagen;
+img.alt = dato.titulo;
+tarjeta.append(img);</code></pre>
+        <div class="tip">Para pintar los elementos usa <code>createElement</code> y <code>textContent</code>; evita <code>innerHTML</code> con datos que vienen de fuera. Para vaciar un contenedor basta con <code>contenedor.textContent = ""</code>.</div>
+      </section>
+    </main>
+
+    <footer>
+      <p>Teoría de AJAX, APIs, JSON y fetch.</p>
+    </footer>
+  </body>
+</html>
