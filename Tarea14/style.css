@@ -1,0 +1,165 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Roboto, system-ui, sans-serif;
+  background-color: #eef3f0;
+}
+
+.section {
+  display: flex;
+  justify-content: center;
+  padding: 2.5rem 1rem;
+  min-height: 100vh;
+}
+
+.card {
+  width: 100%;
+  max-width: 38rem;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+}
+
+.card-header {
+  background-color: #2e7d32;
+  text-align: center;
+  padding: 0.75rem 0;
+}
+
+.card-header-title {
+  color: white;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.card-content {
+  padding: 1.5rem;
+}
+
+.card-footer {
+  padding: 0.75rem 1.5rem 1.25rem;
+  text-align: center;
+}
+
+.instructions {
+  color: #666;
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.buscador {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.buscador input {
+  flex: 1;
+  padding: 0.5rem 0.7rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.buscador button {
+  border: none;
+  background-color: #2e7d32;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.buscador button:hover {
+  background-color: #276529;
+}
+
+.mensaje-carga {
+  color: #8a6d00;
+  background-color: #fff8e1;
+  padding: 0.6rem 0.9rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.mensaje-carga:empty {
+  display: none;
+}
+
+.mensaje-error {
+  color: #c62828;
+  background-color: #fdecea;
+  padding: 0.6rem 0.9rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+.mensaje-error:empty {
+  display: none;
+}
+
+.products-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.producto {
+  display: flex;
+  gap: 0.9rem;
+  background: #f7faf7;
+  border: 1px solid #dde8de;
+  border-radius: 10px;
+  padding: 0.7rem 0.9rem;
+}
+
+.producto img {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+  background: #e5e5e5;
+}
+
+.producto-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.producto-nombre {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.producto-marca {
+  font-size: 0.78rem;
+  color: #666;
+}
+
+.producto-precio {
+  font-size: 0.85rem;
+  color: #2e7d32;
+  font-weight: bold;
+}
+
+.producto-rating {
+  font-size: 0.8rem;
+  color: #b5651d;
+}
+
+.producto-codigo {
+  font-size: 0.72rem;
+  color: #999;
+  font-family: Consolas, monospace;
+}
