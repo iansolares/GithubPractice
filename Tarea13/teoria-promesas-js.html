@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Teoría: Promesas y asincronía en JavaScript</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 0 20px;
+        line-height: 1.5;
+        color: #222;
+      }
+      header {
+        border-bottom: 2px solid #333;
+        padding: 16px 0;
+      }
+      nav a {
+        margin-right: 10px;
+        font-size: 0.9em;
+      }
+      section {
+        padding: 24px 0;
+        border-bottom: 1px solid #ddd;
+      }
+      table {
+        border-collapse: collapse;
+        margin: 12px 0;
+      }
+      table,
+      th,
+      td {
+        border: 1px solid #999;
+        padding: 6px 10px;
+      }
+      pre {
+        background: #f4f4f4;
+        padding: 12px;
+        overflow-x: auto;
+        border-left: 4px solid #888;
+      }
+      code {
+        font-family: Consolas, monospace;
+      }
+      footer {
+        padding: 16px 0;
+        color: #666;
+        font-size: 0.9em;
+      }
+      .extra {
+        display: inline-block;
+        background: #fdf1e0;
+        color: #b5651d;
+        font-weight: bold;
+        font-size: 0.8em;
+        padding: 2px 8px;
+        border-radius: 4px;
+        margin-bottom: 8px;
+      }
+      .tip {
+        background: #e8f5e9;
+        border-left: 4px solid #2e7d32;
+        padding: 8px 12px;
+        margin: 12px 0;
+      }
+      .warn {
+        background: #fdecea;
+        border-left: 4px solid #c62828;
+        padding: 8px 12px;
+        margin: 12px 0;
+      }
+      h1 {
+        margin-bottom: 4px;
+      }
+      .subtitulo {
+        color: #555;
+        margin-top: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Teoría: Promesas y asincronía en JavaScript</h1>
+      <nav>
+        <a href="#problema">Código async</a>
+        <a href="#callbacks">Callbacks</a>
+        <a href="#promesas">Creando una promesa</a>
+        <a href="#validar">3.1 Validar y rechazar</a>
+        <a href="#then-catch">.then() y .catch()</a>
+        <a href="#encadenar">Encadenar promesas</a>
+        <a href="#async-await">async / await</a>
+        <a href="#try-catch">try / catch / finally</a>
+        <a href="#promise-all">Promise.all</a>
+        <a href="#promise-race">Promise.race</a>
+        <a href="#timeout">Límite de tiempo con race</a>
+        <a href="#abort">Cancelar con AbortController</a>
+      </nav>
+    </header>
+
+    <main>
+      <section id="problema">
+        <h2>1. Código async</h2>
+        <p>Pedir datos a un servidor, esperar un cobro, o simplemente usar <code>setTimeout</code>, son operaciones <strong>asíncronas</strong>: no terminan al instante. JS sigue ejecutando el resto del código mientras espera, y avisa cuando termine.</p>
+        <pre><code>console.log("1. Antes");
+setTimeout(() => console.log("2. Se obtuvieron los datos"), 3000);
+console.log("3. Después");
+
+// Orden real en consola: 1, 3, 2</code></pre>
+        <p>El reto es: ¿cómo organizamos código que depende del resultado de algo que todavía no ha terminado?</p>
+      </section>
+
+      <section id="callbacks">
+        <h2>2. Callbacks (la forma vieja) <span class="extra">EXTRA</span></h2>
+        <p>La primera solución fue pasar una función que se ejecuta cuando el resultado está listo: un <strong>callback</strong>.</p>
+        <pre><code>function fakeRequest(url, success, failure) {
+  const delay = Math.floor(Math.random() * 3000) + 1000;
+  setTimeout(() => {
+    if (delay <= 3000) success(`Respuesta de ${url}`);
+    else failure("Connection timeout");
+  }, delay);
+}
+
+fakeRequest("/page1",
+  (respuesta) => console.log(respuesta),
+  (error) => console.log(error)
+);</code></pre>
+        <div class="warn">El problema aparece cuando se necesitan varias peticiones <strong>en orden</strong>, una dentro de la otra: el código se anida cada vez más (<em>"callback hell"</em>) y se vuelve difícil de leer y de manejar errores.</div>
+      </section>
+
+      <section id="promesas">
+        <h2>3. Creando una promesa</h2>
+        <p>
+          Una <strong><code>Promise</code></strong> es un objeto que representa un valor que todavía no existe, pero que existirá (o fallará) en el futuro. Se crea con <code>new Promise()</code>, que recibe una función con dos parámetros: <code>resolve</code> (éxito) y <code>reject</code> (error).
+        </p>
+        <pre><code>function fakeRequestPromise(url) {
+  return new Promise((resolve, reject) => {
+    const delay = Math.floor(Math.random() * 3000) + 1000;
+    setTimeout(() => {
+      if (delay <= 3000) {
+        resolve(`Respuesta de ${url}`); // éxito: pasa el valor a resolve
+      } else {
+        reject(new Error("Connection timeout")); // error: pasa el error a reject
+      }
+    }, delay);
+  });
+}</code></pre>
+        <p>Una promesa siempre está en uno de tres estados: <strong>pending</strong> (esperando), <strong>fulfilled</strong> (se resolvió) o <strong>rejected</strong> (se rechazó). Una vez que resuelve o rechaza, ya no cambia.</p>
+      </section>
+
+      <section id="validar">
+        <h2>3.1. Validar y rechazar</h2>
+        <p>Una promesa también sirve para validar algo: se resuelve si el valor es válido y se rechaza con un <code>Error</code> si no. Para comprobar que un texto tenga exactamente cierta cantidad de dígitos hay dos formas:</p>
+        <pre><code>// 1) Contar caracteres (pero también acepta letras)
+valor.length === 5;
+
+// 2) Expresión regular: exactamente 5 dígitos y nada más
+/^\d{5}$/.test(valor);   // true o false
+
+function validarCodigo(valor) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (/^\d{5}$/.test(valor)) {
+        resolve();
+      } else {
+        reject(new Error("Código inválido"));
+      }
+    }, 500);
+  });
+}</code></pre>
+        <div class="tip">En la regex, <code>^</code> y <code>$</code> marcan el inicio y el final del texto, <code>\d</code> es "un dígito" y <code>{5}</code> es "exactamente 5 veces". Sin <code>^</code> y <code>$</code>, "abc12345xyz" también pasaría.</div>
+      </section>
+
+      <section id="then-catch">
+        <h2>4. Consumiendo una promesa: .then() y .catch()</h2>
+        <p><code>.then()</code> recibe el valor cuando la promesa resuelve; <code>.catch()</code> recibe el error cuando rechaza.</p>
+        <pre><code>fakeRequestPromise("/page1")
+  .then((respuesta) => {
+    console.log(respuesta);
+  })
+  .catch((error) => {
+    console.log(error.message);
+  });</code></pre>
+        <div class="tip">A diferencia de los callbacks, una promesa SIEMPRE tiene un solo lugar para manejar el error (<code>.catch()</code>), sin importar cuántos <code>.then()</code> tenga encadenados.</div>
+      </section>
+
+      <section id="encadenar">
+        <h2>5. Encadenar promesas (devolviendo promesas)</h2>
+        <p>Si dentro de un <code>.then()</code> se <strong>devuelve</strong> otra promesa, el siguiente <code>.then()</code> espera a que esa también resuelva. Así se evita el anidado de los callbacks.</p>
+        <pre><code>fakeRequestPromise("/page1")
+  .then((data) => {
+    console.log(data);
+    return fakeRequestPromise("/page2"); // se devuelve, no se anida
+  })
+  .then((data) => {
+    console.log(data);
+    return fakeRequestPromise("/page3");
+  })
+  .then((data) => {
+    console.log(data);
+  })
+  .catch((error) => {
+    // atrapa el error de CUALQUIERA de las tres peticiones
+    console.log("ERROR:", error.message);
+  });</code></pre>
+      </section>
+
+      <section id="async-await">
+        <h2>6. async / await</h2>
+        <p><code>async/await</code> es una forma más legible de trabajar con promesas: se ven como código síncrono, pero siguen siendo asíncronas por dentro.</p>
+        <ul>
+          <li>Una función marcada <code>async</code> siempre regresa una promesa.</li>
+          <li><code>await</code> "pausa" la función hasta que la promesa termine, y da directamente el valor resuelto (no hace falta <code>.then()</code>).</li>
+          <li><code>await</code> solo se puede usar dentro de una función <code>async</code>.</li>
+        </ul>
+        <pre><code>async function tresPeticiones() {
+  const data1 = await fakeRequestPromise("/page1");
+  console.log(data1);
+  const data2 = await fakeRequestPromise("/page2");
+  console.log(data2);
+  const data3 = await fakeRequestPromise("/page3");
+  console.log(data3);
+}
+
+tresPeticiones();</code></pre>
+        <div class="warn">Igual que con <code>.then()</code> encadenado, aquí cada <code>await</code> espera a que termine el anterior: las tres peticiones son <strong>secuenciales</strong> (una después de otra), no simultáneas. Para correrlas al mismo tiempo se necesita <code>Promise.all</code> (sección 8).</div>
+      </section>
+
+      <section id="try-catch">
+        <h2>7. Manejo de errores: try / catch / finally</h2>
+        <p>Dentro de una función <code>async</code>, un <code>reject</code> (o un <code>throw</code>) se captura con un <code>try/catch</code> normal, como cualquier error síncrono.</p>
+        <pre><code>async function tresPeticiones() {
+  try {
+    const data1 = await fakeRequestPromise("/page1");
+    console.log(data1);
+    const data2 = await fakeRequestPromise("/page2");
+    console.log(data2);
+  } catch (error) {
+    console.log("Algo falló:", error.message);
+  } finally {
+    // esto se ejecuta SIEMPRE, haya habido error o no
+    console.log("Terminó el intento.");
+  }
+}</code></pre>
+        <div class="tip"><code>finally</code> es ideal para cosas que deben pasar sin importar el resultado: volver a habilitar un botón, ocultar un "cargando...", cerrar una conexión, etc.</div>
+      </section>
+
+      <section id="promise-all">
+        <h2>8. Promise.all — correr varias promesas en paralelo</h2>
+        <p><code>Promise.all(arreglo)</code> recibe un arreglo de promesas y regresa UNA promesa que:</p>
+        <ul>
+          <li>Resuelve cuando <strong>todas</strong> las promesas del arreglo resolvieron, con un arreglo de sus resultados (en el mismo orden).</li>
+          <li>Rechaza en cuanto <strong>cualquiera</strong> de ellas rechaza, con ese mismo error — sin esperar a las demás.</li>
+        </ul>
+        <p>Es la forma correcta de lanzar varias operaciones independientes <strong>al mismo tiempo</strong> en vez de una tras otra con <code>await</code> secuencial:</p>
+        <pre><code>// Secuencial: si cada una tarda 500ms, esto tarda ~1000ms
+const a = await pedirPerfil(idUsuario);
+const b = await pedirPermisos(idUsuario);
+
+// Paralelo con Promise.all: tarda ~500ms (lo que tarde la más lenta)
+const [a, b] = await Promise.all([
+  pedirPerfil(idUsuario),
+  pedirPermisos(idUsuario),
+]);</code></pre>
+        <div class="tip">Úsalo cuando las operaciones NO dependen una de la otra (no necesitas el resultado de una para empezar la otra). Si cualquiera falla, el <code>catch</code> de afuera recibe ese error y las demás simplemente se ignoran.</div>
+      </section>
+
+      <section id="promise-race">
+        <h2>9. Promise.race — la primera que termine, gana</h2>
+        <p><code>Promise.race(arreglo)</code> también recibe un arreglo de promesas, pero regresa una promesa que se resuelve o rechaza con el resultado de la <strong>primera</strong> que termine (sea con éxito o con error) — a las demás ya no les importa lo que pase.</p>
+        <pre><code>const lenta = new Promise((resolve) => setTimeout(() => resolve("lenta"), 3000));
+const rapida = new Promise((resolve) => setTimeout(() => resolve("rápida"), 500));
+
+const resultado = await Promise.race([lenta, rapida]);
+console.log(resultado); // "rápida" — ganó la que terminó primero</code></pre>
+      </section>
+
+      <section id="timeout">
+        <h2>10. Límite de tiempo a algo con race</h2>
+        <p><code>Promise.race</code> no sirve solo para "ver quién es más rápido": su uso más común es ponerle un <strong>límite de tiempo</strong> a una operación que podría tardarse demasiado (o quedarse esperando para siempre), compitiéndola contra una promesa que siempre rechaza después de cierto tiempo.</p>
+        <pre><code>function crearTimeout(ms) {
+  return new Promise((_, reject) => {
+    setTimeout(() => reject(new Error("Tardó demasiado")), ms);
+  });
+}
+
+try {
+  // Si cobrarCliente() no termina en 5 segundos, gana el timeout y
+  // se lanza el error, en vez de quedarse esperando indefinidamente.
+  const resultado = await Promise.race([
+    cobrarCliente(monto),
+    crearTimeout(5000),
+  ]);
+  console.log(resultado);
+} catch (error) {
+  console.log("Falló o se agotó el tiempo:", error.message);
+}</code></pre>
+        <div class="warn">Si la operación real puede tardar, por ejemplo, hasta 4 segundos y el límite es de 5 segundos, el timeout <strong>nunca</strong> podrá ganar la carrera — matemáticamente es imposible. Para que el patrón tenga sentido, el límite debe poder ser superado por la operación real al menos algunas veces.</div>
+        <div class="warn"><strong>Ojo:</strong> <code>Promise.race</code> solo <em>ignora</em> el resultado de la promesa que perdió; no la detiene. Si el cobro tardó 6 segundos y el timeout ganó a los 5, el cobro <strong>sigue corriendo</strong> y terminará de todos modos. Para evitarlo hay que poder cancelarlo (se puede usar AbortController).</div>
+      </section>
+
+      <section id="abort">
+        <h2>11. Cancelar lo que no ganó la carrera con AbortController</h2>
+        <p>Un <code>AbortController</code> es un objeto con dos partes: una <code>signal</code> (la "señal" que se le pasa a la operación) y un método <code>abort()</code> (el "botón de cancelar"). Quien arranca la operación guarda el controlador; la operación escucha la señal y se detiene cuando se aborta.</p>
+        <pre><code>function operacionLenta(ms, senal) {
+  return new Promise((resolve, reject) => {
+    const temporizador = setTimeout(() => resolve("terminó"), ms);
+
+    // Si alguien llama a abort(), se cancela el temporizador y se rechaza.
+    senal.addEventListener("abort", () => {
+      clearTimeout(temporizador);
+      reject(new Error("Operación cancelada"));
+    });
+  });
+}
+
+const controlador = new AbortController();
+try {
+  await Promise.race([
+    operacionLenta(6000, controlador.signal),
+    crearTimeout(5000),
+  ]);
+} finally {
+  // Haya ganado quien haya ganado, se cancela lo que siga en curso.
+  // Si la operación ya había terminado, abort() no hace nada.
+  controlador.abort();
+}</code></pre>
+        <div class="tip"><code>clearTimeout(id)</code> cancela un <code>setTimeout</code> pendiente (el <code>id</code> es lo que regresa <code>setTimeout</code>). Es lo que hace que la operación realmente deje de correr, en vez de terminar "en silencio" más tarde. El mismo <code>AbortController</code> se usa también para cancelar un <code>fetch</code>: <code>fetch(url, { signal: controlador.signal })</code>.</div>
+      </section>
+    </main>
+
+    <footer>
+      <p>Teoría de Promesas y asincronía en JavaScript.</p>
+    </footer>
+  </body>
+</html>

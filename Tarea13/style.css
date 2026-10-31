@@ -1,0 +1,228 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Roboto, system-ui, sans-serif;
+  background-color: #eef3f0;
+}
+
+.section {
+  display: flex;
+  justify-content: center;
+  padding: 2.5rem 1rem;
+  min-height: 100vh;
+}
+
+.layout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.info-panel {
+  max-width: 20rem;
+}
+
+.info-list {
+  margin: 0;
+  padding-left: 1.1rem;
+  font-size: 0.85rem;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.tiempo-pago {
+  margin: 1rem 0 0;
+  font-size: 0.85rem;
+  font-weight: bold;
+  color: #8a6d00;
+  min-height: 1.2rem;
+}
+
+.card {
+  width: 100%;
+  max-width: 34rem;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+}
+
+.card-header {
+  background-color: #2e7d32;
+  text-align: center;
+  padding: 0.75rem 0;
+}
+
+.card-header-title {
+  color: white;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.card-content {
+  padding: 1.5rem;
+}
+
+.card-footer {
+  padding: 0.75rem 1.5rem 1.25rem;
+  text-align: center;
+}
+
+.instructions {
+  color: #666;
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.products-list {
+  list-style: none;
+  margin: 0 0 1rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.producto {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f7faf7;
+  border: 1px solid #dde8de;
+  border-radius: 10px;
+  padding: 0.7rem 0.9rem;
+}
+
+.producto .info strong {
+  display: block;
+  font-size: 0.95rem;
+}
+
+.producto .precio {
+  color: #666;
+  font-size: 0.85rem;
+}
+
+.producto .sin-stock {
+  color: #c62828;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.producto .stock {
+  color: #2e7d32;
+  font-size: 0.8rem;
+}
+
+.producto button {
+  border: none;
+  background-color: #2e7d32;
+  color: white;
+  padding: 0.45rem 0.9rem;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.producto button:hover {
+  background-color: #256428;
+}
+
+.producto button:disabled {
+  background-color: #b7c9b8;
+  cursor: not-allowed;
+}
+
+.checkout-panel {
+  border-top: 1px solid #eee;
+  padding-top: 1.25rem;
+}
+
+.checkout-title {
+  margin: 0 0 0.75rem;
+  font-size: 1.05rem;
+  color: #2e7d32;
+}
+
+.producto-seleccionado {
+  font-size: 0.9rem;
+  color: #333;
+  margin: 0 0 0.75rem;
+}
+
+.form-row {
+  margin-bottom: 0.75rem;
+}
+
+.total-compra {
+  margin: -0.25rem 0 0.75rem;
+  font-weight: bold;
+  color: #2e7d32;
+}
+
+.form-row label {
+  display: block;
+  font-size: 0.85rem;
+  margin-bottom: 0.3rem;
+}
+
+.form-row input,
+.form-row select {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+#btn-finalizar {
+  margin-top: 0.5rem;
+  border: none;
+  background-color: #2e7d32;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+#btn-finalizar:disabled {
+  background-color: #9ccb9f;
+  cursor: wait;
+}
+
+.estado {
+  margin-top: 1rem;
+  padding: 0.6rem 0.9rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  min-height: 1.2rem;
+}
+
+.estado:empty {
+  display: none;
+}
+
+.estado.cargando {
+  background-color: #fff8e1;
+  color: #8a6d00;
+}
+
+.estado.exito {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  font-weight: bold;
+}
+
+.estado.error {
+  background-color: #fdecea;
+  color: #c62828;
+  font-weight: bold;
+}

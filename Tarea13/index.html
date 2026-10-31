@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Súper Fresco - Checkout</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="checkout.js" defer></script>
+  </head>
+
+  <body>
+    <section class="section">
+      <div class="layout">
+        <div class="card">
+          <header class="card-header">
+            <p class="card-header-title">Checkout - Súper Fresco</p>
+          </header>
+
+          <div class="card-content">
+            <ul id="lista-productos" class="products-list"></ul>
+
+            <div class="checkout-panel" id="panel-checkout" hidden>
+              <h2 class="checkout-title">Finalizar compra</h2>
+              <p id="producto-seleccionado" class="producto-seleccionado"></p>
+
+              <div class="form-row">
+                <label for="input-cantidad">Cantidad</label>
+                <input type="number" id="input-cantidad" min="1" value="1" />
+              </div>
+
+              <p id="total-compra" class="total-compra"></p>
+
+              <div class="form-row">
+                <label for="select-metodo-pago">Método de pago</label>
+                <select id="select-metodo-pago">
+                  <option value="tarjeta">Tarjeta</option>
+                  <option value="paypal">PayPal</option>
+                </select>
+              </div>
+
+              <div class="form-row" id="label-tarjeta">
+                <label for="input-tarjeta">Número de tarjeta (16 dígitos)</label>
+                <input type="text" id="input-tarjeta" placeholder="4242424242424242" />
+              </div>
+
+              <button id="btn-finalizar">Finalizar compra</button>
+
+              <div id="estado-checkout" class="estado" aria-live="polite"></div>
+            </div>
+          </div>
+
+          <footer class="card-footer">
+            <p class="instructions">Selecciona un producto, completa tus datos de pago y finaliza la compra.</p>
+          </footer>
+        </div>
+
+        <aside class="card info-panel">
+          <header class="card-header">
+            <p class="card-header-title">Cómo funciona el cobro</p>
+          </header>
+          <div class="card-content">
+            <ul class="info-list">
+              <li>Tarjeta: válida solo con 16 dígitos exactos.</li>
+              <li>Probabilidad de que falle el cobro — PayPal: <strong>40%</strong>, Tarjeta: <strong>20%</strong>.</li>
+              <li>Duración del cobro: aleatoria, entre 0.3s y 6s.</li>
+              <li>Límite de tiempo (timeout): <strong>5s</strong>. Si el cobro no responde antes, se cancela por tardanza (puede pasar, ya que la duración llega hasta 6s).</li>
+            </ul>
+            <p id="tiempo-pago" class="tiempo-pago"></p>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </body>
+</html>
